@@ -1,7 +1,58 @@
+#define GLFW_EXPOSE_NATIVE_COCOA
+#include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
 #include "DeviceMetal.h"
+
+class LLGIWindow : public LLGI::Window
+{
+	GLFWwindow* window_ = nullptr;
+
+public:
+	LLGIWindow(GLFWwindow* window) : window_(window) {}
+	
+	~LLGIWindow()
+	{
+		glfwDestroyWindow(window_);
+	}
+	
+	GLFWwindow* GetGLFWwindow()
+	{
+		return window_;
+	}
+
+	bool OnNewFrame() override { return glfwWindowShouldClose(window_) == GL_FALSE; }
+
+	void* GetNativePtr(int32_t index) override
+	{
+		return glfwGetCocoaWindow(window_);
+	}
+
+	LLGI::Vec2I GetWindowSize() const override
+	{
+		int w, h;
+		glfwGetWindowSize(window_, &w, &h);
+		return LLGI::Vec2I(w, h);
+	}
+};
 
 bool DeviceMetal::Initialize(const char* windowTitle, Utils::Vec2I windowSize)
 {
+	glfwInit();
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+
+	auto glfwWindow = glfwCreateWindow(windowSize.X, windowSize.Y, windowTitle, nullptr, nullptr);
+	if (glfwWindow == nullptr)
+	{
+		return false;
+	}
+
+	window = std::make_shared<LLGIWindow>(glfwWindow);
+	if (window == nullptr)
+	{
+		Terminate();
+		return false;
+	}
+
 	// A code to initialize DirectX12 is too long, so I use LLGI
 	// Metal初期化のためのコードは長すぎるのでLLGIを使用する。
 
@@ -9,12 +60,6 @@ bool DeviceMetal::Initialize(const char* windowTitle, Utils::Vec2I windowSize)
 	platformParam.Device = LLGI::DeviceType::Metal;
 	platformParam.WaitVSync = true;
 
-	window = std::shared_ptr<LLGI::Window>(LLGI::CreateWindow(windowTitle, { windowSize.X, windowSize.Y }));
-	if (window == nullptr)
-	{
-		Terminate();
-		return false;
-	}
 
 	platform = LLGI::CreateSharedPtr(LLGI::CreatePlatform(platformParam, window.get()));
 
@@ -57,29 +102,33 @@ void DeviceMetal::Terminate()
 	graphics.reset();
 	platform.reset();
 	window.reset();
-}
-
-void DeviceMetal::ClearScreen()
-{
+	
+	glfwTerminate();
 }
 
 bool DeviceMetal::NewFrame()
 {
-	if (!platform->NewFrame())
+	auto glfwWindow = static_cast<LLGIWindow*>(window.get())->GetGLFWwindow();
+	if (glfwWindowShouldClose(glfwWindow))
+	{
 		return false;
+	}
 
+	glfwPollEvents();
+
+	for (int key = 0; key < 256; key++)
+	{
+		Utils::Input::UpdateKeyState(key, glfwGetKey(glfwWindow, key) != GLFW_RELEASE);
+	}
+	
+	if (!platform->NewFrame())
+	{
+		return false;
+	}
+	
 	memoryPool->NewFrame();
 
 	commandList = commandListPool->Get();
-
-	LLGI::Color8 color;
-	color.R = 0;
-	color.G = 0;
-	color.B = 0;
-	color.A = 255;
-
-	commandList->Begin();
-	commandList->BeginRenderPass(platform->GetCurrentScreen(color, true, false));
 
 	// Call on starting of a frame
 	// フレームの開始時に呼ぶ
@@ -87,20 +136,46 @@ bool DeviceMetal::NewFrame()
 
 	// Begin a command list
 	// コマンドリストを開始する。
-	EffekseerRendererMetal::BeginCommandList(efkCommandList, GetEncoder());
+	commandList->Begin();
+
+	EffekseerRendererMetal::BeginCommandList(efkCommandList);
 	efkRenderer->SetCommandList(efkCommandList);
 
 	return true;
 }
 
+void DeviceMetal::BeginComputePass()
+{
+	commandList->BeginComputePass();
+	EffekseerRendererMetal::BeginComputePass(efkCommandList, GetComputeEncoder());
+}
+
+void DeviceMetal::EndComputePass()
+{
+	EffekseerRendererMetal::EndComputePass(efkCommandList);
+	commandList->EndComputePass();
+}
+
+void DeviceMetal::BeginRenderPass()
+{
+	LLGI::Color8 color {0, 0, 0, 255};
+	commandList->BeginRenderPass(platform->GetCurrentScreen(color, true, false));
+	EffekseerRendererMetal::BeginRenderPass(efkCommandList, GetRenderEncoder());
+}
+
+void DeviceMetal::EndRenderPass()
+{
+	EffekseerRendererMetal::EndRenderPass(efkCommandList);
+	commandList->EndRenderPass();
+}
+
 void DeviceMetal::PresentDevice()
 {
-	// Finish a command list
-	// コマンドリストを終了する。
 	efkRenderer->SetCommandList(nullptr);
 	EffekseerRendererMetal::EndCommandList(efkCommandList);
 
-	commandList->EndRenderPass();
+	// Finish a command list
+	// コマンドリストを終了する。
 	commandList->End();
 
 	graphics->Execute(commandList);
