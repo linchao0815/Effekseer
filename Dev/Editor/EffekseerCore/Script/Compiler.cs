@@ -66,7 +66,7 @@ namespace Effekseer.Script
             }
 
 			CompilerParameters.ReferencedAssemblies.Add(entryDirectory + "EffekseerCore.dll");
-			PythonEngine = ph.Python.CreateEngine();
+			//PythonEngine = ph.Python.CreateEngine();
 		}
 
 		static public void Dispose()

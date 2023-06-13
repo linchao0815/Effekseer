@@ -18,6 +18,7 @@
 #include "Renderer/Effekseer.RingRenderer.h"
 #include "Renderer/Effekseer.SpriteRenderer.h"
 #include "Renderer/Effekseer.TrackRenderer.h"
+#include "Renderer/Effekseer.GpuParticles.h"
 
 #include "Effekseer.Effect.h"
 #include "Effekseer.ResourceManager.h"
@@ -188,6 +189,22 @@ ProceduralModelGeneratorRef Setting::GetProceduralMeshGenerator() const
 void Setting::SetProceduralMeshGenerator(ProceduralModelGeneratorRef generator)
 {
 	resourceManager_->SetProceduralMeshGenerator(generator);
+}
+
+//----------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------
+GpuParticlesRef Setting::GetGpuParticles() const
+{
+	return gpuParticles_;
+}
+
+//----------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------
+void Setting::SetGpuParticles(GpuParticlesRef gpuParticles)
+{
+	gpuParticles_ = gpuParticles;
 }
 
 //----------------------------------------------------------------------------------

@@ -275,6 +275,20 @@ public:
 		\~Japanese GPUパフォーマンスタイマーを設定する。
 	*/
 	virtual void SetGPUTimer(GPUTimerRef gpuTimer) = 0;
+	
+	/**
+		@brief
+		\~English get an GPU performance timer
+		\~Japanese GPUパフォーマンスタイマー取得する。
+	*/
+	virtual GpuParticlesRef GetGpuParticles() = 0;
+
+	/**
+		@brief
+		\~English get an GPU performance timer
+		\~Japanese GPUパフォーマンスタイマーを設定する。
+	*/
+	virtual void SetGpuParticles(GpuParticlesRef gpuParticles) = 0;
 
 	/**
 		@brief	設定クラスを取得する。

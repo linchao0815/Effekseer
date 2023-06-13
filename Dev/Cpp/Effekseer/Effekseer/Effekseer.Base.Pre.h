@@ -74,6 +74,7 @@ class RingRenderer;
 class ModelRenderer;
 class TrackRenderer;
 class GPUTimer;
+class GpuParticles;
 
 class EffectLoader;
 class TextureLoader;
@@ -693,6 +694,11 @@ public:
 		SafeAddRef(ptr);
 		return RefPtr<T>(ptr);
 	}
+
+	explicit operator bool() const
+	{
+		return ptr_ != nullptr;
+	};
 };
 
 template <class T, class U>
@@ -744,6 +750,7 @@ using RingRendererRef = RefPtr<RingRenderer>;
 using ModelRendererRef = RefPtr<ModelRenderer>;
 using TrackRendererRef = RefPtr<TrackRenderer>;
 using GPUTimerRef = RefPtr<GPUTimer>;
+using GpuParticlesRef = RefPtr<GpuParticles>;
 using SoundPlayerRef = RefPtr<SoundPlayer>;
 
 using EffectLoaderRef = RefPtr<EffectLoader>;

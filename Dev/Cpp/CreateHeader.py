@@ -90,6 +90,7 @@ effekseerModulesHeader.readLines('Effekseer/Effekseer/Renderer/Effekseer.RingRen
 effekseerModulesHeader.readLines('Effekseer/Effekseer/Renderer/Effekseer.ModelRenderer.h')
 effekseerModulesHeader.readLines('Effekseer/Effekseer/Renderer/Effekseer.TrackRenderer.h')
 effekseerModulesHeader.readLines('Effekseer/Effekseer/Renderer/Effekseer.GPUTimer.h')
+effekseerModulesHeader.readLines('Effekseer/Effekseer/Renderer/Effekseer.GpuParticles.h')
 effekseerModulesHeader.readLines('Effekseer/Effekseer/Effekseer.EffectLoader.h')
 effekseerModulesHeader.readLines('Effekseer/Effekseer/Effekseer.TextureLoader.h')
 effekseerModulesHeader.readLines('Effekseer/Effekseer/Model/Model.h')

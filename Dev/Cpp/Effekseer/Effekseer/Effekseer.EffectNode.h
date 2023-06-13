@@ -31,6 +31,7 @@
 #include "Parameter/UV.h"
 #include "SIMD/Utils.h"
 #include "Utils/BinaryVersion.h"
+#include "Renderer/Effekseer.GpuParticles.h"
 
 namespace Effekseer
 {
@@ -511,6 +512,9 @@ public:
 	FalloffParameter FalloffParam{};
 
 	ParameterSound Sound;
+
+	GpuParticles::ParamID GpuParticlesParamID = GpuParticles::InvalidID;
+	GpuParticlesRef GpuParticles;
 
 	eRenderingOrder RenderingOrder = RenderingOrder_FirstCreatedInstanceIsFirst;
 

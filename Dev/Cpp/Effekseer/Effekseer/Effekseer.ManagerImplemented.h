@@ -260,6 +260,10 @@ public:
 
 	void SetGPUTimer(GPUTimerRef gpuTimer) override;
 
+	GpuParticlesRef GetGpuParticles() override;
+
+	void SetGpuParticles(GpuParticlesRef gpuParticles) override;
+
 	const SettingRef& GetSetting() const override;
 
 	void SetSetting(const SettingRef& setting) override;

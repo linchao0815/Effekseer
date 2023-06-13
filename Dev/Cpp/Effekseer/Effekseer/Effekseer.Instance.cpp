@@ -377,6 +377,26 @@ void Instance::FirstUpdate()
 	prevGlobalPosition_ = SIMD::Vec3f::Transform(prevPosition_, m_ParentMatrix);
 
 	m_pEffectNode->InitializeRenderedInstance(*this, *ownGroup_, m_pManager);
+
+	if (m_pEffectNode->GpuParticles && m_pEffectNode->IsRendered)
+	{
+		if (auto gpuParticles = m_pManager->GetGpuParticles())
+		{
+			m_gpuEmitterID = gpuParticles->AddEmitter(m_pEffectNode->GpuParticlesParamID);
+
+			gpuParticles->SetTransform(m_gpuEmitterID, ToStruct(globalMatrix_rendered));
+
+			auto paramSet = gpuParticles->GetParamSet(m_pEffectNode->GpuParticlesParamID);
+			if ((BindType)paramSet->ColorFlags == BindType::NotBind_Root)
+			{
+				gpuParticles->SetColor(m_gpuEmitterID, instanceGlobal->GlobalColor);
+			}
+			else
+			{
+				gpuParticles->SetColor(m_gpuEmitterID, ColorInheritance);
+			}
+		}
+	}
 }
 
 void Instance::Update(float deltaFrame, bool shown)
@@ -726,6 +746,25 @@ void Instance::UpdateTransform(float deltaFrame)
 		prevGlobalPosition_ = globalMatrix_.GetCurrent().GetTranslation();
 
 		globalMatrix_rendered = calcMat;
+
+		if (m_gpuEmitterID >= 0)
+		{
+			if (auto gpuParticles = m_pManager->GetGpuParticles())
+			{
+				gpuParticles->SetTransform(m_gpuEmitterID, ToStruct(globalMatrix_rendered));
+
+				auto paramSet = gpuParticles->GetParamSet(m_pEffectNode->GpuParticlesParamID);
+				if ((BindType)paramSet->ColorFlags == BindType::NotBind_Root)
+				{
+					InstanceGlobal* instanceGlobal = m_pContainer->GetRootInstance();
+					gpuParticles->SetColor(m_gpuEmitterID, instanceGlobal->GlobalColor);
+				}
+				else
+				{
+					gpuParticles->SetColor(m_gpuEmitterID, ColorInheritance);
+				}
+			}
+		}
 	}
 
 	m_GlobalMatrix43Calculated = true;
@@ -867,6 +906,12 @@ void Instance::Kill()
 		for (InstanceGroup* group = childrenGroups_; group != nullptr; group = group->NextUsedByInstance)
 		{
 			group->IsReferencedFromInstance = false;
+		}
+
+		if (m_gpuEmitterID >= 0)
+		{
+			m_pManager->GetGpuParticles()->RemoveEmitter(m_gpuEmitterID);
+			m_gpuEmitterID = -1;
 		}
 
 		m_State = eInstanceState::INSTANCE_STATE_REMOVED;

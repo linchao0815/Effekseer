@@ -74,6 +74,7 @@ class RingRenderer;
 class ModelRenderer;
 class TrackRenderer;
 class GPUTimer;
+class GpuParticles;
 
 class EffectLoader;
 class TextureLoader;
@@ -693,6 +694,11 @@ public:
 		SafeAddRef(ptr);
 		return RefPtr<T>(ptr);
 	}
+
+	explicit operator bool() const
+	{
+		return ptr_ != nullptr;
+	};
 };
 
 template <class T, class U>
@@ -744,6 +750,7 @@ using RingRendererRef = RefPtr<RingRenderer>;
 using ModelRendererRef = RefPtr<ModelRenderer>;
 using TrackRendererRef = RefPtr<TrackRenderer>;
 using GPUTimerRef = RefPtr<GPUTimer>;
+using GpuParticlesRef = RefPtr<GpuParticles>;
 using SoundPlayerRef = RefPtr<SoundPlayer>;
 
 using EffectLoaderRef = RefPtr<EffectLoader>;
@@ -4066,6 +4073,20 @@ public:
 		\~Japanese GPUパフォーマンスタイマーを設定する。
 	*/
 	virtual void SetGPUTimer(GPUTimerRef gpuTimer) = 0;
+	
+	/**
+		@brief
+		\~English get an GPU performance timer
+		\~Japanese GPUパフォーマンスタイマー取得する。
+	*/
+	virtual GpuParticlesRef GetGpuParticles() = 0;
+
+	/**
+		@brief
+		\~English get an GPU performance timer
+		\~Japanese GPUパフォーマンスタイマーを設定する。
+	*/
+	virtual void SetGpuParticles(GpuParticlesRef gpuParticles) = 0;
 
 	/**
 		@brief	設定クラスを取得する。
@@ -4787,6 +4808,7 @@ private:
 
 	std::vector<RefPtr<EffectFactory>> effectFactories_;
 	RefPtr<ResourceManager> resourceManager_;
+	GpuParticlesRef gpuParticles_;
 
 protected:
 	Setting();
@@ -4945,6 +4967,26 @@ public:
 		\~Japanese ジェネレータ
 	*/
 	void SetProceduralMeshGenerator(ProceduralModelGeneratorRef generator);
+	
+	/**
+		@brief
+		\~English get a gpu particle system
+		\~Japanese GPUパーティクルシステムを取得する。
+		@return
+		\~English	gpu particle system
+		\~Japanese GPUパーティクルシステム
+	*/
+	GpuParticlesRef GetGpuParticles() const;
+
+	/**
+		@brief
+		\~English specfiy a gpu particle system
+		\~Japanese GPUパーティクルシステムを設定する。
+		@param	gpu particle system
+		\~English	gpu particle system
+		\~Japanese GPUパーティクルシステム
+	*/
+	void SetGpuParticles(GpuParticlesRef gpuParticles);
 
 	/**
 		@brief

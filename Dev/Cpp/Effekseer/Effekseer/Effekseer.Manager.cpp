@@ -25,6 +25,7 @@
 #include "Renderer/Effekseer.SpriteRenderer.h"
 #include "Renderer/Effekseer.TrackRenderer.h"
 #include "Renderer/Effekseer.GPUTimer.h"
+#include "Renderer/Effekseer.GpuParticles.h"
 
 #include "Effekseer.SoundLoader.h"
 #include "Sound/Effekseer.SoundPlayer.h"
@@ -637,6 +638,16 @@ GPUTimerRef ManagerImplemented::GetGPUTimer()
 void ManagerImplemented::SetGPUTimer(GPUTimerRef gpuTimer)
 {
 	m_gpuTimer = gpuTimer;
+}
+
+GpuParticlesRef ManagerImplemented::GetGpuParticles()
+{
+	return m_setting->GetGpuParticles();
+}
+
+void ManagerImplemented::SetGpuParticles(GpuParticlesRef gpuParticles)
+{
+	m_setting->SetGpuParticles(gpuParticles);
 }
 
 SoundPlayerRef ManagerImplemented::GetSoundPlayer()
@@ -1386,6 +1397,11 @@ void ManagerImplemented::Update(const UpdateParameter& parameter)
 
 	EndUpdate();
 
+	if (auto gpuParticles = GetGpuParticles())
+	{
+		gpuParticles->UpdateFrame(parameter.DeltaFrame);
+	}
+
 	ExecuteSounds();
 }
 
@@ -1818,6 +1834,11 @@ void ManagerImplemented::Draw(const Manager::DrawParameter& drawParameter)
 		}
 	}
 
+	if (auto gpuParticles = GetGpuParticles())
+	{
+		gpuParticles->RenderFrame();
+	}
+
 	if (m_gpuTimer != nullptr)
 	{
 		m_gpuTimer->EndFrame();
@@ -1939,6 +1960,11 @@ void ManagerImplemented::DrawFront(const Manager::DrawParameter& drawParameter)
 		{
 			render(m_renderingDrawSets[i]);
 		}
+	}
+
+	if (auto gpuParticles = GetGpuParticles())
+	{
+		gpuParticles->RenderFrame();
 	}
 
 	if (m_gpuTimer != nullptr)
