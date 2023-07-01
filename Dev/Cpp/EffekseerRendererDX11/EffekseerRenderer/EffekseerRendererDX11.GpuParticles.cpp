@@ -633,22 +633,31 @@ void GpuParticles::RemoveEmitter(EmitterID emitterID)
 	emitter.flagBits = 0;
 	m_newEmitterIDs.push_back(emitterID);
 
-	uint32_t particlesTail = emitter.particlesHead + emitter.particlesSize;
+	Block newBlock = { emitter.particlesHead, emitter.particlesSize };
+	uint32_t newTail = newBlock.offset + newBlock.size;
 	for (size_t i = 0; i < m_bufferBlocks.size(); i++)
 	{
 		Block& block = m_bufferBlocks[i];
-		if (block.offset <= particlesTail)
+		if (block.offset + block.size == newBlock.offset)
 		{
-			if (block.offset == particlesTail)
+			block.size += newBlock.size;
+
+			if (i + 1 < m_bufferBlocks.size() && block.offset + block.size == m_bufferBlocks[i + 1].offset)
 			{
-				block.offset -= emitter.particlesSize;
-				break;
+				block.size += m_bufferBlocks[i + 1].size;
+				m_bufferBlocks.erase(m_bufferBlocks.begin() + i + 1);
 			}
-			else
-			{
-				m_bufferBlocks.insert(m_bufferBlocks.begin() + i, {emitter.particlesHead, emitter.particlesSize});
-				break;
-			}
+			break;
+		}
+		else if (newBlock.offset + newBlock.size == block.offset)
+		{
+			block.offset -= newBlock.size;
+			break;
+		}
+		else if (newBlock.offset < block.offset)
+		{
+			m_bufferBlocks.insert(m_bufferBlocks.begin() + i, newBlock);
+			break;
 		}
 	}
 
