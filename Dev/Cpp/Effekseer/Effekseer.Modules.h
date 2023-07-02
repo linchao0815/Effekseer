@@ -683,6 +683,7 @@ public:
 	{
 		uint32_t EmitterMaxCount = 0;
 		uint32_t ParticleMaxCount = 0;
+		uint32_t TrailMaxCount = 0;
 	};
 
 	struct ParameterSet

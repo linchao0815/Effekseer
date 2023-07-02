@@ -46,29 +46,38 @@ struct ParameterSet
 
 struct Emitter
 {
-    uint flagBits;
-    uint seed;
-    uint particlesHead;
-    uint particlesSize;
+    uint FlagBits;
+    uint Seed;
+    uint ParticleHead;
+    uint ParticleSize;
+    uint TrailHead;
+    uint TrailSize;
+    uint TrailPos;
 };
 
 struct DynamicInput
 {
-    uint nextEmitCount;
-    uint totalEmitCount;
-    float3x4 transform;
-    float4 color;
+    uint NextEmitCount;
+    uint TotalEmitCount;
+    float3x4 Transform;
+    float4 Color;
 };
 
 struct Particle
 {
-    uint flagBits;
-    uint seed;
-    float lifeAge;
-    uint color;
-    float3 position;
-    uint2 velocity;
-    uint2 rotscale;
+    uint FlagBits;
+    uint Seed;
+    float LifeAge;
+    uint InheritColor;
+    uint Color;
+    uint2 Velocity;
+    float3x4 Transform;
+};
+
+struct Trail
+{
+    float3 Position;
+    uint Direction;
 };
 
 struct Constants
@@ -83,17 +92,13 @@ struct Constants
     float Reserved;
 };
 
-float deg2rad(float deg) {
-    return deg * 3.141592f / 180.0f;
-}
-
-uint packColor(float4 color)
+uint PackColor(float4 color)
 {
     uint4 colori = uint4(clamp(color * 255.0f, 0.0, 255.0));
     return colori.r | (colori.g << 8) | (colori.b << 16) | (colori.a << 24);
 }
 
-float4 unpackColor(uint color32)
+float4 UnpackColor(uint color32)
 {
     return float4(
         (color32 & 0xFF),
@@ -102,37 +107,50 @@ float4 unpackColor(uint color32)
         ((color32 >> 24) & 0xFF)) / 255.0f;
 }
 
-uint2 packFloat4(float4 v) {
+uint2 PackFloat4(float4 v) {
     uint4 v16 = f32tof16(v);
     return uint2(v16.x | (v16.y << 16), v16.z | (v16.w << 16));
 }
 
-uint2 packFloat4(float3 v3, float v1) {
-    return packFloat4(float4(v3, v1));
+uint2 PackFloat4(float3 v3, float v1) {
+    return PackFloat4(float4(v3, v1));
 }
 
-float4 unpackFloat4(uint2 v) {
-    return f16tof32(uint4(v.x, v.x >> 16, v.y, v.y >> 16));
+float4 UnpackFloat4(uint2 bits) {
+    return f16tof32(uint4(bits.x, bits.x >> 16, bits.y, bits.y >> 16));
 }
 
-float3x3 rotationMatrix(float3 eulerAngles) {
+float PackNormalizedFloat3(float3 v) {
+	uint3 i = uint3((v + 1.0f) * 0.5f * 1023.0f);
+	return i.x | (i.y << 10) | (i.z << 20);
+}
+
+float3 UnpackNormalizedFloat3(uint bits) {
+	float3 v = float3(uint3(bits, bits >> 10, bits >> 20) & 1023);
+	return v / 1023.0f * 2.0f - 1.0f;
+}
+
+float3x4 TRSMatrix(float3 translation, float3 rotation, float3 scale) {
     float3 s, c;
-    sincos(eulerAngles, s, c);
+    sincos(rotation, s, c);
     
-    float3x3 m;
-	m[0][0] = c.z * c.y + s.z * s.x * s.y;
-	m[0][1] = s.z * c.x;
-	m[0][2] = c.z * -s.y + s.z * s.x * c.y;
-	m[1][0] = -s.z * c.y + c.z * s.x * s.y;
-	m[1][1] = c.z * c.x;
-	m[1][2] = -s.z * -s.y + c.z * s.x * c.y;
-	m[2][0] = c.x * s.y;
-	m[2][1] = -s.x;
-	m[2][2] = c.x * c.y;
+    float3x4 m;
+	m[0][0] = scale.x * (c.z * c.y + s.z * s.x * s.y);
+	m[0][1] = scale.y * (s.z * c.x);
+	m[0][2] = scale.z * (c.z * -s.y + s.z * s.x * c.y);
+    m[0][3] = translation.x;
+	m[1][0] = scale.x * (-s.z * c.y + c.z * s.x * s.y);
+	m[1][1] = scale.y * (c.z * c.x);
+	m[1][2] = scale.z * (-s.z * -s.y + c.z * s.x * c.y);
+    m[1][3] = translation.y;
+	m[2][0] = scale.x * (c.x * s.y);
+	m[2][1] = scale.y * (-s.x);
+	m[2][2] = scale.z * (c.x * c.y);
+    m[2][3] = translation.z;
     return m;
 }
 
-uint randomUint(inout uint seed)
+uint RandomUint(inout uint seed)
 {
     seed ^= (seed << 13);
     seed ^= (seed >> 17);
@@ -140,35 +158,35 @@ uint randomUint(inout uint seed)
     return seed;
 }
 
-float randomFloat(inout uint seed)
+float RandomFloat(inout uint seed)
 {
-    return float(randomUint(seed)) / 4294967296.0;
+    return float(RandomUint(seed)) / 4294967296.0;
 }
 
-float randomUintRange(inout uint seed, uint maxmin[2])
+float RandomUintRange(inout uint seed, uint maxmin[2])
 {
-    return lerp(maxmin[1], maxmin[0], randomFloat(seed));
+    return lerp(maxmin[1], maxmin[0], RandomFloat(seed));
 }
 
-float randomFloatRange(inout uint seed, float maxmin[2])
+float RandomFloatRange(inout uint seed, float maxmin[2])
 {
-    return lerp(maxmin[1], maxmin[0], randomFloat(seed));
+    return lerp(maxmin[1], maxmin[0], RandomFloat(seed));
 }
 
-float3 randomFloat3Range(inout uint seed, float3 maxmin[2])
+float3 RandomFloat3Range(inout uint seed, float3 maxmin[2])
 {
-    return lerp(maxmin[1], maxmin[0], randomFloat(seed));
+    return lerp(maxmin[1], maxmin[0], RandomFloat(seed));
 }
 
-float4 randomColorRange(inout uint seed, uint maxmin[2])
+float4 RandomColorRange(inout uint seed, uint maxmin[2])
 {
-    return lerp(unpackColor(maxmin[1]), unpackColor(maxmin[0]), randomFloat(seed));
+    return lerp(UnpackColor(maxmin[1]), UnpackColor(maxmin[0]), RandomFloat(seed));
 }
 
-float3 spreadDir(inout uint seed, float3 baseDir, float angle)
+float3 SpreadDir(inout uint seed, float3 baseDir, float angle)
 {
-    float theta = 2.0 * 3.14159 * randomFloat(seed);
-    float phi = angle * randomFloat(seed);
+    float theta = 2.0 * 3.14159 * RandomFloat(seed);
+    float phi = angle * RandomFloat(seed);
 
     float3 randDir = float3(
         sin(phi) * cos(theta),

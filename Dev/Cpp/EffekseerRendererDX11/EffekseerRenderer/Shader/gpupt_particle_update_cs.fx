@@ -6,12 +6,17 @@ cbuffer cb : register(b0)
 };
 cbuffer cb1 : register(b1)
 {
-    uint bufferOffset;
+    uint BufferOffset;
+    uint TrailOffset;
+    uint TrailJoints;
+    uint TrailPos;
 }
 
 StructuredBuffer<ParameterSet> ParamSets : register(t0);
 StructuredBuffer<DynamicInput> DynamicInputs : register(t1);
+StructuredBuffer<Emitter> Emitters : register(t2);
 RWStructuredBuffer<Particle> Particles : register(u0);
+RWStructuredBuffer<Trail> Trails : register(u1);
 Texture3D<float4> NoiseVFTex : register(t4);
 SamplerState NoiseVFSamp : register(s4);
 
@@ -35,33 +40,50 @@ float3 Vortex(float rotation, float attraction, float3 center, float3 axis, floa
 [numthreads(256, 1, 1)]
 void main(uint3 dtid : SV_DispatchThreadID)
 {
-    uint particleID = bufferOffset + dtid.x + dtid.y * 256;
+    uint index = dtid.x + dtid.y * 256;
+    uint particleID = BufferOffset + index;
     Particle particle = Particles[particleID];
     
-    if (particle.flagBits & 0x01) {
-        uint paramID = (particle.flagBits >> 1) & 0x3F;
-        uint emitterID = (particle.flagBits >> 11) & 0x3F;
+    if (particle.FlagBits & 0x01) {
+        uint paramID = (particle.FlagBits >> 1) & 0x3FF;
+        uint emitterID = (particle.FlagBits >> 11) & 0x3FF;
+        uint updateCount = (particle.FlagBits >> 21) & 0xFF;
         ParameterSet paramSet = ParamSets[paramID];
         DynamicInput input = DynamicInputs[emitterID];
-
         float deltaTime = constants.DeltaTime;
-        uint paramSeed = particle.seed;
-        float lifeTime = (float)randomUintRange(paramSeed, paramSet.LifeTime);
-        float damping = randomFloatRange(paramSeed, paramSet.Damping) * 0.01;
-        float3 angularVelocity = randomFloat3Range(paramSeed, paramSet.AngularVelocity);
-        float initialScale = randomFloatRange(paramSeed, paramSet.InitialScale);
-        float terminalScale = randomFloatRange(paramSeed, paramSet.TerminalScale);
 
-        float3 position = particle.position;
-        float3 velocity = unpackFloat4(particle.velocity).xyz;
-        float4 rotscale = unpackFloat4(particle.rotscale);
-        float3 rotation = rotscale.xyz;
-        float scale = rotscale.w;
-        //float4 color = unpackColor(particle.color);
+        // Randomize parameters
+        uint paramSeed = particle.Seed;
+        float lifeTime = (float)RandomUintRange(paramSeed, paramSet.LifeTime);
+        float lifeRatio = particle.LifeAge / lifeTime;
+        float damping = RandomFloatRange(paramSeed, paramSet.Damping) * 0.01;
+        float3 initialAngle = RandomFloat3Range(paramSeed, paramSet.InitialAngle);
+        float3 angularVelocity = RandomFloat3Range(paramSeed, paramSet.AngularVelocity);
+        float initialScale = RandomFloatRange(paramSeed, paramSet.InitialScale);
+        float terminalScale = RandomFloatRange(paramSeed, paramSet.TerminalScale);
+        float4 colorStart = RandomColorRange(paramSeed, paramSet.ColorStart);
+        float4 colorEnd = RandomColorRange(paramSeed, paramSet.ColorEnd);
 
-        particle.lifeAge += constants.DeltaTime;
-        if (particle.lifeAge >= lifeTime) {
-            particle.flagBits &= ~1;
+        float3 position = particle.Transform._m03_m13_m23;
+        float3 velocity = UnpackFloat4(particle.Velocity).xyz;
+
+        if (TrailJoints > 0) {
+            uint trailID = TrailOffset + index * TrailJoints + TrailPos;
+            Trail trail;
+            trail.Position = position;
+            trail.Direction = PackNormalizedFloat3(velocity);
+            Trails[trailID] = trail;
+        }
+        
+        // Increase count
+        particle.FlagBits &= ~(0xFF << 21);
+        particle.FlagBits |= clamp(updateCount + 1, 0, 255) << 21;
+
+        // Aging
+        particle.LifeAge += constants.DeltaTime;
+        if (particle.LifeAge >= lifeTime) {
+            // Clear the alive flag
+            particle.FlagBits &= ~1;
         }
         
         // Gravity
@@ -71,30 +93,45 @@ void main(uint3 dtid : SV_DispatchThreadID)
         if (paramSet.VortexRotation != 0.0f || paramSet.VortexAttraction != 0.0f) {
             velocity += Vortex(paramSet.VortexRotation, paramSet.VortexAttraction, 
                 paramSet.VortexCenter, paramSet.VortexAxis,
-                position, input.transform) * deltaTime;
+                position, input.Transform) * deltaTime;
         }
+        // Turbulence
         if (paramSet.TurbulencePower != 0.0f) {
             float4 vfTexel = NoiseVFTex.SampleLevel(NoiseVFSamp, position / 8.0f + 0.5f, 0);
             velocity += (vfTexel.xyz * 2.0f - 1.0f) * paramSet.TurbulencePower * deltaTime;
         }
 
+        // Damping
         float speed = length(velocity);
         if (speed > 0.0f) {
             float newSpeed = max(0.0f, speed - damping * deltaTime);
             velocity *= newSpeed / speed;
         }
+
+        // Move from velocity
         position += velocity * constants.DeltaTime;
 
         // Rotation
-        rotation += angularVelocity * constants.DeltaTime;
+        float3 rotation = initialAngle + angularVelocity * particle.LifeAge;
         
         // Scale
-        scale = lerp(initialScale, terminalScale, particle.lifeAge / lifeTime);
+        float scale = lerp(initialScale, terminalScale, lifeRatio) * paramSet.ShapeSize;
 
-        particle.position = position;
-        particle.velocity = packFloat4(velocity, 0.0f);
-        particle.rotscale = packFloat4(rotation, scale);
-        //particle.color = packColor(color);
+        // Color
+        float4 color = lerp(colorStart, colorEnd, lifeRatio);
+        // Apply inheritation color
+        if (paramSet.ColorFlags == 2 || paramSet.ColorFlags == 3) {
+            color *= input.Color;
+        } else {
+            color *= UnpackColor(particle.InheritColor);
+        }
+        // Fade-in/out
+        color.a *= clamp(particle.LifeAge / paramSet.FadeIn, 0.0, 1.0);
+        color.a *= clamp((lifeTime - particle.LifeAge) / paramSet.FadeOut, 0.0, 1.0);
+
+        particle.Transform = TRSMatrix(position, rotation, float3(scale, scale, scale));
+        particle.Velocity = PackFloat4(velocity, 0.0f);
+        particle.Color = PackColor(color);
         Particles[particleID] = particle;
     }
 }

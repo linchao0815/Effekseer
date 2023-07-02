@@ -16,32 +16,31 @@ void main(uint3 dtid : SV_DispatchThreadID)
     uint emitterID = dtid.x + dtid.y * 16;
     Emitter emitter = Emitters[emitterID];
     DynamicInput input = DynamicInputs[emitterID];
-    uint paramID = (emitter.flagBits >> 1) & 0x3F;
+    uint paramID = (emitter.FlagBits >> 1) & 0x3FF;
     ParameterSet paramSet = ParamSets[paramID];
     
-    for (uint i = 0; i < input.nextEmitCount; i++) {
-        float paramSeed = randomUint(emitter.seed);
-        float3 direction = spreadDir(paramSeed, paramSet.Direction, paramSet.Spread.x * 3.141592f / 180.0f);
-        direction = mul(input.transform, float4(direction, 0.0f)).xyz;
-        float speed = randomFloatRange(paramSeed, paramSet.InitialSpeed);
-        float3 rotation = randomFloat3Range(paramSeed, paramSet.InitialAngle);
-        float scale = randomFloatRange(paramSeed, paramSet.InitialScale);
+    for (uint i = 0; i < input.NextEmitCount; i++) {
+        float paramSeed = RandomUint(emitter.Seed);
+        float3 position = input.Transform._m03_m13_m23;
+        float3 direction = SpreadDir(paramSeed, paramSet.Direction, paramSet.Spread.x * 3.141592f / 180.0f);
+        direction = mul(input.Transform, float4(direction, 0.0f)).xyz;
+        float speed = RandomFloatRange(paramSeed, paramSet.InitialSpeed);
 
-        uint particleID = emitter.particlesHead + (input.totalEmitCount + i) % emitter.particlesSize;
+        uint particleOffset = (input.TotalEmitCount + i) % emitter.ParticleSize;
+        uint particleID = emitter.ParticleHead + particleOffset;
         Particle particle = Particles[particleID];
-        particle.flagBits = 0x01 | (paramID << 1) | (emitterID << 11);
-        particle.seed = paramSeed;
-        particle.lifeAge = 0.0f;
+        particle.FlagBits = 0x01 | (paramID << 1) | (emitterID << 11);
+        particle.Seed = paramSeed;
+        particle.LifeAge = 0.0f;
         
         if (paramSet.ColorFlags == 0) {
-            particle.color = 0xFFFFFFFF;
+            particle.InheritColor = 0xFFFFFFFF;
         } else {
-            particle.color = packColor(input.color);
+            particle.InheritColor = PackColor(input.Color);
         }
         
-        particle.position = input.transform._m03_m13_m23;
-        particle.velocity = packFloat4(direction * speed, 0.0f);
-        particle.rotscale = packFloat4(rotation, scale);
+        particle.Transform._m03_m13_m23 = position;
+        particle.Velocity = PackFloat4(direction * speed, 0.0f);
         Particles[particleID] = particle;
     }
 

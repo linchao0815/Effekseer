@@ -153,7 +153,7 @@ namespace Effekseer.Data
 
 			[Selected(ID = 0, Value = 2)]
 			[Key(key = "GpuParticles_RenderShape_TrailLength")]
-			public Value.Int TrailLength { get; private set; } = new Value.Int(value: 16, min: 0);
+			public Value.Int TrailLength { get; private set; } = new Value.Int(value: 16, max: 256, min: 2);
 
 			[Key(key = "GpuParticles_RenderShape_Size")]
 			public Value.Float ShapeSize { get; private set; } = new Value.Float(value: 1.0f, min: 0);

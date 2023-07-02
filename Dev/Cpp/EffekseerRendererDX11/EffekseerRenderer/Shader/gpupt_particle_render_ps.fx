@@ -12,7 +12,7 @@ struct PS_Input
     float4 Color : COLOR0;
 };
 
-float4 main(const PS_Input Input) : SV_Target
+float4 main(const PS_Input input) : SV_Target
 {
-    return Input.Color * ColorTex.Sample(NormalSamp, Input.UV);
+    return input.Color * ColorTex.Sample(NormalSamp, input.UV);
 }

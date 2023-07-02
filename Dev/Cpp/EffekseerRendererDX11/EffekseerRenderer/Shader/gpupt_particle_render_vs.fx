@@ -6,7 +6,10 @@ cbuffer cb : register(b8)
 };
 cbuffer cb1 : register(b9)
 {
-    uint bufferOffset;
+    uint BufferOffset;
+    uint TrailOffset;
+    uint TrailJoints;
+    uint TrailPos;
 }
 
 struct VS_Input
@@ -18,6 +21,7 @@ struct VS_Input
     float2 UV : TEXCOORD0;
     float4 Color : NORMAL3;
     uint InstanceID : SV_InstanceID;
+    uint VertexID : SV_VertexID;
 };
 
 struct VS_Output
@@ -27,67 +31,74 @@ struct VS_Output
     float4 Color : COLOR0;
 };
 
-StructuredBuffer<Particle> Particles : register(t8);
-StructuredBuffer<ParameterSet> ParamSets : register(t9);
-StructuredBuffer<DynamicInput> DynamicInputs : register(t10);
+StructuredBuffer<ParameterSet> ParamSets : register(t8);
+StructuredBuffer<Particle> Particles : register(t9);
+StructuredBuffer<Trail> Trails : register(t10);
 
-VS_Output main(const VS_Input Input)
+VS_Output main(const VS_Input input)
 {
-    VS_Output Output;
+    VS_Output output;
     
-    uint index = bufferOffset + Input.InstanceID;
+    uint index = BufferOffset + input.InstanceID;
     Particle particle = Particles[index];
-    if (particle.flagBits & 0x01) {
-        uint paramID = (particle.flagBits >> 1) & 0x3F;
-        uint emitterID = (particle.flagBits >> 11) & 0x3F;
+    if (particle.FlagBits & 0x01) {
+        uint paramID = (particle.FlagBits >> 1) & 0x3FF;
+        uint emitterID = (particle.FlagBits >> 11) & 0x3FF;
+        uint updateCount = (particle.FlagBits >> 21) & 0xFF;
         ParameterSet paramSet = ParamSets[paramID];
-        DynamicInput input = DynamicInputs[emitterID];
-        uint paramSeed = particle.seed;
-        float lifeTime = (float)randomUintRange(paramSeed, paramSet.LifeTime);
-        float lifeRatio = particle.lifeAge / lifeTime;
-
-        float3 position = Input.Pos;
-        float4 rotscale = unpackFloat4(particle.rotscale);
-        float3 rotation = rotscale.xyz;
-        float scale = rotscale.w * paramSet.ShapeSize;
-        float4 colorStart = randomColorRange(paramSeed, paramSet.ColorStart);
-        float4 colorEnd = randomColorRange(paramSeed, paramSet.ColorEnd);
-
-        // Rotation transform
-        position = mul(rotationMatrix(rotation), position * scale);
+        float3 position = input.Pos;
+        float2 uv = input.UV;
+        float4 color = input.Color;
 
         if (paramSet.ShapeType == 0) {
+            // Rotation and Scale Transform
+            position = mul(particle.Transform, float4(position, 0.0f));
             // Billboard transform
             if (paramSet.ShapeData == 0) {
                 position = mul(constants.BillboardMat, position);
             } else if (paramSet.ShapeData == 1) {
                 position = mul(constants.YAxisBillboardMat, position);
             }
+            // Position transform
+            position = position + particle.Transform._m03_m13_m23;
+        } else if (paramSet.ShapeType == 1) {
+            // Position and Rotation and Scale Transform
+            position = mul(particle.Transform, float4(position, 1.0f)).xyz;
+        } else if (paramSet.ShapeType == 2) {
+            // Trail Transform
+            uint trailLength = min(TrailJoints, updateCount);
+            float3 trailPosition;
+            float3 trailDirection;
+            if (input.VertexID / 2 == 0) {
+                trailPosition = particle.Transform._m03_m13_m23;
+                trailDirection = normalize(UnpackFloat4(particle.Velocity).xyz);
+            } else {
+                uint trailID = TrailOffset + input.InstanceID * TrailJoints;
+                uint trailIndex = min(input.VertexID / 2, trailLength);
+                trailID += (TrailJoints + TrailPos - trailIndex) % TrailJoints;
+                Trail trail = Trails[trailID];
+                trailPosition = trail.Position;
+                trailDirection = normalize(UnpackNormalizedFloat3(trail.Direction));
+                uv.y = float(trailIndex) / float(trailLength);
+            }
+
+            float3 trailTangent = normalize(cross(constants.CameraFront, trailDirection));
+            position = trailTangent * position.x * paramSet.ShapeSize;
+            position += trailPosition;
         }
 
-        // Color calculation
-        float4 color = Input.Color;
-        color *= lerp(colorStart, colorEnd, lifeRatio);
-        if (paramSet.ColorFlags == 2 || paramSet.ColorFlags == 3) {
-            color = input.color;
-        } else {
-            color *= unpackColor(particle.color);
-        }
+        color *= UnpackColor(particle.Color);
         color.rgb *= paramSet.Emissive;
-        color.a *= clamp(particle.lifeAge / paramSet.FadeIn, 0.0, 1.0);
-        color.a *= clamp((lifeTime - particle.lifeAge) / paramSet.FadeOut, 0.0, 1.0);
-
-        // Position transform
-        float4 worldPos = float4(particle.position + position, 1.0f);
-        Output.Pos = mul(constants.ProjMat, mul(constants.CameraMat, worldPos));
-        Output.UV = Input.UV;
-        Output.Color = color;
+        
+        output.Pos = mul(constants.ProjMat, mul(constants.CameraMat, float4(position, 1.0f)));
+        output.UV = uv;
+        output.Color = color;
     }
     else {
-        Output.Pos = float4(0.0f, 0.0f, 0.0f, 0.0f);
-        Output.UV = float2(0.0f, 0.0f);
-        Output.Color = float4(0.0f, 0.0f, 0.0f, 0.0f);
+        output.Pos = float4(0.0f, 0.0f, 0.0f, 0.0f);
+        output.UV = float2(0.0f, 0.0f);
+        output.Color = float4(0.0f, 0.0f, 0.0f, 0.0f);
     }
 
-    return Output;
+    return output;
 }

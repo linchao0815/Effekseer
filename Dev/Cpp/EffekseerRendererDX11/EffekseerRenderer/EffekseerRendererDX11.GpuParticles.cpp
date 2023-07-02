@@ -55,6 +55,55 @@ GpuParticles::ComputeShader CreateCS(ID3D11Device* device, const BYTE* binary, s
 #define ShaderData(shaderName) shaderName::g_main
 #define ShaderSize(shaderName) sizeof(shaderName::g_main)
 
+const Effekseer::Vector3D VEC_UP = {0.0f, 1.0f, 0.0f};
+const Effekseer::Vector3D VEC_RIGHT = {1.0f, 0.0f, 0.0f};
+const Effekseer::Vector3D VEC_FRONT = {0.0f, 0.0f, 1.0f};
+const Effekseer::Color COLOR_WHITE = {255, 255, 255, 255};
+
+Effekseer::ModelRef CreateSpriteModel()
+{
+	Effekseer::CustomVector<Effekseer::Model::Vertex> vertexes = {
+		{ { -0.5f,  0.5f, 0.0f }, VEC_FRONT, VEC_UP, VEC_RIGHT, {0.0f, 0.0f}, COLOR_WHITE },
+		{ { -0.5f, -0.5f, 0.0f }, VEC_FRONT, VEC_UP, VEC_RIGHT, {0.0f, 1.0f}, COLOR_WHITE },
+		{ {  0.5f,  0.5f, 0.0f }, VEC_FRONT, VEC_UP, VEC_RIGHT, {1.0f, 0.0f}, COLOR_WHITE },
+		{ {  0.5f, -0.5f, 0.0f }, VEC_FRONT, VEC_UP, VEC_RIGHT, {1.0f, 1.0f}, COLOR_WHITE },
+	};
+	Effekseer::CustomVector<Effekseer::Model::Face> faces = {
+		{ {0, 2, 1} }, { {1, 2, 3} }
+	};
+	return Effekseer::MakeRefPtr<Effekseer::Model>(vertexes, faces);
+}
+
+Effekseer::ModelRef CreateTrailModel()
+{
+	const size_t TrailJoints = 256;
+	Effekseer::CustomVector<Effekseer::Model::Vertex> vertexes;
+
+	vertexes.resize(TrailJoints * 2);
+	for (size_t i = 0; i < TrailJoints * 2; i++) {
+		Effekseer::Model::Vertex v{};
+		v.Position.X = (i % 2 == 0) ? -0.5f : 0.5f;
+		v.Position.Y = 0.0f;
+		v.Position.Z = 0.0f;
+		v.Binormal = VEC_FRONT;
+		v.Normal = VEC_UP;
+		v.Tangent = VEC_RIGHT;
+		v.UV.X = (i % 2 == 0) ? 0.0f : 1.0f;
+		v.UV.Y = (float)(i / 2) / (float)(TrailJoints - 1);
+		v.VColor = COLOR_WHITE;
+		vertexes[i] = v;
+	}
+
+	Effekseer::CustomVector<Effekseer::Model::Face> faces;
+	faces.resize((TrailJoints - 1) * 2);
+	for (size_t i = 0; i < TrailJoints - 1; i++) {
+		int32_t ofs = (int32_t)(2 * i);
+		faces[i * 2 + 0] = Effekseer::Model::Face{ { ofs + 0, ofs + 2, ofs + 1 } };
+		faces[i * 2 + 1] = Effekseer::Model::Face{ { ofs + 1, ofs + 2, ofs + 3 } };
+	}
+	return Effekseer::MakeRefPtr<Effekseer::Model>(vertexes, faces);
+}
+
 }
 
 GpuParticles::ComputeBuffer GpuParticles::ComputeBuffer::Create(ID3D11Device* device,
@@ -158,6 +207,73 @@ void GpuParticles::ComputeCommand::Dispatch(ID3D11DeviceContext* context, uint32
 	context->CSSetUnorderedAccessViews(0, (UINT)csClearUAVs.size(), csClearUAVs.data(), nullptr);
 }
 
+void GpuParticles::BlockAllocator::Init(uint32_t bufferSize, uint32_t blockSize)
+{
+	bufferBlocks.reserve(bufferSize / blockSize);
+	bufferBlocks.push_back({0, bufferSize});
+}
+
+GpuParticles::Block GpuParticles::BlockAllocator::Allocate(uint32_t size)
+{
+	Block result{};
+	for (size_t i = 0; i < bufferBlocks.size(); i++)
+	{
+		Block& block = bufferBlocks[i];
+		if (block.size >= size)
+		{
+			if (block.size == size)
+			{
+				result = block;
+				bufferBlocks.erase(bufferBlocks.begin() + i);
+				break;
+			}
+			else
+			{
+				result = Block{block.offset, size};
+				block.offset += size;
+				break;
+			}
+		}
+	}
+	return result;
+}
+
+void GpuParticles::BlockAllocator::Deallocate(Block releasingBlock)
+{
+	if (releasingBlock.size == 0)
+	{
+		return;
+	}
+
+	Block newBlock = releasingBlock;
+	uint32_t newTail = newBlock.offset + newBlock.size;
+	for (size_t i = 0; i < bufferBlocks.size(); i++)
+	{
+		Block& block = bufferBlocks[i];
+		if (block.offset + block.size == newBlock.offset)
+		{
+			block.size += newBlock.size;
+
+			if (i + 1 < bufferBlocks.size() && block.offset + block.size == bufferBlocks[i + 1].offset)
+			{
+				block.size += bufferBlocks[i + 1].size;
+				bufferBlocks.erase(bufferBlocks.begin() + i + 1);
+			}
+			break;
+		}
+		else if (newBlock.offset + newBlock.size == block.offset)
+		{
+			block.offset -= newBlock.size;
+			break;
+		}
+		else if (newBlock.offset < block.offset)
+		{
+			bufferBlocks.insert(bufferBlocks.begin() + i, newBlock);
+			break;
+		}
+	}
+}
+
 GpuParticles::GpuParticles(RendererImplemented* renderer, bool hasRefCount)
 	: DeviceObject(renderer, hasRefCount)
 {
@@ -165,7 +281,8 @@ GpuParticles::GpuParticles(RendererImplemented* renderer, bool hasRefCount)
 
 	Settings settings;
 	settings.EmitterMaxCount = 256;
-	settings.ParticleMaxCount = 256 * 1024;
+	settings.ParticleMaxCount = 1 * 1024 * 1024;
+	settings.TrailMaxCount = 4 * 1024 * 1024;
 	InitSystem(settings);
 }
 
@@ -205,15 +322,15 @@ void GpuParticles::InitSystem(const Settings& settings)
 
 	for (uint32_t index = 0; index < settings.EmitterMaxCount; index++)
 	{
-		m_dynamicInputs[index].transform.Indentity();
+		m_dynamicInputs[index].Transform.Indentity();
 		m_paramFreeList.push_back(index);
 		m_emitterFreeList.push_back(index);
 	}
 	m_newParamSetIDs.reserve(settings.EmitterMaxCount);
 	m_newEmitterIDs.reserve(settings.EmitterMaxCount);
 
-	m_bufferBlocks.reserve(settings.ParticleMaxCount / ParticleUnitSize);
-	m_bufferBlocks.push_back({0, settings.ParticleMaxCount});
+	m_particleAllocator.Init(settings.ParticleMaxCount, ParticleUnitSize);
+	m_trailAllocator.Init(settings.TrailMaxCount, ParticleUnitSize);
 
 	Constants cdata{};
 	m_bufferConstants = ConstantBuffer::Create(device, &cdata, sizeof(Constants));
@@ -224,6 +341,7 @@ void GpuParticles::InitSystem(const Settings& settings)
 	m_bufviewDynamicInput = ComputeBuffer::Create(device, sizeof(DynamicInput), settings.EmitterMaxCount, D3D11_CPU_ACCESS_WRITE);
 	m_bufviewEmitter = ComputeBuffer::Create(device, sizeof(Emitter), settings.EmitterMaxCount, 0, true, 0);
 	m_bufviewParticle = ComputeBuffer::Create(device, sizeof(Particle), settings.ParticleMaxCount, 0, true, 0);
+	m_bufviewTrails = ComputeBuffer::Create(device, sizeof(Trail), settings.TrailMaxCount, 0, true, 0);
 
 	m_csEmitterClear = CreateCS(device, ShaderData(CS_EmitterClear), ShaderSize(CS_EmitterClear));
 	m_csEmitterUpdate = CreateCS(device, ShaderData(CS_EmitterUpdate), ShaderSize(CS_EmitterUpdate));
@@ -253,7 +371,9 @@ void GpuParticles::InitSystem(const Settings& settings)
 	m_cmdParticleUpdate.csCBufs[1] = m_bufferParticleArgs.buffer.get();
 	m_cmdParticleUpdate.csSRVs[0] = m_bufviewParamSets.srv.get();
 	m_cmdParticleUpdate.csSRVs[1] = m_bufviewDynamicInput.srv.get();
+	m_cmdParticleUpdate.csSRVs[2] = m_bufviewEmitter.srv.get();
 	m_cmdParticleUpdate.csUAVs[0] = m_bufviewParticle.uav.get();
+	m_cmdParticleUpdate.csUAVs[1] = m_bufviewTrails.uav.get();
 
 	auto graphics = GetRenderer()->GetGraphicsDevice();
 	auto vertexLayout = EffekseerRenderer::GetModelRendererVertexLayout(graphics).DownCast<Backend::VertexLayout>();
@@ -265,17 +385,11 @@ void GpuParticles::InitSystem(const Settings& settings)
 		vertexLayout, "GpuParticleRender"
 	));
 
-	Effekseer::CustomVector<Effekseer::Model::Vertex> SpriteVertexes = {
-		{ { -0.5f,  0.5f, 0.0f }, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}, {255, 255, 255, 255} },
-		{ { -0.5f, -0.5f, 0.0f }, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}, {255, 255, 255, 255} },
-		{ {  0.5f,  0.5f, 0.0f }, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}, {255, 255, 255, 255} },
-		{ {  0.5f, -0.5f, 0.0f }, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}, {255, 255, 255, 255} },
-	};
-	Effekseer::CustomVector<Effekseer::Model::Face> SpriteFaces = {
-		{ {0, 2, 1} }, { {1, 2, 3} }
-	};
-	m_modelSprite = Effekseer::MakeRefPtr<Effekseer::Model>(SpriteVertexes, SpriteFaces);
+	m_modelSprite = CreateSpriteModel();
 	m_modelSprite->StoreBufferToGPU(graphics.Get());
+
+	m_modelTrail = CreateTrailModel();
+	m_modelTrail->StoreBufferToGPU(graphics.Get());
 
 	{
 		D3D11_SAMPLER_DESC samplerDesc{};
@@ -324,6 +438,11 @@ void GpuParticles::UpdateFrame(float deltaTime)
 	cdata.DeltaTime = deltaTime;
 	m_bufferConstants.UpdateData(context, &cdata, sizeof(Constants));
 
+	if (deltaTime == 0.0f)
+	{
+		return;
+	}
+
 	for (auto paramID : m_newParamSetIDs)
 	{
 		// Initialize parameter data
@@ -339,9 +458,9 @@ void GpuParticles::UpdateFrame(float deltaTime)
 
 		// Initialize particle data region
 		ParticleArgs pargs{};
-		pargs.bufferOffset = emitter.particlesHead;
+		pargs.BufferOffset = emitter.ParticleHead;
 		m_bufferParticleArgs.UpdateData(context, &pargs, sizeof(pargs));
-		m_cmdParticleClear.Dispatch(context, 256, emitter.particlesSize);
+		m_cmdParticleClear.Dispatch(context, 256, emitter.ParticleSize);
 	}
 	m_newEmitterIDs.clear();
 
@@ -353,10 +472,10 @@ void GpuParticles::UpdateFrame(float deltaTime)
 		{
 			auto& paramSet = m_paramSets[emitter.GetParamID()];
 			auto& input = m_dynamicInputs[emitterID];
-			input.totalEmitCount += input.nextEmitCount;
-			input.nextEmitCount = std::min(
+			input.TotalEmitCount += input.NextEmitCount;
+			input.NextEmitCount = std::min(
 				(uint32_t)(deltaTime / paramSet.EmitInterval[0]), 
-				paramSet.EmitCount - input.totalEmitCount);
+				paramSet.EmitCount - input.TotalEmitCount);
 		}
 	}
 	m_bufviewDynamicInput.UpdateDynamicData(context, 0, m_dynamicInputs.data(), sizeof(DynamicInput) * m_dynamicInputs.size());
@@ -378,15 +497,22 @@ void GpuParticles::UpdateFrame(float deltaTime)
 			auto& paramRes = m_resources[emitter.GetParamID()];
 
 			ParticleArgs pargs{};
-			pargs.bufferOffset = emitter.particlesHead;
+			pargs.BufferOffset = emitter.ParticleHead;
+			if (emitter.TrailSize > 0)
+			{
+				pargs.TrailOffset = emitter.TrailHead;
+				pargs.TrailJoints = paramSet.ShapeData;
+				pargs.TrailPos = emitter.TrailPos;
+				emitter.TrailPos = (emitter.TrailPos + 1) % paramSet.ShapeData;
+			}
 			m_bufferParticleArgs.UpdateData(context, &pargs, sizeof(pargs));
 
-			if (paramRes.noiseVectorField) {
-				ID3D11ShaderResourceView* vfSRVs[1] = { paramRes.noiseVectorField->GetSRV() };
+			if (paramRes.NoiseVectorField) {
+				ID3D11ShaderResourceView* vfSRVs[1] = { paramRes.NoiseVectorField->GetSRV() };
 				context->CSSetShaderResources(4, 1, vfSRVs);
 			}
 
-			m_cmdParticleUpdate.Dispatch(context, 256, emitter.particlesSize);
+			m_cmdParticleUpdate.Dispatch(context, 256, emitter.ParticleSize);
 		}
 	}
 	{
@@ -412,13 +538,19 @@ void GpuParticles::RenderFrame()
 			auto& paramRes = m_resources[emitter.GetParamID()];
 
 			ParticleArgs pargs{};
-			pargs.bufferOffset = emitter.particlesHead;
+			pargs.BufferOffset = emitter.ParticleHead;
+			if (emitter.TrailSize > 0)
+			{
+				pargs.TrailOffset = emitter.TrailHead;
+				pargs.TrailJoints = paramSet.ShapeData;
+				pargs.TrailPos = emitter.TrailPos;
+			}
 			m_bufferParticleArgs.UpdateData(context, &pargs, sizeof(pargs));
 
 			ID3D11ShaderResourceView* vsSRVs[3] = {
-				m_bufviewParticle.srv.get(),
 				m_bufviewParamSets.srv.get(),
-				m_bufviewDynamicInput.srv.get()
+				m_bufviewParticle.srv.get(),
+				m_bufviewTrails.srv.get(),
 			};
 			context->VSSetShaderResources(8, 3, vsSRVs);
 
@@ -429,7 +561,7 @@ void GpuParticles::RenderFrame()
 			context->VSSetConstantBuffers(8, 2, vsCBufs);
 
 			Effekseer::Backend::TextureRef textures[2];
-			if (auto colorTex = paramRes.effect->GetColorImage(paramSet.ColorTexIndex))
+			if (auto colorTex = paramRes.Effect->GetColorImage(paramSet.ColorTexIndex))
 			{
 				textures[0] = colorTex->GetBackend();
 			}
@@ -438,7 +570,7 @@ void GpuParticles::RenderFrame()
 				textures[0] = renderer->GetImpl()->GetProxyTexture(EffekseerRenderer::ProxyTextureType::White);
 			}
 
-			if (auto normalTex = paramRes.effect->GetNormalImage(paramSet.NormalTexIndex))
+			if (auto normalTex = paramRes.Effect->GetNormalImage(paramSet.NormalTexIndex))
 			{
 				textures[1] = normalTex->GetBackend();
 			}
@@ -462,13 +594,11 @@ void GpuParticles::RenderFrame()
 			renderer->GetRenderState()->Update(true);
 
 			Effekseer::ModelRef model;
-			if (paramSet.ShapeType == 1)
+			switch (paramSet.ShapeType)
 			{
-				model = paramRes.effect->GetModel(paramSet.ShapeData);
-			}
-			else
-			{
-				model = m_modelSprite;
+				case 0: model = m_modelSprite; break;
+				case 1: model = paramRes.Effect->GetModel(paramSet.ShapeData); break;
+				case 2: model = m_modelTrail; break;
 			}
 
 			if (model)
@@ -485,7 +615,15 @@ void GpuParticles::RenderFrame()
 					auto indexBuffer = model->GetIndexBuffer(i).DownCast<Backend::IndexBuffer>();
 					renderer->SetVertexBuffer(vertexBuffer, sizeof(Effekseer::Model::Vertex));
 					renderer->SetIndexBuffer(indexBuffer);
-					renderer->DrawPolygonInstanced(model->GetVertexCount(), model->GetFaceCount() * 3, emitter.particlesSize);
+
+					int32_t vertexCount = model->GetVertexCount(i);
+					int32_t indexCount = model->GetFaceCount(i) * 3;
+					if (emitter.TrailSize > 0)
+					{
+						vertexCount = paramSet.ShapeData * 2;
+						indexCount = (paramSet.ShapeData - 1) * 6;
+					}
+					renderer->DrawPolygonInstanced(vertexCount, indexCount, emitter.ParticleSize);
 				}
 			}
 
@@ -493,8 +631,8 @@ void GpuParticles::RenderFrame()
 		}
 	}
 
-	ID3D11ShaderResourceView* clearSRVs[2] = {};
-	context->VSSetShaderResources(8, 2, clearSRVs);
+	ID3D11ShaderResourceView* clearSRVs[3] = {};
+	context->VSSetShaderResources(8, 3, clearSRVs);
 
 	ID3D11Buffer* clearCBufs[2] = {};
 	context->VSSetConstantBuffers(8, 2, clearCBufs);
@@ -517,7 +655,7 @@ GpuParticles::ParamID GpuParticles::AddParamSet(const ParameterSet& paramSet, co
 	m_newParamSetIDs.emplace_back(paramID);
 
 	ParameterRes paramRes;
-	paramRes.effect = effect;
+	paramRes.Effect = effect;
 
 	if (paramSet.TurbulencePower != 0.0f)
 	{
@@ -533,7 +671,7 @@ GpuParticles::ParamID GpuParticles::AddParamSet(const ParameterSet& paramSet, co
 		memcpy(initialData.data(), noise.VectorField(), initialData.size());
 
 		auto noiseVF = GetRenderer()->GetGraphicsDevice()->CreateTexture(texParam, initialData);
-		paramRes.noiseVectorField = noiseVF.DownCast<Backend::Texture>();
+		paramRes.NoiseVectorField = noiseVF.DownCast<Backend::Texture>();
 	}
 	m_resources[paramID] = paramRes;
 
@@ -578,40 +716,37 @@ GpuParticles::EmitterID GpuParticles::AddEmitter(ParamID paramID)
 	particlesMaxCount = RoundUp(particlesMaxCount, ParticleUnitSize);
 
 	DynamicInput& input = m_dynamicInputs[emitterID];
-	input.nextEmitCount = 0;
-	input.totalEmitCount = 0;
-	input.transform.Indentity();
+	input.NextEmitCount = 0;
+	input.TotalEmitCount = 0;
+	input.Transform.Indentity();
 
 	Emitter& emitter = m_emitters[emitterID];
 	emitter.SetFlagBits(true, paramID);
-	emitter.seed = m_random();
-	emitter.particlesHead = 0;
-	emitter.particlesSize = 0;
+	emitter.Seed = m_random();
+	emitter.ParticleHead = 0;
+	emitter.ParticleSize = 0;
+	emitter.TrailHead = 0;
+	emitter.TrailSize = 0;
+	emitter.TrailPos = 0;
 
-	for (size_t i = 0; i < m_bufferBlocks.size(); i++)
-	{
-		Block& block = m_bufferBlocks[i];
-		if (block.size >= particlesMaxCount)
-		{
-			if (block.size == particlesMaxCount)
-			{
-				emitter.particlesHead = block.offset;
-				emitter.particlesSize = particlesMaxCount;
-				m_bufferBlocks.erase(m_bufferBlocks.begin() + i);
-				break;
-			}
-			else
-			{
-				emitter.particlesHead = block.offset;
-				emitter.particlesSize = particlesMaxCount;
-				block.offset += particlesMaxCount;
-				break;
-			}
-		}
-	}
-	if (emitter.particlesSize == 0)
+	Block particleBlock = m_particleAllocator.Allocate(particlesMaxCount);
+	if (particleBlock.size == 0)
 	{
 		return InvalidID;
+	}
+	emitter.ParticleHead = particleBlock.offset;
+	emitter.ParticleSize = particleBlock.size;
+
+	if (paramSet.ShapeType == 2)
+	{
+		Block trailBlock = m_trailAllocator.Allocate(particlesMaxCount * paramSet.ShapeData);
+		if (trailBlock.size == 0)
+		{
+			m_particleAllocator.Deallocate(particleBlock);
+			return InvalidID;
+		}
+		emitter.TrailHead = trailBlock.offset;
+		emitter.TrailSize = trailBlock.size;
 	}
 
 	m_newEmitterIDs.push_back(emitterID);
@@ -630,36 +765,11 @@ void GpuParticles::RemoveEmitter(EmitterID emitterID)
 	std::lock_guard<std::mutex> lock(m_mutex);
 
 	Emitter& emitter = m_emitters[emitterID];
-	emitter.flagBits = 0;
+	emitter.FlagBits = 0;
 	m_newEmitterIDs.push_back(emitterID);
 
-	Block newBlock = { emitter.particlesHead, emitter.particlesSize };
-	uint32_t newTail = newBlock.offset + newBlock.size;
-	for (size_t i = 0; i < m_bufferBlocks.size(); i++)
-	{
-		Block& block = m_bufferBlocks[i];
-		if (block.offset + block.size == newBlock.offset)
-		{
-			block.size += newBlock.size;
-
-			if (i + 1 < m_bufferBlocks.size() && block.offset + block.size == m_bufferBlocks[i + 1].offset)
-			{
-				block.size += m_bufferBlocks[i + 1].size;
-				m_bufferBlocks.erase(m_bufferBlocks.begin() + i + 1);
-			}
-			break;
-		}
-		else if (newBlock.offset + newBlock.size == block.offset)
-		{
-			block.offset -= newBlock.size;
-			break;
-		}
-		else if (newBlock.offset < block.offset)
-		{
-			m_bufferBlocks.insert(m_bufferBlocks.begin() + i, newBlock);
-			break;
-		}
-	}
+	m_particleAllocator.Deallocate({emitter.ParticleHead, emitter.ParticleSize});
+	m_trailAllocator.Deallocate({emitter.TrailHead, emitter.TrailSize});
 
 	m_emitterFreeList.push_front(emitterID);
 }
@@ -680,7 +790,7 @@ void GpuParticles::SetTransform(EmitterID emitterID, const Effekseer::Matrix43& 
 	}
 
 	auto& input = m_dynamicInputs[emitterID];
-	input.transform = transform;
+	input.Transform = transform;
 }
 
 void GpuParticles::SetColor(EmitterID emitterID, Effekseer::Color color)
@@ -691,7 +801,7 @@ void GpuParticles::SetColor(EmitterID emitterID, Effekseer::Color color)
 	}
 
 	auto& input = m_dynamicInputs[emitterID];
-	input.color = color.ToFloat4();
+	input.Color = color.ToFloat4();
 }
 
 }

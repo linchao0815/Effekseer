@@ -8,7 +8,7 @@ void main(uint3 dtid : SV_DispatchThreadID)
 {
     uint emitterID = dtid.x + dtid.y * 16;
     Emitter emitter = Emitters[emitterID];
-    emitter.flagBits = 0;
-    emitter.seed = 0;
+    emitter.FlagBits = 0;
+    emitter.Seed = 0;
     Emitters[emitterID] = emitter;
 }

@@ -84,40 +84,48 @@ private:
 
 	struct DynamicInput
 	{
-		uint32_t nextEmitCount;
-		uint32_t totalEmitCount;
-		float3x4 transform;
-		float4 color;
+		uint32_t NextEmitCount;
+		uint32_t TotalEmitCount;
+		float3x4 Transform;
+		float4 Color;
 	};
 	struct Emitter
 	{
-		uint32_t flagBits;  // Alive:1, ParamID:10
-		uint32_t seed;
-		uint32_t particlesHead;
-		uint32_t particlesSize;
+		uint32_t FlagBits;  // Alive:1, ParamID:10
+		uint32_t Seed;
+		uint32_t ParticleHead;
+		uint32_t ParticleSize;
+		uint32_t TrailHead;
+		uint32_t TrailSize;
+		uint32_t TrailPos;
 
 		bool IsAlive() const
 		{
-			return flagBits & 0x01;
+			return FlagBits & 0x01;
 		}
 		uint32_t GetParamID() const
 		{
-			return (flagBits >> 1) & 0x3F;
+			return (FlagBits >> 1) & 0x3F;
 		}
 		void SetFlagBits(bool alive, uint32_t paramID)
 		{
-			flagBits = (uint32_t)alive | (paramID << 1);
+			FlagBits = (uint32_t)alive | (paramID << 1);
 		}
 	};
 	struct Particle
 	{
-		uint32_t flagBits;  // Alive:1, ParamID:10, EmitterID:10
-		uint32_t seed;
-		float lifeAge;
-		uint32_t color;
-		float3 position;
-		uint16_t velocity[4];
-		uint16_t rotscale[4];
+		uint32_t FlagBits;  // Alive:1, ParamID:10, EmitterID:10, UpdateCount:8
+		uint32_t Seed;
+		float LifeAge;
+		uint32_t InheritColor;
+		uint32_t Color;
+		uint16_t Velocity[4];
+		float3x4 Transform;
+	};
+	struct Trail
+	{
+		float3 Position;
+		uint32_t Direction;
 	};
 
 	struct Constants
@@ -133,24 +141,31 @@ private:
 	};
 	struct ParticleArgs
 	{
-		uint32_t bufferOffset;
-		uint32_t reserved[3];
-	};
-
-	struct Vertex
-	{
-		float3 position;
+		uint32_t BufferOffset;
+		uint32_t TrailOffset;
+		uint32_t TrailJoints;
+		uint32_t TrailPos;
 	};
 	struct Block
 	{
 		uint32_t offset;
 		uint32_t size;
 	};
+	struct BlockAllocator
+	{
+		std::vector<Block> bufferBlocks;
+
+		void Init(uint32_t bufferSize, uint32_t blockSize);
+
+		Block Allocate(uint32_t size);
+
+		void Deallocate(Block releasingBlock);
+	};
 
 	struct ParameterRes
 	{
-		const Effekseer::Effect* effect = nullptr;
-		Backend::TextureRef noiseVectorField;
+		const Effekseer::Effect* Effect = nullptr;
+		Backend::TextureRef NoiseVectorField;
 	};
 
 	std::mutex m_mutex;
@@ -163,7 +178,8 @@ private:
 	std::vector<ParameterRes> m_resources;
 	std::vector<EmitterID> m_newEmitterIDs;
 	std::vector<Emitter> m_emitters;
-	std::vector<Block> m_bufferBlocks;
+	BlockAllocator m_particleAllocator;
+	BlockAllocator m_trailAllocator;
 	bool m_firstTime = false;
 
 	ConstantBuffer m_bufferConstants;
@@ -174,6 +190,7 @@ private:
 	ComputeBuffer m_bufviewDynamicInput;
 	ComputeBuffer m_bufviewEmitter;
 	ComputeBuffer m_bufviewParticle;
+	ComputeBuffer m_bufviewTrails;
 
 	ComputeShader m_csEmitterClear;
 	ComputeShader m_csEmitterUpdate;
@@ -189,6 +206,7 @@ private:
 
 	std::unique_ptr<Shader> m_renderShader;
 	Effekseer::ModelRef m_modelSprite;
+	Effekseer::ModelRef m_modelTrail;
 };
 
 }
