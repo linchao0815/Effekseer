@@ -52,7 +52,7 @@ struct Emitter
     uint ParticleSize;
     uint TrailHead;
     uint TrailSize;
-    uint TrailPos;
+    uint TrailPhase;
 };
 
 struct DynamicInput

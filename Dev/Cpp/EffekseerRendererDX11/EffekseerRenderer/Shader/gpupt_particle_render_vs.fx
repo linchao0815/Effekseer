@@ -6,10 +6,10 @@ cbuffer cb : register(b8)
 };
 cbuffer cb1 : register(b9)
 {
-    uint BufferOffset;
-    uint TrailOffset;
+    uint ParticleHead;
+    uint TrailHead;
     uint TrailJoints;
-    uint TrailPos;
+    uint TrailPhase;
 }
 
 struct VS_Input
@@ -39,7 +39,7 @@ VS_Output main(const VS_Input input)
 {
     VS_Output output;
     
-    uint index = BufferOffset + input.InstanceID;
+    uint index = ParticleHead + input.InstanceID;
     Particle particle = Particles[index];
     if (particle.FlagBits & 0x01) {
         uint paramID = (particle.FlagBits >> 1) & 0x3FF;
@@ -73,9 +73,9 @@ VS_Output main(const VS_Input input)
                 trailPosition = particle.Transform._m03_m13_m23;
                 trailDirection = normalize(UnpackFloat4(particle.Velocity).xyz);
             } else {
-                uint trailID = TrailOffset + input.InstanceID * TrailJoints;
+                uint trailID = TrailHead + input.InstanceID * TrailJoints;
                 uint trailIndex = min(input.VertexID / 2, trailLength);
-                trailID += (TrailJoints + TrailPos - trailIndex) % TrailJoints;
+                trailID += (TrailJoints + TrailPhase - trailIndex) % TrailJoints;
                 Trail trail = Trails[trailID];
                 trailPosition = trail.Position;
                 trailDirection = normalize(UnpackNormalizedFloat3(trail.Direction));

@@ -458,7 +458,7 @@ void GpuParticles::UpdateFrame(float deltaTime)
 
 		// Initialize particle data region
 		ParticleArgs pargs{};
-		pargs.BufferOffset = emitter.ParticleHead;
+		pargs.ParticleHead = emitter.ParticleHead;
 		m_bufferParticleArgs.UpdateData(context, &pargs, sizeof(pargs));
 		m_cmdParticleClear.Dispatch(context, 256, emitter.ParticleSize);
 	}
@@ -497,13 +497,13 @@ void GpuParticles::UpdateFrame(float deltaTime)
 			auto& paramRes = m_resources[emitter.GetParamID()];
 
 			ParticleArgs pargs{};
-			pargs.BufferOffset = emitter.ParticleHead;
+			pargs.ParticleHead = emitter.ParticleHead;
 			if (emitter.TrailSize > 0)
 			{
-				pargs.TrailOffset = emitter.TrailHead;
+				pargs.TrailHead = emitter.TrailHead;
 				pargs.TrailJoints = paramSet.ShapeData;
-				pargs.TrailPos = emitter.TrailPos;
-				emitter.TrailPos = (emitter.TrailPos + 1) % paramSet.ShapeData;
+				pargs.TrailPhase = emitter.TrailPhase;
+				emitter.TrailPhase = (emitter.TrailPhase + 1) % paramSet.ShapeData;
 			}
 			m_bufferParticleArgs.UpdateData(context, &pargs, sizeof(pargs));
 
@@ -538,12 +538,12 @@ void GpuParticles::RenderFrame()
 			auto& paramRes = m_resources[emitter.GetParamID()];
 
 			ParticleArgs pargs{};
-			pargs.BufferOffset = emitter.ParticleHead;
+			pargs.ParticleHead = emitter.ParticleHead;
 			if (emitter.TrailSize > 0)
 			{
-				pargs.TrailOffset = emitter.TrailHead;
+				pargs.TrailHead = emitter.TrailHead;
 				pargs.TrailJoints = paramSet.ShapeData;
-				pargs.TrailPos = emitter.TrailPos;
+				pargs.TrailPhase = emitter.TrailPhase;
 			}
 			m_bufferParticleArgs.UpdateData(context, &pargs, sizeof(pargs));
 
@@ -727,7 +727,7 @@ GpuParticles::EmitterID GpuParticles::AddEmitter(ParamID paramID)
 	emitter.ParticleSize = 0;
 	emitter.TrailHead = 0;
 	emitter.TrailSize = 0;
-	emitter.TrailPos = 0;
+	emitter.TrailPhase = 0;
 
 	Block particleBlock = m_particleAllocator.Allocate(particlesMaxCount);
 	if (particleBlock.size == 0)

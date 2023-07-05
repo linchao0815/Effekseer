@@ -97,7 +97,7 @@ private:
 		uint32_t ParticleSize;
 		uint32_t TrailHead;
 		uint32_t TrailSize;
-		uint32_t TrailPos;
+		uint32_t TrailPhase;
 
 		bool IsAlive() const
 		{
@@ -141,10 +141,10 @@ private:
 	};
 	struct ParticleArgs
 	{
-		uint32_t BufferOffset;
-		uint32_t TrailOffset;
+		uint32_t ParticleHead;
+		uint32_t TrailHead;
 		uint32_t TrailJoints;
-		uint32_t TrailPos;
+		uint32_t TrailPhase;
 	};
 	struct Block
 	{

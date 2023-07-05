@@ -6,10 +6,10 @@ cbuffer cb : register(b0)
 };
 cbuffer cb1 : register(b1)
 {
-    uint BufferOffset;
-    uint TrailOffset;
+    uint ParticleHead;
+    uint TrailHead;
     uint TrailJoints;
-    uint TrailPos;
+    uint TrailPhase;
 }
 
 StructuredBuffer<ParameterSet> ParamSets : register(t0);
@@ -41,7 +41,7 @@ float3 Vortex(float rotation, float attraction, float3 center, float3 axis, floa
 void main(uint3 dtid : SV_DispatchThreadID)
 {
     uint index = dtid.x + dtid.y * 256;
-    uint particleID = BufferOffset + index;
+    uint particleID = ParticleHead + index;
     Particle particle = Particles[particleID];
     
     if (particle.FlagBits & 0x01) {
@@ -68,7 +68,7 @@ void main(uint3 dtid : SV_DispatchThreadID)
         float3 velocity = UnpackFloat4(particle.Velocity).xyz;
 
         if (TrailJoints > 0) {
-            uint trailID = TrailOffset + index * TrailJoints + TrailPos;
+            uint trailID = TrailHead + index * TrailJoints + TrailPhase;
             Trail trail;
             trail.Position = position;
             trail.Direction = PackNormalizedFloat3(velocity);

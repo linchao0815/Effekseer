@@ -6,7 +6,7 @@ cbuffer cb : register(b0)
 };
 cbuffer cb1 : register(b1)
 {
-    uint BufferOffset;
+    uint ParticleHead;
 }
 
 StructuredBuffer<ParameterSet> ParamSets : register(t0);
@@ -15,7 +15,7 @@ RWStructuredBuffer<Particle> Particles : register(u0);
 [numthreads(256, 1, 1)]
 void main(uint3 dtid : SV_DispatchThreadID)
 {
-    uint particleID = BufferOffset + dtid.x + dtid.y * 256;
+    uint particleID = ParticleHead + dtid.x + dtid.y * 256;
     Particle particle = Particles[particleID];
     
     particle.FlagBits = 0;
