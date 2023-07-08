@@ -6,6 +6,9 @@ struct ParameterSet
     float EmitOffset[2];
     float EmitInterval[2];
 
+    uint EmitShapeType;
+    float3 EmitShapeData[3];
+
     float3 Direction;
     float Spread;
     float InitialSpeed[2];
@@ -183,9 +186,41 @@ float4 RandomColorRange(inout uint seed, uint maxmin[2])
     return lerp(UnpackColor(maxmin[1]), UnpackColor(maxmin[0]), RandomFloat(seed));
 }
 
-float3 SpreadDir(inout uint seed, float3 baseDir, float angle)
+float3 RandomDirection(inout uint seed)
 {
-    float theta = 2.0 * 3.14159 * RandomFloat(seed);
+    float theta = 2.0f * 3.14159f * RandomFloat(seed);
+    float phi = 2.0f * 3.14159f * RandomFloat(seed);
+
+    float3 randDir = float3(
+        sin(phi) * cos(theta),
+        sin(phi) * sin(theta),
+        cos(phi));
+
+    return randDir;
+}
+
+float3 RandomCircle(inout uint seed, float3 axis)
+{
+    float theta = 2.0f * 3.14159f * RandomFloat(seed);
+
+    float3 randDir = float3(cos(theta), 0.0f, sin(theta));
+
+    axis = normalize(axis);
+    if (abs(axis.y) != 1.0f) {
+        float3 up = float3(0.0f, 1.0f, 0.0f);
+        float3 right = normalize(cross(up, axis));
+        float3 front = cross(axis, right);
+        return mul(randDir, float3x3(right, axis, front));
+    }
+    else {
+        return randDir * sign(axis.y);
+    }
+    return randDir;
+}
+
+float3 RandomSpread(inout uint seed, float3 baseDir, float angle)
+{
+    float theta = 2.0f * 3.14159f * RandomFloat(seed);
     float phi = angle * RandomFloat(seed);
 
     float3 randDir = float3(
@@ -195,9 +230,9 @@ float3 SpreadDir(inout uint seed, float3 baseDir, float angle)
 
     baseDir = normalize(baseDir);
     if (abs(baseDir.z) != 1.0) {
-        float3 up = float3(0, 0, 1);
-        float3 right = normalize(cross(up, baseDir));
-        up = cross(baseDir, right);
+        float3 front = float3(0.0f, 0.0f, 1.0f);
+        float3 right = normalize(cross(front, baseDir));
+        float3 up = cross(baseDir, right);
         return mul(randDir, float3x3(right, up, baseDir));
     }
     else {

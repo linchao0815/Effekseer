@@ -693,6 +693,33 @@ public:
 		std::array<float, 2> EmitOffset;
 		std::array<float, 2> EmitInterval;
 
+		uint32_t EmitShapeType;
+		union
+		{
+			float Reserved[3][3];
+			struct
+			{
+				float LineStart[3];
+				float LineEnd[3];
+				float LineWidth;
+			};
+			struct
+			{
+				float CircleAxis[3];
+				float CircleInner;
+				float CircleOuter;
+			};
+			struct
+			{
+				float SphereRadius;
+			};
+			struct
+			{
+				int32_t ModelIndex;
+				float ModelSize;
+			};
+		} EmitShapeData;
+
 		float3 Direction;
 		float Spread;
 		std::array<float, 2> InitialSpeed;

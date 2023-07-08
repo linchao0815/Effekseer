@@ -25,6 +25,72 @@ namespace Effekseer.Data
 			public Value.FloatWithRandom EmitInterval { get; private set; } = new Value.FloatWithRandom(value: 1.0f, min: 0.0f);
 		}
 
+		public class EmitShapeParams
+		{
+			public enum ShapeType : int
+			{
+				[Key(key = "GpuParticles_EmitShape_ShapeType_Point")]
+				Point = 0,
+
+				[Key(key = "GpuParticles_EmitShape_ShapeType_Line")]
+				Line = 1,
+
+				[Key(key = "GpuParticles_EmitShape_ShapeType_Circle")]
+				Circle = 2,
+
+				[Key(key = "GpuParticles_EmitShape_ShapeType_Sphere")]
+				Sphere = 3,
+
+				[Key(key = "GpuParticles_EmitShape_ShapeType_Model")]
+				Model = 4,
+			}
+
+			[Selector(ID = 0)]
+			[Key(key = "GpuParticles_EmitShape_Shape")]
+			public Value.Enum<ShapeType> Shape { get; private set; } = new Value.Enum<ShapeType>();
+
+			[Selected(ID = 0, Value = 1)]
+			[Key(key = "GpuParticles_EmitShape_LineStart")]
+			public Value.Vector3D LineStart { get; private set; } = new Value.Vector3D();
+
+			[Selected(ID = 0, Value = 1)]
+			[Key(key = "GpuParticles_EmitShape_LineEnd")]
+			public Value.Vector3D LineEnd { get; private set; } = new Value.Vector3D();
+
+			[Selected(ID = 0, Value = 1)]
+			[Key(key = "GpuParticles_EmitShape_LineWidth")]
+			public Value.Float LineWidth { get; private set; } = new Value.Float(value: 0.0f, min: 0.0f);
+
+			[Selected(ID = 0, Value = 2)]
+			[Key(key = "GpuParticles_EmitShape_CircleAxis")]
+			public Value.Vector3D CircleAxis { get; private set; } = new Value.Vector3D(0.0f, 1.0f, 0.0f);
+
+			[Selected(ID = 0, Value = 2)]
+			[Key(key = "GpuParticles_EmitShape_CircleInner")]
+			public Value.Float CircleInner { get; private set; } = new Value.Float(value: 1.0f, min: 0.0f);
+
+			[Selected(ID = 0, Value = 2)]
+			[Key(key = "GpuParticles_EmitShape_CircleOuter")]
+			public Value.Float CircleOuter { get; private set; } = new Value.Float(value: 1.0f, min: 0.0f);
+
+			[Selected(ID = 0, Value = 3)]
+			[Key(key = "GpuParticles_EmitShape_SphereRadius")]
+			public Value.Float SphereRadius { get; private set; } = new Value.Float(value: 1.0f, min: 0.0f);
+
+			[Selected(ID = 0, Value = 4)]
+			[Key(key = "GpuParticles_RenderShape_ModelPath")]
+			public Value.PathForModel ModelPath { get; private set; } = null;
+
+			[Selected(ID = 0, Value = 4)]
+			[Key(key = "GpuParticles_EmitShape_ModelSize")]
+			public Value.Float ModelSize { get; private set; } = new Value.Float(value: 1.0f, min: 0.0f);
+
+			public EmitShapeParams(Value.Path basepath)
+			{
+				ModelPath = new Value.PathForModel(basepath, new MultiLanguageString("ModelFilter"), true, "");
+			}
+		}
+
 		public class PositionParams
 		{
 			[Key(key = "GpuParticles_Position_Direction")]
@@ -232,6 +298,11 @@ namespace Effekseer.Data
 
 		[IO(Export = true)]
 		[Selected(ID = 0, Value = 1)]
+		[TreeNode(id = "GpuParticles_EmitShape", key = "GpuParticles_EmitShape")]
+		public EmitShapeParams EmitShape { get; private set; } = null;
+
+		[IO(Export = true)]
+		[Selected(ID = 0, Value = 1)]
 		[TreeNode(id = "GpuParticles_Position", key = "GpuParticles_Position")]
 		public PositionParams Position { get; private set; } = new PositionParams();
 
@@ -272,6 +343,7 @@ namespace Effekseer.Data
 
 		public GpuParticlesValues(Value.Path basepath)
 		{
+			EmitShape = new EmitShapeParams(basepath);
 			RenderShape = new RenderShapeParams(basepath);
 			RenderMaterial = new RenderMaterialParams(basepath);
 		}

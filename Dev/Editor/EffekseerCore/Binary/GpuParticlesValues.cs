@@ -22,10 +22,33 @@ namespace Effekseer.Binary
 			}
 
 			data.Add(value.Basic.EmitCount.GetBytes());
-
 			data.Add(value.Basic.LifeTime.GetBytes());
 			data.Add(value.Basic.EmitOffset.GetBytes());
 			data.Add(value.Basic.EmitInterval.GetBytes());
+
+			data.Add(value.EmitShape.Shape.GetBytes());
+			switch (value.EmitShape.Shape.Value)
+			{
+				case Data.GpuParticlesValues.EmitShapeParams.ShapeType.Point:
+					break;
+				case Data.GpuParticlesValues.EmitShapeParams.ShapeType.Line:
+					data.Add(value.EmitShape.LineStart.GetBytes());
+					data.Add(value.EmitShape.LineEnd.GetBytes());
+					data.Add(value.EmitShape.LineWidth.GetBytes());
+					break;
+				case Data.GpuParticlesValues.EmitShapeParams.ShapeType.Circle:
+					data.Add(value.EmitShape.CircleAxis.GetBytes());
+					data.Add(value.EmitShape.CircleInner.GetBytes());
+					data.Add(value.EmitShape.CircleOuter.GetBytes());
+					break;
+				case Data.GpuParticlesValues.EmitShapeParams.ShapeType.Sphere:
+					data.Add(value.EmitShape.SphereRadius.GetBytes());
+					break;
+				case Data.GpuParticlesValues.EmitShapeParams.ShapeType.Model:
+					AddResource(data, modelAndIndex, value.EmitShape.ModelPath);
+					data.Add(value.EmitShape.ModelSize.GetBytes());
+					break;
+			}
 
 			data.Add(value.Position.Direction.GetBytes());
 			data.Add(value.Position.Spread.GetBytes());

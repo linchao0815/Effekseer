@@ -310,14 +310,49 @@ void EffectNodeImplemented::LoadParameter(unsigned char*& pos, EffectNode* paren
 				{
 					GpuParticles::ParameterSet paramSet{};
 
-					memcpy(&paramSet.EmitCount, pos, sizeof(int));
-					pos += sizeof(int);
+					memcpy(&paramSet.EmitCount, pos, sizeof(uint32_t));
+					pos += sizeof(uint32_t);
 					memcpy(&paramSet.LifeTime, pos, sizeof(float) * 2);
 					pos += sizeof(float) * 2;
 					memcpy(&paramSet.EmitOffset, pos, sizeof(float) * 2);
 					pos += sizeof(float) * 2;
 					memcpy(&paramSet.EmitInterval, pos, sizeof(float) * 2);
 					pos += sizeof(float) * 2;
+
+					memcpy(&paramSet.EmitShapeType, pos, sizeof(uint32_t));
+					pos += sizeof(uint32_t);
+					switch (paramSet.EmitShapeType)
+					{
+						case 0:
+							break;
+						case 1:
+							memcpy(&paramSet.EmitShapeData.LineStart, pos, sizeof(Vector3D));
+							pos += sizeof(Vector3D);
+							memcpy(&paramSet.EmitShapeData.LineEnd, pos, sizeof(Vector3D));
+							pos += sizeof(Vector3D);
+							memcpy(&paramSet.EmitShapeData.LineWidth, pos, sizeof(float));
+							pos += sizeof(float);
+							break;
+						case 2:
+							memcpy(&paramSet.EmitShapeData.CircleAxis, pos, sizeof(Vector3D));
+							pos += sizeof(Vector3D);
+							memcpy(&paramSet.EmitShapeData.CircleInner, pos, sizeof(float));
+							pos += sizeof(float);
+							memcpy(&paramSet.EmitShapeData.CircleOuter, pos, sizeof(float));
+							pos += sizeof(float);
+							break;
+							break;
+						case 3:
+							memcpy(&paramSet.EmitShapeData.SphereRadius, pos, sizeof(float));
+							pos += sizeof(float);
+							break;
+						case 4:
+							memcpy(&paramSet.EmitShapeData.ModelIndex, pos, sizeof(int32_t));
+							pos += sizeof(int32_t);
+							memcpy(&paramSet.EmitShapeData.ModelSize, pos, sizeof(float));
+							pos += sizeof(float);
+							break;
+					}
 
 					memcpy(&paramSet.Direction, pos, sizeof(Vector3D));
 					pos += sizeof(Vector3D);
