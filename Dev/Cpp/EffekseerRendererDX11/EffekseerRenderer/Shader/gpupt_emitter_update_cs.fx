@@ -13,7 +13,7 @@ RWStructuredBuffer<Particle> Particles : register(u1);
 [numthreads(16, 1, 1)]
 void main(uint3 dtid : SV_DispatchThreadID)
 {
-    uint emitterID = dtid.x + dtid.y * 16;
+    uint emitterID = dtid.x;
     Emitter emitter = Emitters[emitterID];
     DynamicInput input = DynamicInputs[emitterID];
     uint paramID = (emitter.FlagBits >> 1) & 0x3FF;

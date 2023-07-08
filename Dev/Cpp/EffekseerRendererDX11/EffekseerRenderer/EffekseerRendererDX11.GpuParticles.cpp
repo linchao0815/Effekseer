@@ -201,7 +201,7 @@ void GpuParticles::ComputeCommand::Dispatch(ID3D11DeviceContext* context, uint32
 	context->CSSetConstantBuffers(0, (UINT)csCBufs.size(), csCBufs.data());
 	context->CSSetShaderResources(0, (UINT)csSRVs.size(), csSRVs.data());
 	context->CSSetUnorderedAccessViews(0, (UINT)csUAVs.size(), csUAVs.data(), nullptr);
-	context->Dispatch(1, processCount / baseCount, 1);
+	context->Dispatch(processCount / baseCount, 1, 1);
 
 	std::array<ID3D11UnorderedAccessView*, 4> csClearUAVs = {};
 	context->CSSetUnorderedAccessViews(0, (UINT)csClearUAVs.size(), csClearUAVs.data(), nullptr);

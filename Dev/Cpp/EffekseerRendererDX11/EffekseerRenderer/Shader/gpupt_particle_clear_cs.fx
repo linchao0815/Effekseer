@@ -15,7 +15,7 @@ RWStructuredBuffer<Particle> Particles : register(u0);
 [numthreads(256, 1, 1)]
 void main(uint3 dtid : SV_DispatchThreadID)
 {
-    uint particleID = ParticleHead + dtid.x + dtid.y * 256;
+    uint particleID = ParticleHead + dtid.x;
     Particle particle = Particles[particleID];
     
     particle.FlagBits = 0;

@@ -40,8 +40,7 @@ float3 Vortex(float rotation, float attraction, float3 center, float3 axis, floa
 [numthreads(256, 1, 1)]
 void main(uint3 dtid : SV_DispatchThreadID)
 {
-    uint index = dtid.x + dtid.y * 256;
-    uint particleID = ParticleHead + index;
+    uint particleID = ParticleHead + dtid.x;
     Particle particle = Particles[particleID];
     
     if (particle.FlagBits & 0x01) {
@@ -68,7 +67,7 @@ void main(uint3 dtid : SV_DispatchThreadID)
         float3 velocity = UnpackFloat4(particle.Velocity).xyz;
 
         if (TrailJoints > 0) {
-            uint trailID = TrailHead + index * TrailJoints + TrailPhase;
+            uint trailID = TrailHead + dtid.x * TrailJoints + TrailPhase;
             Trail trail;
             trail.Position = position;
             trail.Direction = PackNormalizedFloat3(velocity);
