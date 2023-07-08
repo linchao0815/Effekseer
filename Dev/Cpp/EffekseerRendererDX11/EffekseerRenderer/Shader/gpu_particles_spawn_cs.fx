@@ -1,4 +1,4 @@
-#include "gpupt_common.h"
+#include "gpu_particles_common.h"
 
 cbuffer cb : register(b0)
 {
@@ -6,34 +6,33 @@ cbuffer cb : register(b0)
 };
 
 StructuredBuffer<ParameterSet> ParamSets : register(t0);
-StructuredBuffer<DynamicInput> DynamicInputs : register(t1);
-RWStructuredBuffer<Emitter> Emitters : register(u0);
-RWStructuredBuffer<Particle> Particles : register(u1);
+StructuredBuffer<Emitter> Emitters : register(t1);
+RWStructuredBuffer<Particle> Particles : register(u0);
 
-[numthreads(16, 1, 1)]
+[numthreads(1, 1, 1)]
 void main(uint3 dtid : SV_DispatchThreadID)
 {
     uint emitterID = dtid.x;
     Emitter emitter = Emitters[emitterID];
-    DynamicInput input = DynamicInputs[emitterID];
     uint paramID = (emitter.FlagBits >> 1) & 0x3FF;
     ParameterSet paramSet = ParamSets[paramID];
     
-    for (uint i = 0; i < input.NextEmitCount; i++) {
-        float paramSeed = RandomUint(emitter.Seed);
-        float3 position = input.Transform._m03_m13_m23;
+    for (uint i = 0; i < emitter.NextEmitCount; i++) {
+        //float paramSeed = RandomUint(emitter.Seed);
+        float paramSeed = emitter.Seed ^ (emitter.TotalEmitCount + i);
+        float3 position = emitter.Transform._m03_m13_m23;
         float3 direction = RandomSpread(paramSeed, paramSet.Direction, paramSet.Spread.x * 3.141592f / 180.0f);
-        direction = mul(input.Transform, float4(direction, 0.0f)).xyz;
+        direction = mul(emitter.Transform, float4(direction, 0.0f)).xyz;
         float speed = RandomFloatRange(paramSeed, paramSet.InitialSpeed);
 
         if (paramSet.EmitShapeType == 1) {
-            float3 lineStart = mul(input.Transform, float4(paramSet.EmitShapeData[0], 0.0f)).xyz;
-            float3 lineEnd = mul(input.Transform, float4(paramSet.EmitShapeData[1], 0.0f)).xyz;
+            float3 lineStart = mul(emitter.Transform, float4(paramSet.EmitShapeData[0], 0.0f)).xyz;
+            float3 lineEnd = mul(emitter.Transform, float4(paramSet.EmitShapeData[1], 0.0f)).xyz;
             float lineWidth = paramSet.EmitShapeData[2].x;
             position += lerp(lineStart, lineEnd, RandomFloat(paramSeed));
             position += RandomDirection(paramSeed) * lineWidth * 0.5f;
         } else if (paramSet.EmitShapeType == 2) {
-            float3 circleAxis = mul(input.Transform, float4(paramSet.EmitShapeData[0], 0.0f)).xyz;
+            float3 circleAxis = mul(emitter.Transform, float4(paramSet.EmitShapeData[0], 0.0f)).xyz;
             float circleInner = paramSet.EmitShapeData[1].x;
             float circleOuter = paramSet.EmitShapeData[1].y;
             float circleRadius = lerp(circleInner, circleOuter, RandomFloat(paramSeed));
@@ -43,7 +42,7 @@ void main(uint3 dtid : SV_DispatchThreadID)
             position += RandomDirection(paramSeed) * sphereRadius;
         }
 
-        uint particleOffset = (input.TotalEmitCount + i) % emitter.ParticleSize;
+        uint particleOffset = (emitter.TotalEmitCount + i) % emitter.ParticleSize;
         uint particleID = emitter.ParticleHead + particleOffset;
         Particle particle = Particles[particleID];
         particle.FlagBits = 0x01 | (paramID << 1) | (emitterID << 11);
@@ -53,13 +52,11 @@ void main(uint3 dtid : SV_DispatchThreadID)
         if (paramSet.ColorFlags == 0) {
             particle.InheritColor = 0xFFFFFFFF;
         } else {
-            particle.InheritColor = PackColor(input.Color);
+            particle.InheritColor = PackColor(emitter.Color);
         }
         
         particle.Transform._m03_m13_m23 = position;
         particle.Velocity = PackFloat4(direction * speed, 0.0f);
         Particles[particleID] = particle;
     }
-
-    Emitters[emitterID] = emitter;
 }

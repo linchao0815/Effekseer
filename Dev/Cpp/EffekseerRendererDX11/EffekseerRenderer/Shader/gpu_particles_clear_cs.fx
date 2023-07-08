@@ -1,4 +1,4 @@
-#include "gpupt_common.h"
+#include "gpu_particles_common.h"
 
 cbuffer cb : register(b0)
 {

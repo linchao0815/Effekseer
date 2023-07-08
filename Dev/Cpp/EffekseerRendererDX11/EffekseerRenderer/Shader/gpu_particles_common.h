@@ -56,10 +56,6 @@ struct Emitter
     uint TrailHead;
     uint TrailSize;
     uint TrailPhase;
-};
-
-struct DynamicInput
-{
     uint NextEmitCount;
     uint TotalEmitCount;
     float3x4 Transform;

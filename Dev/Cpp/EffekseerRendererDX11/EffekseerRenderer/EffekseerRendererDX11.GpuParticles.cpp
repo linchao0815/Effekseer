@@ -10,34 +10,29 @@ namespace EffekseerRendererDX11
 namespace
 {
 
-namespace CS_EmitterClear
-{
-#include "ShaderHeader/gpupt_emitter_clear_cs.h"
-}
-
-namespace CS_EmitterUpdate
-{
-#include "ShaderHeader/gpupt_emitter_update_cs.h"
-}
-
 namespace CS_ParticleClear
 {
-#include "ShaderHeader/gpupt_particle_clear_cs.h"
+#include "ShaderHeader/gpu_particles_clear_cs.h"
+}
+
+namespace CS_ParticleSpawn
+{
+#include "ShaderHeader/gpu_particles_spawn_cs.h"
 }
 
 namespace CS_ParticleUpdate
 {
-#include "ShaderHeader/gpupt_particle_update_cs.h"
+#include "ShaderHeader/gpu_particles_update_cs.h"
 }
 
 namespace VS_ParticleRender
 {
-#include "ShaderHeader/gpupt_particle_render_vs.h"
+#include "ShaderHeader/gpu_particles_render_vs.h"
 }
 
 namespace PS_ParticleRender
 {
-#include "ShaderHeader/gpupt_particle_render_ps.h"
+#include "ShaderHeader/gpu_particles_render_ps.h"
 }
 
 inline constexpr uint32_t RoundUp(uint32_t x, uint32_t unit)
@@ -318,11 +313,10 @@ void GpuParticles::InitSystem(const Settings& settings)
 	m_paramSets.resize(settings.EmitterMaxCount);
 	m_resources.resize(settings.EmitterMaxCount);
 	m_emitters.resize(settings.EmitterMaxCount);
-	m_dynamicInputs.resize(settings.EmitterMaxCount);
 
 	for (uint32_t index = 0; index < settings.EmitterMaxCount; index++)
 	{
-		m_dynamicInputs[index].Transform.Indentity();
+		m_emitters[index].Transform.Indentity();
 		m_paramFreeList.push_back(index);
 		m_emitterFreeList.push_back(index);
 	}
@@ -338,41 +332,32 @@ void GpuParticles::InitSystem(const Settings& settings)
 	m_bufferParticleArgs = ConstantBuffer::Create(device, &pargs, sizeof(ParticleArgs));
 	
 	m_bufviewParamSets = ComputeBuffer::Create(device, sizeof(ParameterSet), settings.EmitterMaxCount, 0);
-	m_bufviewDynamicInput = ComputeBuffer::Create(device, sizeof(DynamicInput), settings.EmitterMaxCount, D3D11_CPU_ACCESS_WRITE);
-	m_bufviewEmitter = ComputeBuffer::Create(device, sizeof(Emitter), settings.EmitterMaxCount, 0, true, 0);
-	m_bufviewParticle = ComputeBuffer::Create(device, sizeof(Particle), settings.ParticleMaxCount, 0, true, 0);
+	m_bufviewEmitters = ComputeBuffer::Create(device, sizeof(Emitter), settings.EmitterMaxCount, D3D11_CPU_ACCESS_WRITE);
+	m_bufviewParticles = ComputeBuffer::Create(device, sizeof(Particle), settings.ParticleMaxCount, 0, true, 0);
 	m_bufviewTrails = ComputeBuffer::Create(device, sizeof(Trail), settings.TrailMaxCount, 0, true, 0);
 
-	m_csEmitterClear = CreateCS(device, ShaderData(CS_EmitterClear), ShaderSize(CS_EmitterClear));
-	m_csEmitterUpdate = CreateCS(device, ShaderData(CS_EmitterUpdate), ShaderSize(CS_EmitterUpdate));
 	m_csParticleClear = CreateCS(device, ShaderData(CS_ParticleClear), ShaderSize(CS_ParticleClear));
+	m_csParticleSpawn = CreateCS(device, ShaderData(CS_ParticleSpawn), ShaderSize(CS_ParticleSpawn));
 	m_csParticleUpdate = CreateCS(device, ShaderData(CS_ParticleUpdate), ShaderSize(CS_ParticleUpdate));
-
-	m_cmdEmitterClear.shader = m_csEmitterClear.get();
-	m_cmdEmitterClear.csCBufs[0] = m_bufferConstants.buffer.get();
-	m_cmdEmitterClear.csSRVs[0] = m_bufviewParamSets.srv.get();
-	m_cmdEmitterClear.csUAVs[0] = m_bufviewEmitter.uav.get();
-
-	m_cmdEmitterUpdate.shader = m_csEmitterUpdate.get();
-	m_cmdEmitterUpdate.csCBufs[0] = m_bufferConstants.buffer.get();
-	m_cmdEmitterUpdate.csSRVs[0] = m_bufviewParamSets.srv.get();
-	m_cmdEmitterUpdate.csSRVs[1] = m_bufviewDynamicInput.srv.get();
-	m_cmdEmitterUpdate.csUAVs[0] = m_bufviewEmitter.uav.get();
-	m_cmdEmitterUpdate.csUAVs[1] = m_bufviewParticle.uav.get();
 
 	m_cmdParticleClear.shader = m_csParticleClear.get();
 	m_cmdParticleClear.csCBufs[0] = m_bufferConstants.buffer.get();
 	m_cmdParticleClear.csCBufs[1] = m_bufferParticleArgs.buffer.get();
 	m_cmdParticleClear.csSRVs[0] = m_bufviewParamSets.srv.get();
-	m_cmdParticleClear.csUAVs[0] = m_bufviewParticle.uav.get();
+	m_cmdParticleClear.csUAVs[0] = m_bufviewParticles.uav.get();
+
+	m_cmdParticleSpawn.shader = m_csParticleSpawn.get();
+	m_cmdParticleSpawn.csCBufs[0] = m_bufferConstants.buffer.get();
+	m_cmdParticleSpawn.csSRVs[0] = m_bufviewParamSets.srv.get();
+	m_cmdParticleSpawn.csSRVs[1] = m_bufviewEmitters.srv.get();
+	m_cmdParticleSpawn.csUAVs[0] = m_bufviewParticles.uav.get();
 
 	m_cmdParticleUpdate.shader = m_csParticleUpdate.get();
 	m_cmdParticleUpdate.csCBufs[0] = m_bufferConstants.buffer.get();
 	m_cmdParticleUpdate.csCBufs[1] = m_bufferParticleArgs.buffer.get();
 	m_cmdParticleUpdate.csSRVs[0] = m_bufviewParamSets.srv.get();
-	m_cmdParticleUpdate.csSRVs[1] = m_bufviewDynamicInput.srv.get();
-	m_cmdParticleUpdate.csSRVs[2] = m_bufviewEmitter.srv.get();
-	m_cmdParticleUpdate.csUAVs[0] = m_bufviewParticle.uav.get();
+	m_cmdParticleUpdate.csSRVs[1] = m_bufviewEmitters.srv.get();
+	m_cmdParticleUpdate.csUAVs[0] = m_bufviewParticles.uav.get();
 	m_cmdParticleUpdate.csUAVs[1] = m_bufviewTrails.uav.get();
 
 	auto graphics = GetRenderer()->GetGraphicsDevice();
@@ -402,19 +387,11 @@ void GpuParticles::InitSystem(const Settings& settings)
 		device->CreateSamplerState(&samplerDesc, &sampler);
 		m_vfSampler.reset(sampler);
 	}
-
-	m_firstTime = true;
 }
 
 void GpuParticles::UpdateFrame(float deltaTime)
 {
 	auto context = GetRenderer()->GetContext();
-
-	if (m_firstTime)
-	{
-		m_cmdEmitterClear.Dispatch(context, 16, m_settings.EmitterMaxCount);
-		m_firstTime = false;
-	}
 
 	// Update constant buffer
 	Constants cdata{};
@@ -452,11 +429,8 @@ void GpuParticles::UpdateFrame(float deltaTime)
 
 	for (auto emitterID : m_newEmitterIDs)
 	{
-		// Initialize emitter data
-		auto& emitter = m_emitters[emitterID];
-		m_bufviewEmitter.UpdateData(context, emitterID * sizeof(Emitter), &emitter, sizeof(Emitter));
-
 		// Initialize particle data region
+		auto& emitter = m_emitters[emitterID];
 		ParticleArgs pargs{};
 		pargs.ParticleHead = emitter.ParticleHead;
 		m_bufferParticleArgs.UpdateData(context, &pargs, sizeof(pargs));
@@ -464,33 +438,30 @@ void GpuParticles::UpdateFrame(float deltaTime)
 	}
 	m_newEmitterIDs.clear();
 
-	// Update dynamic inputs
-	for (EmitterID emitterID = 0; emitterID < (EmitterID)m_emitters.size(); emitterID++)
+	// Update emitter data
+	for (auto& emitter : m_emitters)
 	{
-		auto& emitter = m_emitters[emitterID];
 		if (emitter.IsAlive())
 		{
 			auto& paramSet = m_paramSets[emitter.GetParamID()];
-			auto& input = m_dynamicInputs[emitterID];
-			input.TotalEmitCount += input.NextEmitCount;
-			input.NextEmitCount = std::min(
+			emitter.TotalEmitCount += emitter.NextEmitCount;
+			emitter.NextEmitCount = std::min(
 				(uint32_t)(deltaTime / paramSet.EmitInterval[0]), 
-				paramSet.EmitCount - input.TotalEmitCount);
+				paramSet.EmitCount - emitter.TotalEmitCount);
 		}
 	}
-	m_bufviewDynamicInput.UpdateDynamicData(context, 0, m_dynamicInputs.data(), sizeof(DynamicInput) * m_dynamicInputs.size());
+	m_bufviewEmitters.UpdateDynamicData(context, 0, m_emitters.data(), sizeof(Emitter) * m_emitters.size());
 
-	// Update emitters
-	m_cmdEmitterUpdate.Dispatch(context, 16, m_settings.EmitterMaxCount);
+	// Spawn particles
+	m_cmdParticleSpawn.Dispatch(context, 1, m_settings.EmitterMaxCount);
 
 	// Update particles
 	{
 		ID3D11SamplerState* samplers[1] = { m_vfSampler.get() };
 		context->CSSetSamplers(4, 1, samplers);
 	}
-	for (EmitterID emitterID = 0; emitterID < (EmitterID)m_emitters.size(); emitterID++)
+	for (auto& emitter : m_emitters)
 	{
-		auto& emitter = m_emitters[emitterID];
 		if (emitter.IsAlive())
 		{
 			auto& paramSet = m_paramSets[emitter.GetParamID()];
@@ -549,7 +520,7 @@ void GpuParticles::RenderFrame()
 
 			ID3D11ShaderResourceView* vsSRVs[3] = {
 				m_bufviewParamSets.srv.get(),
-				m_bufviewParticle.srv.get(),
+				m_bufviewParticles.srv.get(),
 				m_bufviewTrails.srv.get(),
 			};
 			context->VSSetShaderResources(8, 3, vsSRVs);
@@ -715,11 +686,6 @@ GpuParticles::EmitterID GpuParticles::AddEmitter(ParamID paramID)
 	particlesMaxCount = std::min(particlesMaxCount, paramSet.EmitCount);
 	particlesMaxCount = RoundUp(particlesMaxCount, ParticleUnitSize);
 
-	DynamicInput& input = m_dynamicInputs[emitterID];
-	input.NextEmitCount = 0;
-	input.TotalEmitCount = 0;
-	input.Transform.Indentity();
-
 	Emitter& emitter = m_emitters[emitterID];
 	emitter.SetFlagBits(true, paramID);
 	emitter.Seed = m_random();
@@ -728,6 +694,9 @@ GpuParticles::EmitterID GpuParticles::AddEmitter(ParamID paramID)
 	emitter.TrailHead = 0;
 	emitter.TrailSize = 0;
 	emitter.TrailPhase = 0;
+	emitter.NextEmitCount = 0;
+	emitter.TotalEmitCount = 0;
+	emitter.Transform.Indentity();
 
 	Block particleBlock = m_particleAllocator.Allocate(particlesMaxCount);
 	if (particleBlock.size == 0)
@@ -789,8 +758,8 @@ void GpuParticles::SetTransform(EmitterID emitterID, const Effekseer::Matrix43& 
 		return;
 	}
 
-	auto& input = m_dynamicInputs[emitterID];
-	input.Transform = transform;
+	auto& emitter = m_emitters[emitterID];
+	emitter.Transform = transform;
 }
 
 void GpuParticles::SetColor(EmitterID emitterID, Effekseer::Color color)
@@ -800,8 +769,8 @@ void GpuParticles::SetColor(EmitterID emitterID, Effekseer::Color color)
 		return;
 	}
 
-	auto& input = m_dynamicInputs[emitterID];
-	input.Color = color.ToFloat4();
+	auto& emitter = m_emitters[emitterID];
+	emitter.Color = color.ToFloat4();
 }
 
 }

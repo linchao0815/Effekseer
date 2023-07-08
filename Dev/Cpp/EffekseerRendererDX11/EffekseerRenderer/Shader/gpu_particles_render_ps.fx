@@ -1,4 +1,4 @@
-#include "gpupt_common.h"
+#include "gpu_particles_common.h"
 
 Texture2D<float4> ColorTex : register(t0);
 SamplerState ColorSamp : register(s0);

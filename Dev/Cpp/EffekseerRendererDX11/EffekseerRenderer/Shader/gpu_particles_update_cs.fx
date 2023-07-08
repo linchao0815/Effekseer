@@ -1,4 +1,4 @@
-#include "gpupt_common.h"
+#include "gpu_particles_common.h"
 
 cbuffer cb : register(b0)
 {
@@ -13,8 +13,7 @@ cbuffer cb1 : register(b1)
 }
 
 StructuredBuffer<ParameterSet> ParamSets : register(t0);
-StructuredBuffer<DynamicInput> DynamicInputs : register(t1);
-StructuredBuffer<Emitter> Emitters : register(t2);
+StructuredBuffer<Emitter> Emitters : register(t1);
 RWStructuredBuffer<Particle> Particles : register(u0);
 RWStructuredBuffer<Trail> Trails : register(u1);
 Texture3D<float4> NoiseVFTex : register(t4);
@@ -48,7 +47,7 @@ void main(uint3 dtid : SV_DispatchThreadID)
         uint emitterID = (particle.FlagBits >> 11) & 0x3FF;
         uint updateCount = (particle.FlagBits >> 21) & 0xFF;
         ParameterSet paramSet = ParamSets[paramID];
-        DynamicInput input = DynamicInputs[emitterID];
+        Emitter emitter = Emitters[emitterID];
         float deltaTime = constants.DeltaTime;
 
         // Randomize parameters
@@ -92,7 +91,7 @@ void main(uint3 dtid : SV_DispatchThreadID)
         if (paramSet.VortexRotation != 0.0f || paramSet.VortexAttraction != 0.0f) {
             velocity += Vortex(paramSet.VortexRotation, paramSet.VortexAttraction, 
                 paramSet.VortexCenter, paramSet.VortexAxis,
-                position, input.Transform) * deltaTime;
+                position, emitter.Transform) * deltaTime;
         }
         // Turbulence
         if (paramSet.TurbulencePower != 0.0f) {
@@ -120,7 +119,7 @@ void main(uint3 dtid : SV_DispatchThreadID)
         float4 color = lerp(colorStart, colorEnd, lifeRatio);
         // Apply inheritation color
         if (paramSet.ColorFlags == 2 || paramSet.ColorFlags == 3) {
-            color *= input.Color;
+            color *= emitter.Color;
         } else {
             color *= UnpackColor(particle.InheritColor);
         }

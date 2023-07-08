@@ -82,13 +82,6 @@ private:
 	static constexpr uint32_t EmitterUnitSize = 16;
 	static constexpr uint32_t ParticleUnitSize = 256;
 
-	struct DynamicInput
-	{
-		uint32_t NextEmitCount;
-		uint32_t TotalEmitCount;
-		float3x4 Transform;
-		float4 Color;
-	};
 	struct Emitter
 	{
 		uint32_t FlagBits;  // Alive:1, ParamID:10
@@ -98,6 +91,10 @@ private:
 		uint32_t TrailHead;
 		uint32_t TrailSize;
 		uint32_t TrailPhase;
+		uint32_t NextEmitCount;
+		uint32_t TotalEmitCount;
+		float3x4 Transform;
+		float4 Color;
 
 		bool IsAlive() const
 		{
@@ -180,25 +177,20 @@ private:
 	std::vector<Emitter> m_emitters;
 	BlockAllocator m_particleAllocator;
 	BlockAllocator m_trailAllocator;
-	bool m_firstTime = false;
 
 	ConstantBuffer m_bufferConstants;
 	ConstantBuffer m_bufferParticleArgs;
 
-	std::vector<DynamicInput> m_dynamicInputs;
 	ComputeBuffer m_bufviewParamSets;
-	ComputeBuffer m_bufviewDynamicInput;
-	ComputeBuffer m_bufviewEmitter;
-	ComputeBuffer m_bufviewParticle;
+	ComputeBuffer m_bufviewEmitters;
+	ComputeBuffer m_bufviewParticles;
 	ComputeBuffer m_bufviewTrails;
 
-	ComputeShader m_csEmitterClear;
-	ComputeShader m_csEmitterUpdate;
+	ComputeShader m_csParticleSpawn;
 	ComputeShader m_csParticleClear;
 	ComputeShader m_csParticleUpdate;
 
-	ComputeCommand m_cmdEmitterClear;
-	ComputeCommand m_cmdEmitterUpdate;
+	ComputeCommand m_cmdParticleSpawn;
 	ComputeCommand m_cmdParticleClear;
 	ComputeCommand m_cmdParticleUpdate;
 
