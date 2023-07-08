@@ -12,13 +12,6 @@ if (USE_INTERNAL_RENDER_PASS)
 	add_definitions(-D__EFFEKSEER_RENDERERMETAL_INTERNAL_RENDER_PASS__)
 endif()
 
-#--------------------
-# Files
-
-file(GLOB_RECURSE LOCAL_SOURCES_Common ../EffekseerRendererCommon/*.h ../EffekseerRendererCommon/*.cpp)
-
-source_group("EffekseerRendererCommon" FILES ${LOCAL_SOURCES_Common})
-
 file(GLOB_RECURSE LOCAL_HEADERS_Metal *.h)
 file(GLOB_RECURSE LOCAL_SOURCES_Metal *.cpp *.mm)
 list(APPEND LOCAL_HEADERS_Metal ../EffekseerMaterialCompiler/Metal/EffekseerMaterialCompilerMetal.h)
@@ -29,38 +22,42 @@ list(APPEND LOCAL_SOURCES_Metal ../EffekseerMaterialCompiler/Common/ShaderGenera
 FilterFolder("${LOCAL_HEADERS_Metal}")
 FilterFolder("${LOCAL_SOURCES_Metal}")
 
-file(GLOB_RECURSE LOCAL_SOURCES_LLGI
-    ../EffekseerRendererLLGI/*.h
-    ../EffekseerRendererLLGI/*.cpp)
-
-source_group("EffekseerRendererLLGI" FILES ${LOCAL_SOURCES_LLGI})
-
 set(LOCAL_SOURCES
-    ${LOCAL_SOURCES_Common}
     ${LOCAL_HEADERS_Metal}
-    ${LOCAL_SOURCES_Metal}
-    ${LOCAL_SOURCES_LLGI})
+    ${LOCAL_SOURCES_Metal})
+
+
+set(PublicHeaders
+    EffekseerRendererMetal.h
+    EffekseerRenderer/EffekseerRendererMetal.Base.Pre.h
+    EffekseerRenderer/EffekseerRendererMetal.Renderer.h)
 
 #--------------------
 # Projects
 
 add_library(${PROJECT_NAME} STATIC ${LOCAL_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../Effekseer ${CMAKE_CURRENT_LIST_DIR}/../3rdparty/LLGI/src ${EFK_THIRDPARTY_INCLUDES})
-set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${LOCAL_HEADERS_Metal}")
-target_link_libraries(${PROJECT_NAME} PUBLIC Effekseer LLGI)
+set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${PublicHeaders}")
+target_link_libraries(${PROJECT_NAME} PUBLIC Effekseer EffekseerRendererCommon EffekseerRendererLLGI LLGI)
 
-if(USE_LIBPNG_LOADER)
-    add_dependencies(${PROJECT_NAME} ExternalProject_zlib ExternalProject_libpng) 
+if(CLANG_FORMAT_ENABLED)
+    clang_format(${PROJECT_NAME})
 endif()
+
+# WarnError(${PROJECT_NAME})
 
 #--------------------
 # Install
+
+foreach (file ${PublicHeaders})
+    get_filename_component(dir ${file} DIRECTORY)
+    install(FILES ${file} DESTINATION include/EffekseerRendererMetal/${dir})
+endforeach()
 
 install(
     TARGETS ${PROJECT_NAME}
     EXPORT ${PROJECT_NAME}-export
     INCLUDES DESTINATION include/EffekseerRendererMetal
-    PUBLIC_HEADER DESTINATION include/EffekseerRendererMetal
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib)
 

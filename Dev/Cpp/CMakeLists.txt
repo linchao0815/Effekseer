@@ -72,10 +72,8 @@ endif()
 add_subdirectory(Effekseer)
 set_property(TARGET Effekseer PROPERTY FOLDER Libraries)
 
-if(BUILD_UNITYPLUGIN OR BUILD_UNITYPLUGIN_FOR_IOS)
-    add_subdirectory(EffekseerRendererCommon)
-    set_property(TARGET EffekseerRendererCommon PROPERTY FOLDER Libraries)
-endif()
+add_subdirectory(EffekseerRendererCommon)
+set_property(TARGET EffekseerRendererCommon PROPERTY FOLDER Libraries)
 
 if (BUILD_VIEWER OR BUILD_EDITOR)
     add_subdirectory(3rdParty)
@@ -106,6 +104,9 @@ if (BUILD_DX12 OR BUILD_METAL OR BUILD_VULKAN)
     add_subdirectory(3rdParty/LLGI)
     set_target_properties (LLGI PROPERTIES FOLDER Thirdparty)
     set(BUILD_TEST ${BUILD_TEST_TEMP})
+
+    add_subdirectory(EffekseerRendererLLGI)
+    set_property(TARGET EffekseerRendererLLGI PROPERTY FOLDER Libraries)
 endif()
 
 if (BUILD_DX9)

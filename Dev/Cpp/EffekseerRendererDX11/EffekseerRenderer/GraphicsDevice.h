@@ -2,6 +2,7 @@
 #ifndef __EFFEKSEERRENDERER_DX11_GRAPHICS_DEVICE_H__
 #define __EFFEKSEERRENDERER_DX11_GRAPHICS_DEVICE_H__
 
+#include "../../EffekseerRendererCommon/EffekseerRenderer.CommonUtils.h"
 #include <Effekseer.h>
 #include <assert.h>
 #include <d3d11.h>
@@ -60,24 +61,6 @@ DXGI_FORMAT GetTextureFormatType(Effekseer::Backend::TextureFormatType format);
 
 D3D11InputLayoutPtr CreateInputLayout(GraphicsDevice& graphicsDevice, VertexLayoutRef vertexLayout, const void* vertexBufferData, int32_t vertexBufferSize);
 
-class DirtiedBlock
-{
-	struct Block
-	{
-		int32_t offset;
-		int32_t size;
-	};
-
-	std::vector<Block> blocks_;
-
-public:
-	/**
-		@brief	Allocate block
-		@return	whether is required to discard.
-	*/
-	bool Allocate(int32_t size, int32_t offset);
-};
-
 class DeviceObject
 {
 private:
@@ -95,7 +78,7 @@ class VertexBuffer
 	  public Effekseer::Backend::VertexBuffer
 {
 private:
-	DirtiedBlock blocks_;
+	EffekseerRenderer::DirtiedBlock blocks_;
 
 	GraphicsDevice* graphicsDevice_ = nullptr;
 	D3D11BufferPtr buffer_ = nullptr;
@@ -119,6 +102,8 @@ public:
 
 	void UpdateData(const void* src, int32_t size, int32_t offset);
 
+	void MakeAllDirtied();
+
 	ID3D11Buffer* GetBuffer() const
 	{
 		return buffer_.get();
@@ -133,7 +118,7 @@ class IndexBuffer
 	  public Effekseer::Backend::IndexBuffer
 {
 private:
-	DirtiedBlock blocks_;
+	EffekseerRenderer::DirtiedBlock blocks_;
 
 	GraphicsDevice* graphicsDevice_ = nullptr;
 	D3D11BufferPtr buffer_ = nullptr;

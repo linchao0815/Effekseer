@@ -25,7 +25,6 @@ class RendererImplemented : public Renderer, public ::Effekseer::ReferenceObject
 	friend class DeviceObject;
 
 private:
-	VertexBuffer* m_vertexBuffer;
 	Effekseer::Backend::IndexBufferRef currentndexBuffer_;
 	Effekseer::Backend::IndexBufferRef indexBuffer_;
 	Effekseer::Backend::IndexBufferRef indexBufferForWireframe_;
@@ -53,8 +52,6 @@ private:
 	::Effekseer::CoordinateSystem m_coordinateSystem;
 
 	::EffekseerRenderer::RenderStateBase* m_renderState;
-
-	std::set<DeviceObject*> m_deviceObjects;
 
 	// ステート
 	DWORD m_state_FVF;
@@ -139,11 +136,6 @@ public:
 	*/
 	bool EndRendering();
 
-	/**
-		@brief	頂点バッファ取得
-	*/
-	VertexBuffer* GetVertexBuffer();
-
 	Effekseer::Backend::IndexBufferRef GetIndexBuffer();
 
 	/**
@@ -204,7 +196,6 @@ public:
 		return m_standardRenderer;
 	}
 
-	void SetVertexBuffer(VertexBuffer* vertexBuffer, int32_t size);
 	void SetVertexBuffer(IDirect3DVertexBuffer9* vertexBuffer, int32_t size);
 
 	void SetVertexBuffer(const Effekseer::Backend::VertexBufferRef& vertexBuffer, int32_t size);

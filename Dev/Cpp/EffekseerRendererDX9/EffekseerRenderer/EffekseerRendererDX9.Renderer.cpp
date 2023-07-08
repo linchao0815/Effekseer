@@ -13,11 +13,9 @@
 #include "../../EffekseerRendererCommon/EffekseerRenderer.TrackRendererBase.h"
 #include "../../EffekseerRendererCommon/ModelLoader.h"
 #include "../../EffekseerRendererCommon/TextureLoader.h"
-#include "EffekseerRendererDX9.DeviceObject.h"
 #include "EffekseerRendererDX9.MaterialLoader.h"
 #include "EffekseerRendererDX9.ModelRenderer.h"
 #include "EffekseerRendererDX9.Shader.h"
-#include "EffekseerRendererDX9.VertexBuffer.h"
 
 //----------------------------------------------------------------------------------
 //
@@ -126,9 +124,7 @@ RendererRef Renderer::Create(LPDIRECT3DDEVICE9 device, int32_t squareMaxCount)
 //
 //----------------------------------------------------------------------------------
 RendererImplemented::RendererImplemented(int32_t squareMaxCount)
-	: m_vertexBuffer(nullptr)
-	//, m_indexBuffer(nullptr)
-	, m_squareMaxCount(squareMaxCount)
+	: m_squareMaxCount(squareMaxCount)
 	, m_coordinateSystem(::Effekseer::CoordinateSystem::RH)
 	, m_state_vertexShader(nullptr)
 	, m_state_pixelShader(nullptr)
@@ -172,7 +168,6 @@ RendererImplemented::~RendererImplemented()
 	ES_SAFE_DELETE(shader_lit_);
 
 	ES_SAFE_DELETE(m_renderState);
-	ES_SAFE_DELETE(m_vertexBuffer);
 }
 
 //----------------------------------------------------------------------------------
@@ -180,11 +175,6 @@ RendererImplemented::~RendererImplemented()
 //----------------------------------------------------------------------------------
 void RendererImplemented::OnLostDevice()
 {
-	for (auto& device : m_deviceObjects)
-	{
-		device->OnLostDevice();
-	}
-
 	GetImpl()->DeleteProxyTextures(this);
 	SetBackground(nullptr);
 
@@ -197,11 +187,6 @@ void RendererImplemented::OnLostDevice()
 void RendererImplemented::OnResetDevice()
 {
 	graphicsDevice_->ResetDevice();
-
-	for (auto& device : m_deviceObjects)
-	{
-		device->OnResetDevice();
-	}
 
 	if (m_isChangedDevice)
 	{
@@ -219,9 +204,12 @@ bool RendererImplemented::Initialize(Backend::GraphicsDeviceRef graphicsDevice)
 
 	// generate a vertex buffer
 	{
-		m_vertexBuffer = VertexBuffer::Create(this, EffekseerRenderer::GetMaximumVertexSizeInAllTypes() * m_squareMaxCount * 4, true, false);
-		if (m_vertexBuffer == nullptr)
+		GetImpl()->InternalVertexBuffer = std::make_shared<EffekseerRenderer::VertexBufferRing>(graphicsDevice_, EffekseerRenderer::GetMaximumVertexSizeInAllTypes() * m_squareMaxCount * 4, 1);
+		if (!GetImpl()->InternalVertexBuffer->GetIsValid())
+		{
+			GetImpl()->InternalVertexBuffer = nullptr;
 			return false;
+		}
 	}
 
 	if (!EffekseerRenderer::GenerateIndexDataStride<int16_t>(graphicsDevice_, m_squareMaxCount, indexBuffer_, indexBufferForWireframe_))
@@ -521,14 +509,6 @@ bool RendererImplemented::EndRendering()
 	return true;
 }
 
-//----------------------------------------------------------------------------------
-//
-//----------------------------------------------------------------------------------
-VertexBuffer* RendererImplemented::GetVertexBuffer()
-{
-	return m_vertexBuffer;
-}
-
 Effekseer::Backend::IndexBufferRef RendererImplemented::GetIndexBuffer()
 {
 	if (GetRenderMode() == ::Effekseer::RenderMode::Wireframe)
@@ -623,12 +603,12 @@ void RendererImplemented::SetBackground(IDirect3DTexture9* background)
 
 	if (m_backgroundDX9 == nullptr)
 	{
-		m_backgroundDX9 = graphicsDevice_->CreateTexture(background, [](auto texture) -> auto {}, [](auto texture) -> auto {});
+		m_backgroundDX9 = graphicsDevice_->CreateTexture(background, [](auto texture) -> auto{}, [](auto texture) -> auto{});
 	}
 	else
 	{
 		auto texture = static_cast<Backend::Texture*>(m_backgroundDX9.Get());
-		texture->Init(background, [](auto texture) -> auto {}, [](auto texture) -> auto {});
+		texture->Init(background, [](auto texture) -> auto{}, [](auto texture) -> auto{});
 	}
 
 	EffekseerRenderer::Renderer::SetBackground(m_backgroundDX9);
@@ -651,14 +631,6 @@ void RendererImplemented::SetDistortingCallback(EffekseerRenderer::DistortingCal
 void RendererImplemented::SetVertexBuffer(IDirect3DVertexBuffer9* vertexBuffer, int32_t size)
 {
 	GetDevice()->SetStreamSource(0, vertexBuffer, 0, size);
-}
-
-//----------------------------------------------------------------------------------
-//
-//----------------------------------------------------------------------------------
-void RendererImplemented::SetVertexBuffer(VertexBuffer* vertexBuffer, int32_t size)
-{
-	GetDevice()->SetStreamSource(0, vertexBuffer->GetInterface(), 0, size);
 }
 
 void RendererImplemented::SetVertexBuffer(const Effekseer::Backend::VertexBufferRef& vertexBuffer, int32_t size)
@@ -828,11 +800,6 @@ void RendererImplemented::SetTextures(Shader* shader, Effekseer::Backend::Textur
 //----------------------------------------------------------------------------------
 void RendererImplemented::ChangeDevice(LPDIRECT3DDEVICE9 device)
 {
-	for (auto& device : m_deviceObjects)
-	{
-		device->OnChangeDevice();
-	}
-
 	graphicsDevice_->ChangeDevice(device);
 
 	m_isChangedDevice = true;
