@@ -52,6 +52,7 @@ set(effekseer_public_h
     Effekseer/Renderer/Effekseer.ModelRenderer.h
     Effekseer/Renderer/Effekseer.TrackRenderer.h
     Effekseer/Renderer/Effekseer.GPUTimer.h
+    Effekseer/Renderer/Effekseer.GpuParticles.h
     Effekseer/Effekseer.EffectLoader.h
     Effekseer/Effekseer.TextureLoader.h
     Effekseer/Model/Model.h
