@@ -3,6 +3,8 @@
 #define __EFFEKSEER_GPU_PARTICLES_H__
 
 #include "../Effekseer.Base.h"
+#include "../Effekseer.Vector3D.h"
+#include "../Effekseer.Color.h"
 
 namespace Effekseer
 {
