@@ -348,6 +348,7 @@ void GpuParticles::InitSystem(const Settings& settings)
 
 	m_cmdParticleSpawn.shader = m_csParticleSpawn.get();
 	m_cmdParticleSpawn.csCBufs[0] = m_bufferConstants.buffer.get();
+	m_cmdParticleSpawn.csCBufs[1] = m_bufferParticleArgs.buffer.get();
 	m_cmdParticleSpawn.csSRVs[0] = m_bufviewParamSets.srv.get();
 	m_cmdParticleSpawn.csSRVs[1] = m_bufviewEmitters.srv.get();
 	m_cmdParticleSpawn.csUAVs[0] = m_bufviewParticles.uav.get();
@@ -432,6 +433,7 @@ void GpuParticles::UpdateFrame(float deltaTime)
 		// Initialize particle data region
 		auto& emitter = m_emitters[emitterID];
 		ParticleArgs pargs{};
+		pargs.EmitterID = emitterID;
 		pargs.ParticleHead = emitter.ParticleHead;
 		m_bufferParticleArgs.UpdateData(context, &pargs, sizeof(pargs));
 		m_cmdParticleClear.Dispatch(context, 256, emitter.ParticleSize);
@@ -446,28 +448,42 @@ void GpuParticles::UpdateFrame(float deltaTime)
 			auto& paramSet = m_paramSets[emitter.GetParamID()];
 			emitter.TotalEmitCount += emitter.NextEmitCount;
 			emitter.NextEmitCount = std::min(
-				(uint32_t)(deltaTime / paramSet.EmitInterval[0]), 
+				(uint32_t)(round(deltaTime / paramSet.EmitInterval[0])), 
 				paramSet.EmitCount - emitter.TotalEmitCount);
 		}
 	}
 	m_bufviewEmitters.UpdateDynamicData(context, 0, m_emitters.data(), sizeof(Emitter) * m_emitters.size());
 
 	// Spawn particles
-	m_cmdParticleSpawn.Dispatch(context, 1, m_settings.EmitterMaxCount);
+	for (EmitterID emitterID = 0; emitterID < (EmitterID)m_emitters.size(); emitterID++)
+	{
+		auto& emitter = m_emitters[emitterID];
+		if (emitter.IsAlive())
+		{
+			ParticleArgs pargs{};
+			pargs.EmitterID = emitterID;
+			pargs.ParticleHead = emitter.ParticleHead;
+			m_bufferParticleArgs.UpdateData(context, &pargs, sizeof(pargs));
+			
+			m_cmdParticleSpawn.Dispatch(context, 1, emitter.NextEmitCount);
+		}
+	}
 
 	// Update particles
 	{
 		ID3D11SamplerState* samplers[1] = { m_vfSampler.get() };
 		context->CSSetSamplers(4, 1, samplers);
 	}
-	for (auto& emitter : m_emitters)
+	for (EmitterID emitterID = 0; emitterID < (EmitterID)m_emitters.size(); emitterID++)
 	{
+		auto& emitter = m_emitters[emitterID];
 		if (emitter.IsAlive())
 		{
 			auto& paramSet = m_paramSets[emitter.GetParamID()];
 			auto& paramRes = m_resources[emitter.GetParamID()];
 
 			ParticleArgs pargs{};
+			pargs.EmitterID = emitterID;
 			pargs.ParticleHead = emitter.ParticleHead;
 			if (emitter.TrailSize > 0)
 			{
@@ -501,14 +517,16 @@ void GpuParticles::RenderFrame()
 	renderer->BeginShader(shader);
 	renderer->SetLayout(shader);
 
-	for (Emitter& emitter : m_emitters)
+	for (EmitterID emitterID = 0; emitterID < (EmitterID)m_emitters.size(); emitterID++)
 	{
+		auto& emitter = m_emitters[emitterID];
 		if (emitter.IsAlive())
 		{
 			auto& paramSet = m_paramSets[emitter.GetParamID()];
 			auto& paramRes = m_resources[emitter.GetParamID()];
 
 			ParticleArgs pargs{};
+			pargs.EmitterID = emitterID;
 			pargs.ParticleHead = emitter.ParticleHead;
 			if (emitter.TrailSize > 0)
 			{
@@ -682,7 +700,7 @@ GpuParticles::EmitterID GpuParticles::AddEmitter(ParamID paramID)
 	EmitterID emitterID = m_emitterFreeList.front();
 	
 	auto& paramSet = m_paramSets[paramID];
-	uint32_t particlesMaxCount = (uint32_t)((double)paramSet.LifeTime[0] / paramSet.EmitInterval[1]);
+	uint32_t particlesMaxCount = (uint32_t)(round((double)paramSet.LifeTime[0] / paramSet.EmitInterval[1]));
 	particlesMaxCount = std::min(particlesMaxCount, paramSet.EmitCount);
 	particlesMaxCount = RoundUp(particlesMaxCount, ParticleUnitSize);
 

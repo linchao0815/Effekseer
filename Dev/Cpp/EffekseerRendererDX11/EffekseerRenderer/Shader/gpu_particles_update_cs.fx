@@ -6,6 +6,7 @@ cbuffer cb : register(b0)
 };
 cbuffer cb1 : register(b1)
 {
+    uint EmitterID;
     uint ParticleHead;
     uint TrailHead;
     uint TrailJoints;
@@ -44,10 +45,9 @@ void main(uint3 dtid : SV_DispatchThreadID)
     
     if (particle.FlagBits & 0x01) {
         uint paramID = (particle.FlagBits >> 1) & 0x3FF;
-        uint emitterID = (particle.FlagBits >> 11) & 0x3FF;
-        uint updateCount = (particle.FlagBits >> 21) & 0xFF;
+        uint updateCount = (particle.FlagBits >> 11) & 0xFF;
         ParameterSet paramSet = ParamSets[paramID];
-        Emitter emitter = Emitters[emitterID];
+        Emitter emitter = Emitters[EmitterID];
         float deltaTime = constants.DeltaTime;
 
         // Randomize parameters

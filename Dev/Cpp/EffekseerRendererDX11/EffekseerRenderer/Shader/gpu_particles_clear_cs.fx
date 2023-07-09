@@ -6,6 +6,7 @@ cbuffer cb : register(b0)
 };
 cbuffer cb1 : register(b1)
 {
+    uint EmitterID;
     uint ParticleHead;
 }
 

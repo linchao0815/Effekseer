@@ -6,6 +6,7 @@ cbuffer cb : register(b8)
 };
 cbuffer cb1 : register(b9)
 {
+    uint EmitterID;
     uint ParticleHead;
     uint TrailHead;
     uint TrailJoints;
@@ -43,8 +44,7 @@ VS_Output main(const VS_Input input)
     Particle particle = Particles[index];
     if (particle.FlagBits & 0x01) {
         uint paramID = (particle.FlagBits >> 1) & 0x3FF;
-        uint emitterID = (particle.FlagBits >> 11) & 0x3FF;
-        uint updateCount = (particle.FlagBits >> 21) & 0xFF;
+        uint updateCount = (particle.FlagBits >> 11) & 0xFF;
         ParameterSet paramSet = ParamSets[paramID];
         float3 position = input.Pos;
         float2 uv = input.UV;

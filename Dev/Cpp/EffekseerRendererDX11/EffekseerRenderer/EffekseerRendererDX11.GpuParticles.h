@@ -111,7 +111,7 @@ private:
 	};
 	struct Particle
 	{
-		uint32_t FlagBits;  // Alive:1, ParamID:10, EmitterID:10, UpdateCount:8
+		uint32_t FlagBits;  // Alive:1, ParamID:10, UpdateCount:8
 		uint32_t Seed;
 		float LifeAge;
 		uint32_t InheritColor;
@@ -138,10 +138,12 @@ private:
 	};
 	struct ParticleArgs
 	{
+		uint32_t EmitterID;
 		uint32_t ParticleHead;
 		uint32_t TrailHead;
 		uint32_t TrailJoints;
 		uint32_t TrailPhase;
+		uint32_t Reserved[3];
 	};
 	struct Block
 	{
