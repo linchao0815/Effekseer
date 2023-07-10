@@ -21,10 +21,10 @@ namespace Effekseer.Binary
 				return value.Enabled.Value.GetBytes();
 			}
 
-			data.Add(value.Basic.EmitCount.GetBytes());
-			data.Add(value.Basic.LifeTime.GetBytes());
+			data.Add(value.Basic.EmitCount.GetBytes(-1));
+			data.Add(value.Basic.EmitPerFrame.GetBytes());
 			data.Add(value.Basic.EmitOffset.GetBytes());
-			data.Add(value.Basic.EmitInterval.GetBytes());
+			data.Add(value.Basic.LifeTime.GetBytes());
 
 			data.Add(value.EmitShape.Shape.GetBytes());
 			switch (value.EmitShape.Shape.Value)

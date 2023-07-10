@@ -1,30 +1,32 @@
 
 struct ParameterSet
 {
-    uint EmitCount;
-    uint LifeTime[2];
-    float EmitOffset[2];
-    float EmitInterval[2];
+    int EmitCount;
+    int EmitPerFrame;
+    float EmitOffset;
+    uint Padding0;
+    float LifeTime[2];
 
     uint EmitShapeType;
-    float3 EmitShapeData[3];
+    uint Padding1;
+    float4 EmitShapeData[2];
 
     float3 Direction;
     float Spread;
     float InitialSpeed[2];
     float Damping[2];
 
-    float3 InitialAngle[2];
-    float3 AngularVelocity[2];
+    float4 InitialAngleScale[2];
+    float4 TargetAngleScale[2];
     
-    float InitialScale[2];
-    float TerminalScale[2];
-
     float3 Gravity;
-    float VortexRotation;
-    float VortexAttraction;
+    uint Padding2;
+
     float3 VortexCenter;
+    float VortexRotation;
     float3 VortexAxis;
+    float VortexAttraction;
+
     float TurbulencePower;
     uint TurbulenceSeed;
     float TurbulenceScale;
@@ -35,16 +37,17 @@ struct ParameterSet
     uint ShapeData;
     float ShapeSize;
 
-    uint ColorFlags;
-    uint ColorStart[2];
-    uint ColorEnd[2];
     float Emissive;
     float FadeIn;
     float FadeOut;
+    uint ColorFlags;
+    uint ColorStart[2];
+    uint ColorEnd[2];
 
     uint ColorTexIndex;
     uint NormalTexIndex;
     uint TexState;
+	uint Padding3;
 };
 
 struct Emitter
@@ -56,6 +59,7 @@ struct Emitter
     uint TrailHead;
     uint TrailSize;
     uint TrailPhase;
+    float TimeCount;
     uint NextEmitCount;
     uint TotalEmitCount;
     float3x4 Transform;
@@ -173,6 +177,11 @@ float RandomFloatRange(inout uint seed, float maxmin[2])
 }
 
 float3 RandomFloat3Range(inout uint seed, float3 maxmin[2])
+{
+    return lerp(maxmin[1], maxmin[0], RandomFloat(seed));
+}
+
+float4 RandomFloat4Range(inout uint seed, float4 maxmin[2])
 {
     return lerp(maxmin[1], maxmin[0], RandomFloat(seed));
 }

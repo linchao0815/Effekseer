@@ -91,6 +91,7 @@ private:
 		uint32_t TrailHead;
 		uint32_t TrailSize;
 		uint32_t TrailPhase;
+		float TimeCount;
 		uint32_t NextEmitCount;
 		uint32_t TotalEmitCount;
 		float3x4 Transform;

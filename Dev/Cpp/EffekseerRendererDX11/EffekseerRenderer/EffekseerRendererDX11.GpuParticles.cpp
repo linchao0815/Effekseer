@@ -196,7 +196,7 @@ void GpuParticles::ComputeCommand::Dispatch(ID3D11DeviceContext* context, uint32
 	context->CSSetConstantBuffers(0, (UINT)csCBufs.size(), csCBufs.data());
 	context->CSSetShaderResources(0, (UINT)csSRVs.size(), csSRVs.data());
 	context->CSSetUnorderedAccessViews(0, (UINT)csUAVs.size(), csUAVs.data(), nullptr);
-	context->Dispatch(processCount / baseCount, 1, 1);
+	context->Dispatch(std::min(processCount / baseCount, 65536u), 1, 1);
 
 	std::array<ID3D11UnorderedAccessView*, 4> csClearUAVs = {};
 	context->CSSetUnorderedAccessViews(0, (UINT)csClearUAVs.size(), csClearUAVs.data(), nullptr);
@@ -392,7 +392,8 @@ void GpuParticles::InitSystem(const Settings& settings)
 
 void GpuParticles::UpdateFrame(float deltaTime)
 {
-	auto context = GetRenderer()->GetContext();
+	auto renderer = GetRenderer();
+	auto context = renderer->GetContext();
 
 	// Update constant buffer
 	Constants cdata{};
@@ -415,11 +416,6 @@ void GpuParticles::UpdateFrame(float deltaTime)
 	cdata.CameraFront = GetRenderer()->GetCameraFrontDirection();
 	cdata.DeltaTime = deltaTime;
 	m_bufferConstants.UpdateData(context, &cdata, sizeof(Constants));
-
-	if (deltaTime == 0.0f)
-	{
-		return;
-	}
 
 	for (auto paramID : m_newParamSetIDs)
 	{
@@ -447,9 +443,17 @@ void GpuParticles::UpdateFrame(float deltaTime)
 		{
 			auto& paramSet = m_paramSets[emitter.GetParamID()];
 			emitter.TotalEmitCount += emitter.NextEmitCount;
-			emitter.NextEmitCount = std::min(
-				(uint32_t)(round(deltaTime / paramSet.EmitInterval[0])), 
-				paramSet.EmitCount - emitter.TotalEmitCount);
+
+			if (emitter.TimeCount >= paramSet.EmitOffset)
+			{
+				emitter.NextEmitCount = (uint32_t)(round(paramSet.EmitPerFrame * deltaTime));
+				
+				if (paramSet.EmitCount >= 0)
+				{
+					emitter.NextEmitCount = std::clamp((int32_t)emitter.NextEmitCount, 0, paramSet.EmitCount - (int32_t)emitter.TotalEmitCount);
+				}
+			}
+			emitter.TimeCount += deltaTime;
 		}
 	}
 	m_bufviewEmitters.UpdateDynamicData(context, 0, m_emitters.data(), sizeof(Emitter) * m_emitters.size());
@@ -460,6 +464,23 @@ void GpuParticles::UpdateFrame(float deltaTime)
 		auto& emitter = m_emitters[emitterID];
 		if (emitter.IsAlive())
 		{
+			auto& paramSet = m_paramSets[emitter.GetParamID()];
+			auto& paramRes = m_resources[emitter.GetParamID()];
+
+			if (paramSet.EmitShapeType == 4)
+			{
+				if (auto model = paramRes.Effect->GetModel(paramSet.EmitShapeData.ModelIndex))
+				{
+					if (!model->GetIsBufferStoredOnGPU())
+					{
+						model->StoreBufferToGPU(renderer->GetGraphicsDevice().Get());
+					}
+
+					auto vertexBuffer = model->GetVertexBuffer(0).DownCast<Backend::VertexBuffer>();
+					auto indexBuffer = model->GetIndexBuffer(0).DownCast<Backend::IndexBuffer>();
+				}
+			}
+
 			ParticleArgs pargs{};
 			pargs.EmitterID = emitterID;
 			pargs.ParticleHead = emitter.ParticleHead;
@@ -700,8 +721,8 @@ GpuParticles::EmitterID GpuParticles::AddEmitter(ParamID paramID)
 	EmitterID emitterID = m_emitterFreeList.front();
 	
 	auto& paramSet = m_paramSets[paramID];
-	uint32_t particlesMaxCount = (uint32_t)(round((double)paramSet.LifeTime[0] / paramSet.EmitInterval[1]));
-	particlesMaxCount = std::min(particlesMaxCount, paramSet.EmitCount);
+	uint32_t particlesMaxCount = (uint32_t)(round((double)paramSet.LifeTime[1] * paramSet.EmitPerFrame));
+	particlesMaxCount = std::min(particlesMaxCount, (uint32_t)paramSet.EmitCount);
 	particlesMaxCount = RoundUp(particlesMaxCount, ParticleUnitSize);
 
 	Emitter& emitter = m_emitters[emitterID];
@@ -712,6 +733,7 @@ GpuParticles::EmitterID GpuParticles::AddEmitter(ParamID paramID)
 	emitter.TrailHead = 0;
 	emitter.TrailSize = 0;
 	emitter.TrailPhase = 0;
+	emitter.TimeCount = 0.0f;
 	emitter.NextEmitCount = 0;
 	emitter.TotalEmitCount = 0;
 	emitter.Transform.Indentity();

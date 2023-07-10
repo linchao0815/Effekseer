@@ -28,13 +28,13 @@ void main(uint3 dtid : SV_DispatchThreadID)
     float speed = RandomFloatRange(paramSeed, paramSet.InitialSpeed);
 
     if (paramSet.EmitShapeType == 1) {
-        float3 lineStart = mul(emitter.Transform, float4(paramSet.EmitShapeData[0], 0.0f)).xyz;
-        float3 lineEnd = mul(emitter.Transform, float4(paramSet.EmitShapeData[1], 0.0f)).xyz;
-        float lineWidth = paramSet.EmitShapeData[2].x;
+        float3 lineStart = mul(emitter.Transform, float4(paramSet.EmitShapeData[0].xyz, 0.0f)).xyz;
+        float3 lineEnd = mul(emitter.Transform, float4(paramSet.EmitShapeData[1].xyz, 0.0f)).xyz;
+        float lineWidth = paramSet.EmitShapeData[1].w;
         position += lerp(lineStart, lineEnd, RandomFloat(paramSeed));
         position += RandomDirection(paramSeed) * lineWidth * 0.5f;
     } else if (paramSet.EmitShapeType == 2) {
-        float3 circleAxis = mul(emitter.Transform, float4(paramSet.EmitShapeData[0], 0.0f)).xyz;
+        float3 circleAxis = mul(emitter.Transform, float4(paramSet.EmitShapeData[0].xyz, 0.0f)).xyz;
         float circleInner = paramSet.EmitShapeData[1].x;
         float circleOuter = paramSet.EmitShapeData[1].y;
         float circleRadius = lerp(circleInner, circleOuter, RandomFloat(paramSeed));

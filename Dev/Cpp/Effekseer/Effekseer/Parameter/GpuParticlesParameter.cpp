@@ -7,13 +7,13 @@ GpuParticles::ParameterSet LoadGpuParticlesParameter(uint8_t*& pos, int32_t vers
 {
 	GpuParticles::ParameterSet paramSet{};
 
-	memcpy(&paramSet.EmitCount, pos, sizeof(uint32_t));
-	pos += sizeof(uint32_t);
+	memcpy(&paramSet.EmitCount, pos, sizeof(int32_t));
+	pos += sizeof(int32_t);
+	memcpy(&paramSet.EmitPerFrame, pos, sizeof(int32_t));
+	pos += sizeof(int32_t);
+	memcpy(&paramSet.EmitOffset, pos, sizeof(float));
+	pos += sizeof(float);
 	memcpy(&paramSet.LifeTime, pos, sizeof(float) * 2);
-	pos += sizeof(float) * 2;
-	memcpy(&paramSet.EmitOffset, pos, sizeof(float) * 2);
-	pos += sizeof(float) * 2;
-	memcpy(&paramSet.EmitInterval, pos, sizeof(float) * 2);
 	pos += sizeof(float) * 2;
 
 	memcpy(&paramSet.EmitShapeType, pos, sizeof(uint32_t));
@@ -60,22 +60,34 @@ GpuParticles::ParameterSet LoadGpuParticlesParameter(uint8_t*& pos, int32_t vers
 	memcpy(&paramSet.Damping, pos, sizeof(float) * 2);
 	pos += sizeof(float) * 2;
 
-	memcpy(&paramSet.InitialAngle, pos, sizeof(Vector3D) * 2);
-	pos += sizeof(Vector3D) * 2;
-	memcpy(&paramSet.AngularVelocity, pos, sizeof(Vector3D) * 2);
-	pos += sizeof(Vector3D) * 2;
+	memcpy(&paramSet.InitialAngleScale[0], pos, sizeof(Vector3D));
+	pos += sizeof(Vector3D);
+	memcpy(&paramSet.InitialAngleScale[1], pos, sizeof(Vector3D));
+	pos += sizeof(Vector3D);
+	memcpy(&paramSet.TargetAngleScale[0], pos, sizeof(Vector3D));
+	pos += sizeof(Vector3D);
+	memcpy(&paramSet.TargetAngleScale[1], pos, sizeof(Vector3D));
+	pos += sizeof(Vector3D);
 
 	for (size_t i = 0; i < 2; i++)
 	{
 		// Degrees to Radians
-		paramSet.InitialAngle[i] *= EFK_PI / 180.0f;
-		paramSet.AngularVelocity[i] *= EFK_PI / 180.0f;
+		paramSet.InitialAngleScale[i].x *= EFK_PI / 180.0f;
+		paramSet.InitialAngleScale[i].y *= EFK_PI / 180.0f;
+		paramSet.InitialAngleScale[i].z *= EFK_PI / 180.0f;
+		paramSet.TargetAngleScale[i].x *= EFK_PI / 180.0f;
+		paramSet.TargetAngleScale[i].y *= EFK_PI / 180.0f;
+		paramSet.TargetAngleScale[i].z *= EFK_PI / 180.0f;
 	}
 
-	memcpy(&paramSet.InitialScale, pos, sizeof(float) * 2);
-	pos += sizeof(float) * 2;
-	memcpy(&paramSet.TerminalScale, pos, sizeof(float) * 2);
-	pos += sizeof(float) * 2;
+	memcpy(&paramSet.InitialAngleScale[0].w, pos, sizeof(float));
+	pos += sizeof(float);
+	memcpy(&paramSet.InitialAngleScale[1].w, pos, sizeof(float));
+	pos += sizeof(float);
+	memcpy(&paramSet.TargetAngleScale[0].w, pos, sizeof(float));
+	pos += sizeof(float);
+	memcpy(&paramSet.TargetAngleScale[1].w, pos, sizeof(float));
+	pos += sizeof(float);
 
 	memcpy(&paramSet.Gravity, pos, sizeof(Vector3D));
 	pos += sizeof(Vector3D);

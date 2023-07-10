@@ -15,8 +15,32 @@ using GpuParticlesRef = RefPtr<GpuParticles>;
 class GpuParticles : public ReferenceObject
 {
 public:
-	using float3 = Effekseer::Vector3D;
-	using float4 = std::array<float, 4>;
+
+	struct float3
+	{
+		float x, y, z;
+
+		float3& operator=(const Effekseer::Vector3D& rhs)
+		{
+			x = rhs.X;
+			y = rhs.Y;
+			z = rhs.Z;
+			return *this;
+		}
+	};
+	struct float4
+	{
+		float x, y, z, w;
+
+		float4& operator=(const std::array<float, 4>& rhs)
+		{
+			x = rhs[0];
+			y = rhs[1];
+			z = rhs[2];
+			w = rhs[3];
+			return *this;
+		}
+	};
 	using float3x4 = Effekseer::Matrix43;
 	using float4x4 = Effekseer::Matrix44;
 	using float3x3 = std::array<float4, 3>;  // 16byte alignment needed
@@ -30,24 +54,28 @@ public:
 
 	struct ParameterSet
 	{
-		uint32_t EmitCount;
-		std::array<int32_t, 2> LifeTime;
-		std::array<float, 2> EmitOffset;
-		std::array<float, 2> EmitInterval;
+		int32_t EmitCount;
+		int32_t EmitPerFrame;
+		float EmitOffset;
+		uint32_t Padding0;
+		std::array<float, 2> LifeTime;
 
 		uint32_t EmitShapeType;
+		uint32_t Padding1;
 		union
 		{
-			float Reserved[3][3];
+			float4 Reserved[2];
 			struct
 			{
-				float LineStart[3];
-				float LineEnd[3];
+				float3 LineStart;
+				float Padding;
+				float3 LineEnd;
 				float LineWidth;
 			};
 			struct
 			{
-				float CircleAxis[3];
+				float3 CircleAxis;
+				float Padding;
 				float CircleInner;
 				float CircleOuter;
 			};
@@ -67,17 +95,17 @@ public:
 		std::array<float, 2> InitialSpeed;
 		std::array<float, 2> Damping;
 
-		std::array<float3, 2> InitialAngle;
-		std::array<float3, 2> AngularVelocity;
-
-		std::array<float, 2> InitialScale;
-		std::array<float, 2> TerminalScale;
+		std::array<float4, 2> InitialAngleScale;
+		std::array<float4, 2> TargetAngleScale;
 
 		float3 Gravity;
-		float VortexRotation;
-		float VortexAttraction;
+		float Padding2;
+
 		float3 VortexCenter;
+		float VortexRotation;
 		float3 VortexAxis;
+		float VortexAttraction;
+
 		float TurbulencePower;
 		int32_t TurbulenceSeed;
 		float TurbulenceScale;
@@ -92,18 +120,20 @@ public:
 		uint32_t ShapeData;
 		float ShapeSize;
 
-		uint32_t ColorFlags;
-		std::array<uint32_t, 2> ColorStart;
-		std::array<uint32_t, 2> ColorEnd;
 		float Emissive;
 		float FadeIn;
 		float FadeOut;
+		uint32_t ColorFlags;
+		std::array<uint32_t, 2> ColorStart;
+		std::array<uint32_t, 2> ColorEnd;
+		
 		uint32_t ColorTexIndex;
 		uint32_t NormalTexIndex;
 		uint8_t ColorTexFilter;
 		uint8_t NormalTexFilter;
 		uint8_t ColorTexWrap;
 		uint8_t NormalTexWrap;
+		uint32_t Padding3;
 	};
 	using EmitterID = int32_t;
 	using ParamID = int32_t;

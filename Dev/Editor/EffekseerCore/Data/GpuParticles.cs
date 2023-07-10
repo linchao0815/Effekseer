@@ -13,16 +13,16 @@ namespace Effekseer.Data
 		public class BasicParams
 		{
 			[Key(key = "GpuParticles_Basic_EmitCount")]
-			public Value.IntWithInifinite EmitCount { get; private set; } = new Value.IntWithInifinite(value: 20, min: 1);
+			public Value.IntWithInifinite EmitCount { get; private set; } = new Value.IntWithInifinite(value: 1000, min: 1);
 
-			[Key(key = "GpuParticles_Basic_LifeTime")]
-			public Value.IntWithRandom LifeTime { get; private set; } = new Value.IntWithRandom(value: 100, min: 1);
+			[Key(key = "GpuParticles_Basic_EmitPerFrame")]
+			public Value.Int EmitPerFrame { get; private set; } = new Value.Int(value: 10, min: 0);
 
 			[Key(key = "GpuParticles_Basic_EmitOffset")]
-			public Value.FloatWithRandom EmitOffset { get; private set; } = new Value.FloatWithRandom(value: 0.0f, min: 0.0f);
+			public Value.Float EmitOffset { get; private set; } = new Value.Float(value: 0.0f, min: 0.0f);
 
-			[Key(key = "GpuParticles_Basic_EmitInterval")]
-			public Value.FloatWithRandom EmitInterval { get; private set; } = new Value.FloatWithRandom(value: 1.0f, min: 0.0f);
+			[Key(key = "GpuParticles_Basic_LifeTime")]
+			public Value.FloatWithRandom LifeTime { get; private set; } = new Value.FloatWithRandom(value: 100.0f, min: 1.0f);
 		}
 
 		public class EmitShapeParams

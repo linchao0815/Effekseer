@@ -52,13 +52,15 @@ void main(uint3 dtid : SV_DispatchThreadID)
 
         // Randomize parameters
         uint paramSeed = particle.Seed;
-        float lifeTime = (float)RandomUintRange(paramSeed, paramSet.LifeTime);
+        float lifeTime = RandomFloatRange(paramSeed, paramSet.LifeTime);
         float lifeRatio = particle.LifeAge / lifeTime;
         float damping = RandomFloatRange(paramSeed, paramSet.Damping) * 0.01;
-        float3 initialAngle = RandomFloat3Range(paramSeed, paramSet.InitialAngle);
-        float3 angularVelocity = RandomFloat3Range(paramSeed, paramSet.AngularVelocity);
-        float initialScale = RandomFloatRange(paramSeed, paramSet.InitialScale);
-        float terminalScale = RandomFloatRange(paramSeed, paramSet.TerminalScale);
+        float4 initialAngleScale = RandomFloat4Range(paramSeed, paramSet.InitialAngleScale);
+        float4 targetAngleScale = RandomFloat4Range(paramSeed, paramSet.TargetAngleScale);
+        float3 initialAngle = initialAngleScale.xyz;
+        float3 angularVelocity = targetAngleScale.xyz;
+        float initialScale = initialAngleScale.w;
+        float terminalScale = targetAngleScale.w;
         float4 colorStart = RandomColorRange(paramSeed, paramSet.ColorStart);
         float4 colorEnd = RandomColorRange(paramSeed, paramSet.ColorEnd);
 
