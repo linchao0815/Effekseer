@@ -1,10 +1,10 @@
 #include "gpu_particles_common.h"
 
-cbuffer cb : register(b8)
+cbuffer cb : register(b0)
 {
     Constants constants;
 };
-cbuffer cb1 : register(b9)
+cbuffer cb1 : register(b1)
 {
     uint EmitterID;
     uint ParticleHead;

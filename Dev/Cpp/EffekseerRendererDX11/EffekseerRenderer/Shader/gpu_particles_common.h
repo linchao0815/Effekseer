@@ -62,8 +62,19 @@ struct Emitter
     float TimeCount;
     uint NextEmitCount;
     uint TotalEmitCount;
+    uint EmitPointCount;
     float3x4 Transform;
     float4 Color;
+};
+
+struct EmitPoint
+{
+    float3 Position;
+    float3 Normal;
+    float3 Binormal;
+    float3 Tangent;
+    float2 UV;
+    uint VColor;
 };
 
 struct Particle

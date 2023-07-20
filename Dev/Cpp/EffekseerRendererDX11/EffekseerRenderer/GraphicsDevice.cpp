@@ -1,3 +1,4 @@
+#define NOMINMAX
 #include "GraphicsDevice.h"
 #include "../../EffekseerRendererCommon/EffekseerRenderer.CommonUtils.h"
 
@@ -484,6 +485,81 @@ bool UniformBuffer::GetIsDirtied() const
 	return isDirtied_;
 }
 
+ComputeBuffer::ComputeBuffer(GraphicsDevice* graphicsDevice)
+	: graphicsDevice_(graphicsDevice)
+{
+	ES_SAFE_ADDREF(graphicsDevice_);
+	graphicsDevice_->Register(this);
+}
+
+ComputeBuffer ::~ComputeBuffer()
+{
+	graphicsDevice_->Unregister(this);
+	ES_SAFE_RELEASE(graphicsDevice_);
+}
+
+bool ComputeBuffer::Init(int32_t elementCount, int32_t elementSize, const void* initialData)
+{
+	D3D11_BUFFER_DESC hBufferDesc;
+	hBufferDesc.ByteWidth = static_cast<UINT>(elementCount * elementSize);
+	hBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	hBufferDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
+	hBufferDesc.CPUAccessFlags = 0;
+	hBufferDesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
+	hBufferDesc.StructureByteStride = static_cast<UINT>(elementSize);
+
+	D3D11_SUBRESOURCE_DATA hSubResourceData;
+	hSubResourceData.pSysMem = initialData;
+	hSubResourceData.SysMemPitch = 0;
+	hSubResourceData.SysMemSlicePitch = 0;
+
+	ID3D11Buffer* buffer;
+	if (FAILED(graphicsDevice_->GetDevice()->CreateBuffer(&hBufferDesc, initialData != nullptr ? &hSubResourceData : nullptr, &buffer)))
+	{
+		return false;
+	}
+	buffer_ = Effekseer::CreateUniqueReference(buffer);
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+	srvDesc.Format = DXGI_FORMAT_UNKNOWN;
+	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
+	srvDesc.Buffer.FirstElement = 0;
+	srvDesc.Buffer.NumElements = static_cast<UINT>(elementCount);
+
+	ID3D11ShaderResourceView* srv = nullptr;
+	if (FAILED(graphicsDevice_->GetDevice()->CreateShaderResourceView(buffer, &srvDesc, &srv)))
+	{
+		return false;
+	}
+	srv_ = Effekseer::CreateUniqueReference(srv);
+
+	D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc{};
+	uavDesc.Format = DXGI_FORMAT_UNKNOWN;
+	uavDesc.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;
+	uavDesc.Buffer.FirstElement = 0;
+	uavDesc.Buffer.NumElements = static_cast<UINT>(elementCount);
+	uavDesc.Buffer.Flags = 0;
+
+	ID3D11UnorderedAccessView* uav = nullptr;
+	if (FAILED(graphicsDevice_->GetDevice()->CreateUnorderedAccessView(buffer, &uavDesc, &uav)))
+	{
+		return false;
+	}
+	uav_ = Effekseer::CreateUniqueReference(uav);
+
+	return true;
+}
+
+void ComputeBuffer::UpdateData(const void* src, int32_t size, int32_t offset)
+{
+	D3D11_BOX dstBox{};
+	dstBox.left = static_cast<UINT>(offset);
+	dstBox.right = static_cast<UINT>(offset + size);
+	dstBox.bottom = 1;
+	dstBox.back = 1;
+	graphicsDevice_->GetContext()->UpdateSubresource(buffer_.get(), 0, &dstBox, src, 0, 0);
+}
+
 Texture::Texture(GraphicsDevice* graphicsDevice)
 	: graphicsDevice_(graphicsDevice)
 {
@@ -953,6 +1029,28 @@ bool Shader::Init(const void* vertexShaderData, int32_t vertexShaderDataSize, co
 	return true;
 }
 
+ComputeShader::ComputeShader(GraphicsDevice* graphicsDevice)
+	: graphicsDevice_(graphicsDevice)
+{
+	ES_SAFE_ADDREF(graphicsDevice_);
+}
+
+ComputeShader::~ComputeShader()
+{
+	ES_SAFE_RELEASE(graphicsDevice_);
+}
+
+bool ComputeShader::Init(const void* computeShaderData, int32_t computeShaderDataSize)
+{
+	ID3D11ComputeShader* cs = nullptr;
+	if (FAILED(graphicsDevice_->GetDevice()->CreateComputeShader(computeShaderData, computeShaderDataSize, nullptr, &cs)))
+	{
+		return false;
+	}
+	cs_ = Effekseer::CreateUniqueReference(cs);
+	return true;
+}
+
 PipelineState::PipelineState(GraphicsDevice* graphicsDevice)
 	: graphicsDevice_(graphicsDevice)
 {
@@ -1279,6 +1377,18 @@ Effekseer::Backend::UniformBufferRef GraphicsDevice::CreateUniformBuffer(int32_t
 	return ret;
 }
 
+Effekseer::Backend::ComputeBufferRef GraphicsDevice::CreateComputeBuffer(int32_t elementSize, int32_t elementCount, const void* initialData)
+{
+	auto ret = Effekseer::MakeRefPtr<ComputeBuffer>(this);
+
+	if (!ret->Init(elementSize, elementCount, initialData))
+	{
+		return nullptr;
+	}
+
+	return ret;
+}
+
 Effekseer::Backend::VertexLayoutRef GraphicsDevice::CreateVertexLayout(const Effekseer::Backend::VertexLayoutElement* elements, int32_t elementCount)
 {
 	auto ret = Effekseer::MakeRefPtr<VertexLayout>();
@@ -1347,6 +1457,18 @@ Effekseer::Backend::ShaderRef GraphicsDevice::CreateShaderFromCodes(const Effeks
 	return nullptr;
 }
 
+Effekseer::Backend::ComputeShaderRef GraphicsDevice::CreateComputeShader(const void* csData, int32_t csDataSize)
+{
+	auto ret = Effekseer::MakeRefPtr<ComputeShader>(this);
+
+	if (!ret->Init(csData, csDataSize))
+	{
+		return nullptr;
+	}
+
+	return ret;
+}
+
 Effekseer::Backend::PipelineStateRef GraphicsDevice::CreatePipelineState(const Effekseer::Backend::PipelineStateParameter& param)
 {
 	auto ret = Effekseer::MakeRefPtr<PipelineState>(this);
@@ -1373,6 +1495,9 @@ void GraphicsDevice::SetViewport(int32_t x, int32_t y, int32_t width, int32_t he
 
 void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 {
+	constexpr int32_t BufferSlotCount = Effekseer::Backend::DrawParameter::BufferSlotCount;
+	constexpr int32_t TextureSlotCount = Effekseer::Backend::DrawParameter::TextureSlotCount;
+
 	if (drawParam.VertexBufferPtr == nullptr ||
 		drawParam.IndexBufferPtr == nullptr ||
 		drawParam.PipelineStatePtr == nullptr)
@@ -1383,8 +1508,6 @@ void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 	auto vb = static_cast<VertexBuffer*>(drawParam.VertexBufferPtr.Get());
 	auto ib = static_cast<IndexBuffer*>(drawParam.IndexBufferPtr.Get());
 	auto pip = static_cast<PipelineState*>(drawParam.PipelineStatePtr.Get());
-	auto vub = static_cast<UniformBuffer*>(drawParam.VertexUniformBufferPtr.Get());
-	auto pub = static_cast<UniformBuffer*>(drawParam.PixelUniformBufferPtr.Get());
 	auto shader = static_cast<Shader*>(pip->GetParam().ShaderPtr.Get());
 	auto vertexLayout = static_cast<VertexLayout*>(pip->GetParam().VertexLayoutPtr.Get());
 
@@ -1396,7 +1519,7 @@ void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 			vertexSize += Effekseer::Backend::GetVertexLayoutFormatSize(element.Format);
 		}
 
-		std::array<ID3D11Buffer*, 1> vbs;
+		std::array<ID3D11Buffer*, 1> vbs{};
 		vbs[0] = vb->GetBuffer();
 		uint32_t offset = 0;
 
@@ -1411,25 +1534,37 @@ void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 		context_->IASetIndexBuffer(ib->GetBuffer(), formats[static_cast<int32_t>(ib->GetStrideType())], 0);
 	}
 
-	if (vub != nullptr)
+	// Constant buffers (VS)
+	std::array<ID3D11Buffer*, BufferSlotCount> vubs{};
+	for (int32_t i = 0; i < BufferSlotCount; i++)
 	{
-		vub->UpdateDataActually();
-		auto cb = vub->GetBuffer();
-		context_->VSSetConstantBuffers(0, 1, &cb);
+		if (auto vub = static_cast<UniformBuffer*>(drawParam.VertexUniformBufferPtrs[i].Get()))
+		{
+			vub->UpdateDataActually();
+			vubs[i] = vub->GetBuffer();
+		}
 	}
+	context_->VSSetConstantBuffers(0, BufferSlotCount, vubs.data());
 
-	if (pub != nullptr)
+	// Constant buffers (PS)
+	std::array<ID3D11Buffer*, BufferSlotCount> pubs{};
+	for (int32_t i = 0; i < BufferSlotCount; i++)
 	{
-		pub->UpdateDataActually();
-		auto cb = pub->GetBuffer();
-		context_->PSSetConstantBuffers(0, 1, &cb);
+		if (auto pub = static_cast<UniformBuffer*>(drawParam.PixelUniformBufferPtrs[i].Get()))
+		{
+			pub->UpdateDataActually();
+			pubs[i] = pub->GetBuffer();
+		}
 	}
+	context_->PSSetConstantBuffers(0, BufferSlotCount, pubs.data());
 
+	// Vertex/Pixel shader
 	{
 		context_->VSSetShader(shader->GetVertexShader(), nullptr, 0);
 		context_->PSSetShader(shader->GetPixelShader(), nullptr, 0);
 	}
 
+	// Render State
 	{
 		context_->OMSetDepthStencilState(pip->GetDepthStencilState(), 0);
 		context_->RSSetState(pip->GetRasterizerState());
@@ -1437,44 +1572,33 @@ void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 		context_->OMSetBlendState(pip->GetBlendState(), blendFactor, 0xFFFFFFFF);
 	}
 
-	for (int32_t i = 0; i < drawParam.TextureCount; i++)
+	// Shader Resources
+	std::array<ID3D11SamplerState*, TextureSlotCount> samplers{};
+	std::array<ID3D11ShaderResourceView*, TextureSlotCount + BufferSlotCount> srvs{};
+	for (int32_t i = 0; i < TextureSlotCount; i++)
 	{
-		auto texture = static_cast<Texture*>(drawParam.TexturePtrs[i].Get());
-		if (texture != nullptr)
+		if (auto texture = static_cast<Texture*>(drawParam.TexturePtrs[i].Get()))
 		{
-			ID3D11SamplerState* samplerTbl[] = {samplers_[static_cast<int>(drawParam.TextureSamplingTypes[i])][static_cast<int>(drawParam.TextureWrapTypes[i])].get()};
-			context_->VSSetSamplers(i, 1, samplerTbl);
-			context_->PSSetSamplers(i, 1, samplerTbl);
-
-			auto srv = texture->GetSRV();
-			GetContext()->VSSetShaderResources(i, 1, &srv);
-			GetContext()->PSSetShaderResources(i, 1, &srv);
+			auto texSamplingType = drawParam.TextureSamplingTypes[i];
+			auto texWrapType = drawParam.TextureWrapTypes[i];
+			samplers[i] = samplers_[static_cast<int>(texSamplingType)][static_cast<int>(texWrapType)].get();
+			srvs[i] = texture->GetSRV();
 		}
-		else
+	}
+	for (int32_t i = 0; i < BufferSlotCount; i++)
+	{
+		if (auto buffer = static_cast<ComputeBuffer*>(drawParam.ComputeBufferPtrs[i].Get()))
 		{
-			ID3D11SamplerState* samplerTbl[] = {nullptr};
-			ID3D11ShaderResourceView* srvTbl[] = {nullptr};
-
-			GetContext()->VSSetSamplers(i, 1, samplerTbl);
-			GetContext()->PSSetSamplers(i, 1, samplerTbl);
-			GetContext()->VSSetShaderResources(i, 1, srvTbl);
-			GetContext()->PSSetShaderResources(i, 1, srvTbl);
+			srvs[TextureSlotCount + i] = buffer->GetSRV();
 		}
 	}
 
-	for (int32_t i = drawParam.TextureCount; i < Effekseer::Backend::DrawParameter::TextureSlotCount; i++)
-	{
-		ID3D11SamplerState* samplerTbl[] = {nullptr};
-		ID3D11ShaderResourceView* srvTbl[] = {nullptr};
-
-		GetContext()->VSSetSamplers(i, 1, samplerTbl);
-		GetContext()->PSSetSamplers(i, 1, samplerTbl);
-		GetContext()->VSSetShaderResources(i, 1, srvTbl);
-		GetContext()->PSSetShaderResources(i, 1, srvTbl);
-	}
+	GetContext()->VSSetShaderResources(0, TextureSlotCount + BufferSlotCount, srvs.data());
+	GetContext()->PSSetShaderResources(0, TextureSlotCount + BufferSlotCount, srvs.data());
+	GetContext()->VSSetSamplers(0, TextureSlotCount, samplers.data());
+	GetContext()->PSSetSamplers(0, TextureSlotCount, samplers.data());
 
 	// topology
-
 	int32_t indexPerPrimitive{};
 
 	if (pip->GetParam().Topology == Effekseer::Backend::TopologyType::Point)
@@ -1560,6 +1684,66 @@ void GraphicsDevice::EndRenderPass()
 {
 }
 
+void GraphicsDevice::Dispatch(const Effekseer::Backend::DispatchParameter& dispatchParam)
+{
+	constexpr int32_t BufferSlotCount = Effekseer::Backend::DispatchParameter::BufferSlotCount;
+	constexpr int32_t TextureSlotCount = Effekseer::Backend::DispatchParameter::TextureSlotCount;
+
+	auto shader = dispatchParam.Shader.DownCast<ComputeShader>();
+
+	std::array<ID3D11Buffer*, BufferSlotCount> csCBufs = {};
+	std::array<ID3D11ShaderResourceView*, BufferSlotCount + TextureSlotCount> csSRVs = {};
+	std::array<ID3D11UnorderedAccessView*, BufferSlotCount> csUAVs = {};
+	std::array<ID3D11SamplerState*, TextureSlotCount> csSamplers = {};
+
+	for (int32_t i = 0; i < BufferSlotCount; i++)
+	{
+		if (auto uniformBuffer = dispatchParam.UniformBufferPtrs[i].DownCast<UniformBuffer>())
+		{
+			uniformBuffer->UpdateDataActually();
+			csCBufs[i] = uniformBuffer->GetBuffer();
+		}
+	}
+
+	for (int32_t i = 0; i < BufferSlotCount; i++)
+	{
+		if (auto computeBuffer = dispatchParam.ROComputeBufferPtrs[i].DownCast<ComputeBuffer>())
+		{
+			csSRVs[i] = computeBuffer->GetSRV();
+		}
+	}
+
+	for (int32_t i = 0; i < BufferSlotCount; i++)
+	{
+		if (auto computeBuffer = dispatchParam.RWComputeBufferPtrs[i].DownCast<ComputeBuffer>())
+		{
+			csUAVs[i] = computeBuffer->GetUAV();
+		}
+	}
+
+	for (int32_t i = 0; i < TextureSlotCount; i++)
+	{
+		if (auto texture = dispatchParam.TexturePtrs[i].DownCast<Texture>())
+		{
+			csSRVs[BufferSlotCount + i] = texture->GetSRV();
+
+			auto texSamplingType = dispatchParam.TextureSamplingTypes[i];
+			auto texWrapType = dispatchParam.TextureWrapTypes[i];
+			csSamplers[i] = samplers_[static_cast<int>(texSamplingType)][static_cast<int>(texWrapType)].get();
+		}
+	}
+
+	context_->CSSetShader(shader->GetComputeShader(), nullptr, 0);
+	context_->CSSetConstantBuffers(0, (UINT)csCBufs.size(), csCBufs.data());
+	context_->CSSetShaderResources(0, (UINT)csSRVs.size(), csSRVs.data());
+	context_->CSSetSamplers(BufferSlotCount, (UINT)csSamplers.size(), csSamplers.data());
+	context_->CSSetUnorderedAccessViews(0, (UINT)csUAVs.size(), csUAVs.data(), nullptr);
+	context_->Dispatch(std::min(dispatchParam.DispatchCount / dispatchParam.ThreadCount, 65536), 1, 1);
+
+	std::array<ID3D11UnorderedAccessView*, 4> csClearUAVs = {};
+	context_->CSSetUnorderedAccessViews(0, (UINT)csClearUAVs.size(), csClearUAVs.data(), nullptr);
+}
+
 bool GraphicsDevice::UpdateUniformBuffer(Effekseer::Backend::UniformBufferRef& buffer, int32_t size, int32_t offset, const void* data)
 {
 	if (buffer == nullptr)
@@ -1568,6 +1752,20 @@ bool GraphicsDevice::UpdateUniformBuffer(Effekseer::Backend::UniformBufferRef& b
 	}
 
 	auto b = static_cast<UniformBuffer*>(buffer.Get());
+
+	b->UpdateData(data, size, offset);
+
+	return true;
+}
+
+bool GraphicsDevice::UpdateComputeBuffer(Effekseer::Backend::ComputeBufferRef& buffer, int32_t size, int32_t offset, const void* data)
+{
+	if (buffer == nullptr)
+	{
+		return false;
+	}
+
+	auto b = static_cast<ComputeBuffer*>(buffer.Get());
 
 	b->UpdateData(data, size, offset);
 

@@ -1018,7 +1018,6 @@ void EffectRenderer::Render(std::shared_ptr<RenderImage> renderImage)
 	{
 		graphics_->GetGraphics()->SetRenderTarget({renderTargetImage}, nullptr);
 		overdrawEffect_->GetDrawParameter().TexturePtrs[0] = hdrRenderTexture;
-		overdrawEffect_->GetDrawParameter().TextureCount = 1;
 		overdrawEffect_->Render();
 	}
 	else

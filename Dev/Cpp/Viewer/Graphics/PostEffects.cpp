@@ -215,7 +215,6 @@ void BloomPostEffect::Render(Effekseer::Backend::TextureRef dst, Effekseer::Back
 
 		graphicsDevice_->BeginRenderPass(renderPassExtract_, true, false, {0, 0, 0, 0});
 
-		extract_->GetDrawParameter().TextureCount = 1;
 		extract_->GetDrawParameter().TexturePtrs[0] = src;
 
 		auto uniformBuffer = extract_->GetUniformBufferPS();
@@ -238,7 +237,6 @@ void BloomPostEffect::Render(Effekseer::Backend::TextureRef dst, Effekseer::Back
 
 		graphicsDevice_->BeginRenderPass(renderPassDownscales_[i], true, false, {0, 0, 0, 0});
 
-		downsample_->GetDrawParameter().TextureCount = 1;
 		downsample_->GetDrawParameter().TexturePtrs[0] = texture;
 
 		auto uniformBuffer = downsample_->GetUniformBufferPS();
@@ -259,7 +257,6 @@ void BloomPostEffect::Render(Effekseer::Backend::TextureRef dst, Effekseer::Back
 
 		graphicsDevice_->BeginRenderPass(renderPassBlurs_[1][i], true, false, {0, 0, 0, 0});
 
-		blurH_->GetDrawParameter().TextureCount = 1;
 		blurH_->GetDrawParameter().TexturePtrs[0] = texture;
 
 		auto uniformBuffer = blurH_->GetUniformBufferPS();
@@ -280,7 +277,6 @@ void BloomPostEffect::Render(Effekseer::Backend::TextureRef dst, Effekseer::Back
 
 		graphicsDevice_->BeginRenderPass(renderPassBlurs_[0][i], true, false, {0, 0, 0, 0});
 
-		blurV_->GetDrawParameter().TextureCount = 1;
 		blurV_->GetDrawParameter().TexturePtrs[0] = texture;
 
 		auto uniformBuffer = blurV_->GetUniformBufferPS();
@@ -295,7 +291,6 @@ void BloomPostEffect::Render(Effekseer::Backend::TextureRef dst, Effekseer::Back
 	{
 		graphicsDevice_->BeginRenderPass(renderPass_, false, false, {0, 0, 0, 0});
 
-		blend_->GetDrawParameter().TextureCount = 4;
 		blend_->GetDrawParameter().TexturePtrs[0] = lowresBuffers[0][0];
 		blend_->GetDrawParameter().TexturePtrs[1] = lowresBuffers[0][1];
 		blend_->GetDrawParameter().TexturePtrs[2] = lowresBuffers[0][2];
@@ -450,7 +445,6 @@ void TonemapPostEffect::Render(Effekseer::Backend::TextureRef dst, Effekseer::Ba
 	if (algorithm_ == Algorithm::Off)
 	{
 		auto& drawParam = postProcessCopy_->GetDrawParameter();
-		drawParam.TextureCount = 1;
 		drawParam.TexturePtrs[0] = src;
 		drawParam.TextureWrapTypes[0] = Backend::TextureWrapType::Clamp;
 
@@ -459,7 +453,6 @@ void TonemapPostEffect::Render(Effekseer::Backend::TextureRef dst, Effekseer::Ba
 	else if (algorithm_ == Algorithm::Reinhard)
 	{
 		auto& drawParam = postProcessTone_->GetDrawParameter();
-		drawParam.TextureCount = 1;
 		drawParam.TexturePtrs[0] = src;
 		drawParam.TextureWrapTypes[0] = Backend::TextureWrapType::Clamp;
 
@@ -528,7 +521,6 @@ void LinearToSRGBPostEffect::Render(Effekseer::Backend::TextureRef dst, Effeksee
 
 	auto& drawParam = postProcess_->GetDrawParameter();
 
-	drawParam.TextureCount = 1;
 	drawParam.TexturePtrs[0] = src;
 	drawParam.TextureWrapTypes[0] = Backend::TextureWrapType::Clamp;
 

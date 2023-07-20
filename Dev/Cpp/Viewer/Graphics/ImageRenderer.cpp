@@ -153,7 +153,6 @@ void ImageRenderer::Render()
 
 		Effekseer::Backend::DrawParameter drawParam;
 
-		drawParam.TextureCount = 1;
 		drawParam.TexturePtrs[0] = sprite.TexturePtr != nullptr ? sprite.TexturePtr->GetBackend() : dummyTexture_;
 		drawParam.TextureSamplingTypes[0] = Backend::TextureSamplingType::Linear;
 		drawParam.TextureWrapTypes[0] = Backend::TextureWrapType::Repeat;

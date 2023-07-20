@@ -12,6 +12,7 @@ cbuffer cb1 : register(b1)
 
 StructuredBuffer<ParameterSet> ParamSets : register(t0);
 StructuredBuffer<Emitter> Emitters : register(t1);
+StructuredBuffer<EmitPoint> EmitPoints : register(t2);
 RWStructuredBuffer<Particle> Particles : register(u0);
 
 [numthreads(1, 1, 1)]
@@ -24,7 +25,6 @@ void main(uint3 dtid : SV_DispatchThreadID)
     float paramSeed = emitter.Seed ^ (emitter.TotalEmitCount + dtid.x);
     float3 position = emitter.Transform._m03_m13_m23;
     float3 direction = RandomSpread(paramSeed, paramSet.Direction, paramSet.Spread.x * 3.141592f / 180.0f);
-    direction = mul(emitter.Transform, float4(direction, 0.0f)).xyz;
     float speed = RandomFloatRange(paramSeed, paramSet.InitialSpeed);
 
     if (paramSet.EmitShapeType == 1) {
@@ -42,7 +42,17 @@ void main(uint3 dtid : SV_DispatchThreadID)
     } else if (paramSet.EmitShapeType == 3) {
         float sphereRadius = paramSet.EmitShapeData[0].x;
         position += RandomDirection(paramSeed) * sphereRadius;
+    } else if (paramSet.EmitShapeType == 4) {
+        float modelSize = paramSet.EmitShapeData[0].y;
+        if (emitter.EmitPointCount > 0) {
+            uint emitIndex = RandomUint(paramSeed) % emitter.EmitPointCount;
+            EmitPoint emitPoint = EmitPoints[emitIndex];
+            position += mul(emitter.Transform, float4(emitPoint.Position * modelSize, 0.0f)).xyz;
+            direction = mul(direction, float3x3(normalize(emitPoint.Tangent), normalize(emitPoint.Binormal), normalize(emitPoint.Normal)));
+        }
     }
+
+    direction = mul(emitter.Transform, float4(direction, 0.0f)).xyz;
 
     uint particleID = emitter.ParticleHead + (emitter.TotalEmitCount + dtid.x) % emitter.ParticleSize;
     Particle particle = Particles[particleID];

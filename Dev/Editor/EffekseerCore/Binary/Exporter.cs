@@ -448,6 +448,14 @@ namespace Effekseer.Binary
 						
 						if (_node.GpuParticles.Enabled.Value)
 						{
+							if (_node.GpuParticles.EmitShape.Shape.Value == Data.GpuParticlesValues.EmitShapeParams.ShapeType.Model)
+							{
+								var modelPath = _node.GpuParticles.EmitShape.ModelPath.RelativePath;
+								if (!Models.Contains(modelPath))
+								{
+									Models.Add(modelPath);
+								}
+							}
 							if (_node.GpuParticles.RenderShape.Shape.Value == Data.GpuParticlesValues.RenderShapeParams.ShapeType.Model)
 							{
 								var modelPath = _node.GpuParticles.RenderShape.ModelPath.RelativePath;

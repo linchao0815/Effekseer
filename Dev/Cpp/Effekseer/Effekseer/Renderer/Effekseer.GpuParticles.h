@@ -52,6 +52,15 @@ public:
 		uint32_t TrailMaxCount = 0;
 	};
 
+	enum class EmitShape : uint32_t
+	{
+		Point, Line, Circle, Sphere, Model,
+	};
+	enum class RenderShape : uint32_t
+	{
+		Sprite, Model, Trail,
+	};
+
 	struct ParameterSet
 	{
 		int32_t EmitCount;
@@ -60,7 +69,7 @@ public:
 		uint32_t Padding0;
 		std::array<float, 2> LifeTime;
 
-		uint32_t EmitShapeType;
+		EmitShape EmitShapeType;
 		uint32_t Padding1;
 		union
 		{
@@ -116,7 +125,7 @@ public:
 		uint8_t ZTest;
 		uint8_t Reserved;
 
-		uint32_t ShapeType;
+		RenderShape ShapeType;
 		uint32_t ShapeData;
 		float ShapeSize;
 
