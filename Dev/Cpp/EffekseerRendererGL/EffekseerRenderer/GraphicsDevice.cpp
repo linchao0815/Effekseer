@@ -1434,9 +1434,7 @@ void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 	GLExt::glUseProgram(shader->GetProgram());
 
 	// textures
-	const auto textureCount = std::min(static_cast<int32_t>(shader->GetLayout()->GetTextures().size()), drawParam.TextureCount);
-
-	for (int32_t i = 0; i < textureCount; i++)
+	for (int32_t i = 0; i < drawParam.TextureSlotCount; i++)
 	{
 		const auto textureSlot = shader->GetTextureLocations()[i];
 
@@ -1522,8 +1520,8 @@ void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 
 	// uniformss
 	StoreUniforms(pip->GetParam().ShaderPtr.DownCast<Backend::Shader>(),
-				  drawParam.VertexUniformBufferPtr.DownCast<Backend::UniformBuffer>(),
-				  drawParam.PixelUniformBufferPtr.DownCast<Backend::UniformBuffer>(),
+				  drawParam.VertexUniformBufferPtrs[0].DownCast<Backend::UniformBuffer>(),
+				  drawParam.PixelUniformBufferPtrs[0].DownCast<Backend::UniformBuffer>(),
 				  false);
 
 	GLCheckError();

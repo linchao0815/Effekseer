@@ -135,6 +135,7 @@ set(effekseer_src
     Effekseer/IO/Effekseer.EfkEfcFactory.cpp
     Effekseer/Parameter/Easing.cpp
     Effekseer/Parameter/Effekseer.Parameters.cpp
+    Effekseer/Parameter/GpuParticlesParameter.cpp
     Effekseer/Parameter/Rotation.cpp
     Effekseer/Utils/Effekseer.CustomAllocator.cpp
     Effekseer/SIMD/Mat43f.cpp

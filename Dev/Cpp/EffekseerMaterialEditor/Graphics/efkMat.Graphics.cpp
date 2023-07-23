@@ -698,8 +698,8 @@ void Preview::Render()
 			drawParam.InstanceCount = 1;
 			drawParam.PrimitiveCount = mesh_->GetIndexCount() / 3;
 			drawParam.PipelineStatePtr = pipelineState_;
-			drawParam.VertexUniformBufferPtr = vertexUniformBuffer_;
-			drawParam.PixelUniformBufferPtr = pixelUniformBuffer_;
+			drawParam.VertexUniformBufferPtrs[0] = vertexUniformBuffer_;
+			drawParam.PixelUniformBufferPtrs[0] = pixelUniformBuffer_;
 		}
 		else
 		{
@@ -709,8 +709,8 @@ void Preview::Render()
 			drawParam.InstanceCount = 1;
 			drawParam.PrimitiveCount = 2;
 			drawParam.PipelineStatePtr = pipelineState_;
-			drawParam.VertexUniformBufferPtr = vertexUniformBuffer_;
-			drawParam.PixelUniformBufferPtr = pixelUniformBuffer_;
+			drawParam.VertexUniformBufferPtrs[0] = vertexUniformBuffer_;
+			drawParam.PixelUniformBufferPtrs[0] = pixelUniformBuffer_;
 		}
 
 		for (int i = 0; i < textures_.size(); i++)

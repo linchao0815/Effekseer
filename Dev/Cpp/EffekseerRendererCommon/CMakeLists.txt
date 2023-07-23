@@ -13,6 +13,7 @@ set(PublicHeaders
     EffekseerRenderer.StandardRenderer.h
     EffekseerRenderer.TrackRendererBase.h
     EffekseerRenderer.CommonUtils.h
+    EffekseerRenderer.GpuParticles.h
     EffekseerRenderer.ShaderBase.h
     EffekseerRenderer.Renderer_Impl.h
     GraphicsDeviceCPU.h
@@ -31,6 +32,7 @@ set(LocalHeaders
 set(LocalSources
     EffekseerRenderer.CommonUtils.cpp
     EffekseerRenderer.DDSTextureLoader.cpp
+    EffekseerRenderer.GpuParticles.cpp
     EffekseerRenderer.ModelRendererBase.cpp
     EffekseerRenderer.PngTextureLoader.cpp
     EffekseerRenderer.Renderer.cpp
