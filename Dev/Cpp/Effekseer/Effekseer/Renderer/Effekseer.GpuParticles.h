@@ -47,9 +47,9 @@ public:
 
 	struct Settings
 	{
-		uint32_t EmitterMaxCount = 0;
-		uint32_t ParticleMaxCount = 0;
-		uint32_t TrailMaxCount = 0;
+		uint32_t EmitterMaxCount = 256;
+		uint32_t ParticleMaxCount = 1 * 1024 * 1024;
+		uint32_t TrailMaxCount = 4 * 1024 * 1024;
 	};
 
 	enum class EmitShape : uint32_t
@@ -153,7 +153,7 @@ public:
 
 	virtual ~GpuParticles() = default;
 	
-	virtual void InitSystem(const Settings& settings) {}
+	virtual bool InitSystem(const Settings& settings = {}) { return true; }
 
 	virtual void UpdateFrame(float deltaTime) {}
 

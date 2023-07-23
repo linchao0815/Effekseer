@@ -232,18 +232,13 @@ void GpuParticles::BlockAllocator::Deallocate(Block releasingBlock)
 GpuParticles::GpuParticles(Renderer* renderer)
 	: m_rendererBase(renderer)
 {
-	Settings settings;
-	settings.EmitterMaxCount = 256;
-	settings.ParticleMaxCount = 1 * 1024 * 1024;
-	settings.TrailMaxCount = 4 * 1024 * 1024;
-	InitSystem(settings);
 }
 
 GpuParticles::~GpuParticles()
 {
 }
 
-void GpuParticles::InitSystem(const Settings& settings)
+bool GpuParticles::InitSystem(const Settings& settings)
 {
 	auto graphics = m_rendererBase->GetGraphicsDevice();
 
@@ -309,6 +304,8 @@ void GpuParticles::InitSystem(const Settings& settings)
 		texParam.Dimension = 3;
 		m_dummyVectorField = graphics->CreateTexture(texParam, {0, 0, 0, 0});
 	}
+
+	return true;
 }
 
 void GpuParticles::UpdateFrame(float deltaTime)

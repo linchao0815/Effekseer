@@ -612,7 +612,12 @@ int32_t RendererImplemented::GetSquareMaxCount() const
 
 ::Effekseer::GpuParticlesRef RendererImplemented::CreateGpuParticles()
 {
-	return ::Effekseer::GpuParticlesRef(new ::EffekseerRendererDX11::GpuParticles(this, true));
+	auto gpuParticles = ::Effekseer::GpuParticlesRef(new ::EffekseerRendererDX11::GpuParticles(this, true));
+	if (!gpuParticles->InitSystem())
+	{
+		return nullptr;
+	}
+	return gpuParticles;
 }
 
 //----------------------------------------------------------------------------------

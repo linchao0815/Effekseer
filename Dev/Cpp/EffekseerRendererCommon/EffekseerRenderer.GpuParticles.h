@@ -23,7 +23,7 @@ public:
 
 	virtual ~GpuParticles();
 
-	virtual void InitSystem(const Settings& settings) override;
+	virtual bool InitSystem(const Settings& settings = {}) override;
 
 	virtual void InitShaders() = 0;
 
