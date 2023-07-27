@@ -121,7 +121,7 @@ void main(uint3 dtid : SV_DispatchThreadID)
         float4 color = lerp(colorStart, colorEnd, lifeRatio);
         // Apply inheritation color
         if (paramSet.ColorFlags == 2 || paramSet.ColorFlags == 3) {
-            color *= emitter.Color;
+            color *= UnpackColor(emitter.Color);
         } else {
             color *= UnpackColor(particle.InheritColor);
         }

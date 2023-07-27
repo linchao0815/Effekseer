@@ -55,7 +55,7 @@ void main(uint3 dtid : SV_DispatchThreadID)
     direction = mul(emitter.Transform, float4(direction, 0.0f)).xyz;
 
     uint particleID = emitter.ParticleHead + (emitter.TotalEmitCount + dtid.x) % emitter.ParticleSize;
-    Particle particle = Particles[particleID];
+    Particle particle;
     particle.FlagBits = 0x01 | (paramID << 1);
     particle.Seed = paramSeed;
     particle.LifeAge = 0.0f;
@@ -63,10 +63,16 @@ void main(uint3 dtid : SV_DispatchThreadID)
     if (paramSet.ColorFlags == 0) {
         particle.InheritColor = 0xFFFFFFFF;
     } else {
-        particle.InheritColor = PackColor(emitter.Color);
+        particle.InheritColor = emitter.Color;
     }
-    
-    particle.Transform._m03_m13_m23 = position;
+    particle.Color = 0xFFFFFFFF;
+    particle.Padding = 0;
+
+    particle.Transform = float3x4(
+        float4(1.0f, 0.0f, 0.0f, position.x),
+        float4(0.0f, 1.0f, 0.0f, position.y),
+        float4(0.0f, 0.0f, 1.0f, position.z)
+    );
     particle.Velocity = PackFloat4(direction * speed, 0.0f);
     Particles[particleID] = particle;
 }

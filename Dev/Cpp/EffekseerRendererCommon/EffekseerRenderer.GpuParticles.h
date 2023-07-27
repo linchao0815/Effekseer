@@ -64,8 +64,8 @@ protected:
 		uint32_t NextEmitCount;
 		uint32_t TotalEmitCount;
 		uint32_t EmitPointCount;
+		Effekseer::Color Color;
 		float3x4 Transform;
-		float4 Color;
 
 		bool IsAlive() const
 		{
@@ -86,8 +86,9 @@ protected:
 		uint32_t Seed;
 		float LifeAge;
 		uint32_t InheritColor;
-		uint32_t Color;
 		uint16_t Velocity[4];
+		uint32_t Color;
+		uint32_t Padding;
 		float3x4 Transform;
 	};
 	struct Trail
@@ -100,8 +101,8 @@ protected:
 	{
 		float4x4 ProjMat;
 		float4x4 CameraMat;
-		float3x3 BillboardMat;
-		float3x3 YAxisBillboardMat;
+		float3x4 BillboardMat;
+		float3x4 YAxisBillboardMat;
 		float3 CameraPos;
 		float DeltaTime;
 		float3 CameraFront;

@@ -55,9 +55,9 @@ VS_Output main(const VS_Input input)
             position = mul(particle.Transform, float4(position, 0.0f));
             // Billboard transform
             if (paramSet.ShapeData == 0) {
-                position = mul(constants.BillboardMat, position);
+                position = mul(constants.BillboardMat, float4(position, 0.0f));
             } else if (paramSet.ShapeData == 1) {
-                position = mul(constants.YAxisBillboardMat, position);
+                position = mul(constants.YAxisBillboardMat, float4(position, 0.0f));
             }
             // Position transform
             position = position + particle.Transform._m03_m13_m23;

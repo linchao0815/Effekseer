@@ -249,7 +249,6 @@ bool GpuParticles::InitSystem(const Settings& settings)
 
 	for (uint32_t index = 0; index < settings.EmitterMaxCount; index++)
 	{
-		m_emitters[index].Transform.Indentity();
 		m_paramFreeList.push_back(index);
 		m_emitterFreeList.push_back(index);
 	}
@@ -321,14 +320,14 @@ void GpuParticles::UpdateFrame(float deltaTime)
 	Effekseer::Matrix44	inv{};
 	Effekseer::Matrix44::Inverse(inv, cdata.CameraMat);
 	cdata.BillboardMat = {
-		float4{ inv.Values[0][0], inv.Values[0][1], inv.Values[0][2], 0.0f },
-		float4{ inv.Values[1][0], inv.Values[1][1], inv.Values[1][2], 0.0f },
-		float4{ inv.Values[2][0], inv.Values[2][1], inv.Values[2][2], 0.0f }
+		float4{ inv.Values[0][0], inv.Values[1][0], inv.Values[2][0], 0.0f },
+		float4{ inv.Values[0][1], inv.Values[1][1], inv.Values[2][1], 0.0f },
+		float4{ inv.Values[0][2], inv.Values[1][2], inv.Values[2][2], 0.0f }
 	};
 	cdata.YAxisBillboardMat = {
-		float4{ inv.Values[0][0], 0.0f, inv.Values[0][2], 0.0f },
-		float4{ inv.Values[1][0], 1.0f, inv.Values[1][2], 0.0f },
-		float4{ inv.Values[2][0], 0.0f, inv.Values[2][2], 0.0f }
+		float4{ inv.Values[0][0], 0.0f, inv.Values[2][0], 0.0f },
+		float4{ inv.Values[0][1], 1.0f, inv.Values[2][1], 0.0f },
+		float4{ inv.Values[0][2], 0.0f, inv.Values[2][2], 0.0f }
 	};
 	cdata.CameraPos = m_rendererBase->GetCameraPosition();
 	cdata.CameraFront = m_rendererBase->GetCameraFrontDirection();
@@ -674,7 +673,11 @@ GpuParticles::EmitterID GpuParticles::AddEmitter(ParamID paramID)
 	emitter.NextEmitCount = 0;
 	emitter.TotalEmitCount = 0;
 	emitter.EmitPointCount = 0;
-	emitter.Transform.Indentity();
+	emitter.Transform = {
+		float4{ 1.0f, 0.0f, 0.0f, 0.0f },
+		float4{ 0.0f, 1.0f, 0.0f, 0.0f },
+		float4{ 0.0f, 0.0f, 1.0f, 0.0f }
+	};
 
 	Block particleBlock = m_particleAllocator.Allocate(particlesMaxCount);
 	if (particleBlock.size == 0)
@@ -737,7 +740,11 @@ void GpuParticles::SetTransform(EmitterID emitterID, const Effekseer::Matrix43& 
 	}
 
 	auto& emitter = m_emitters[emitterID];
-	emitter.Transform = transform;
+	emitter.Transform = {
+		float4{ transform.Value[0][0], transform.Value[0][1], transform.Value[0][2], transform.Value[3][0] },
+		float4{ transform.Value[1][0], transform.Value[1][1], transform.Value[1][2], transform.Value[3][1] },
+		float4{ transform.Value[2][0], transform.Value[2][1], transform.Value[2][2], transform.Value[3][2] }
+	};
 }
 
 void GpuParticles::SetColor(EmitterID emitterID, Effekseer::Color color)
@@ -748,7 +755,7 @@ void GpuParticles::SetColor(EmitterID emitterID, Effekseer::Color color)
 	}
 
 	auto& emitter = m_emitters[emitterID];
-	emitter.Color = color.ToFloat4();
+	emitter.Color = color;
 }
 
 }

@@ -5,7 +5,7 @@ struct ParameterSet
     int EmitPerFrame;
     float EmitOffset;
     uint Padding0;
-    float LifeTime[2];
+    float2 LifeTime;
 
     uint EmitShapeType;
     uint Padding1;
@@ -13,8 +13,8 @@ struct ParameterSet
 
     float3 Direction;
     float Spread;
-    float InitialSpeed[2];
-    float Damping[2];
+    float2 InitialSpeed;
+    float2 Damping;
 
     float4 InitialAngleScale[2];
     float4 TargetAngleScale[2];
@@ -41,8 +41,8 @@ struct ParameterSet
     float FadeIn;
     float FadeOut;
     uint ColorFlags;
-    uint ColorStart[2];
-    uint ColorEnd[2];
+    uint2 ColorStart;
+    uint2 ColorEnd;
 
     uint ColorTexIndex;
     uint NormalTexIndex;
@@ -63,8 +63,8 @@ struct Emitter
     uint NextEmitCount;
     uint TotalEmitCount;
     uint EmitPointCount;
-    float3x4 Transform;
-    float4 Color;
+    uint Color;
+    row_major float3x4 Transform;
 };
 
 struct EmitPoint
@@ -83,9 +83,10 @@ struct Particle
     uint Seed;
     float LifeAge;
     uint InheritColor;
-    uint Color;
     uint2 Velocity;
-    float3x4 Transform;
+    uint Color;
+    uint Padding;
+    row_major float3x4 Transform;
 };
 
 struct Trail
@@ -98,8 +99,8 @@ struct Constants
 {
     float4x4 ProjMat;
     float4x4 CameraMat;
-    float3x3 BillboardMat;
-    float3x3 YAxisBillboardMat;
+    row_major float3x4 BillboardMat;
+    row_major float3x4 YAxisBillboardMat;
     float3 CameraPos;
     float DeltaTime;
     float3 CameraFront;
@@ -177,19 +178,14 @@ float RandomFloat(inout uint seed)
     return float(RandomUint(seed)) / 4294967296.0;
 }
 
-float RandomUintRange(inout uint seed, uint maxmin[2])
+float RandomUintRange(inout uint seed, uint2 maxmin)
 {
-    return lerp(maxmin[1], maxmin[0], RandomFloat(seed));
+    return lerp(maxmin.y, maxmin.x, RandomFloat(seed));
 }
 
-float RandomFloatRange(inout uint seed, float maxmin[2])
+float RandomFloatRange(inout uint seed, float2 maxmin)
 {
-    return lerp(maxmin[1], maxmin[0], RandomFloat(seed));
-}
-
-float3 RandomFloat3Range(inout uint seed, float3 maxmin[2])
-{
-    return lerp(maxmin[1], maxmin[0], RandomFloat(seed));
+    return lerp(maxmin.y, maxmin.x, RandomFloat(seed));
 }
 
 float4 RandomFloat4Range(inout uint seed, float4 maxmin[2])
@@ -197,9 +193,9 @@ float4 RandomFloat4Range(inout uint seed, float4 maxmin[2])
     return lerp(maxmin[1], maxmin[0], RandomFloat(seed));
 }
 
-float4 RandomColorRange(inout uint seed, uint maxmin[2])
+float4 RandomColorRange(inout uint seed, uint2 maxmin)
 {
-    return lerp(UnpackColor(maxmin[1]), UnpackColor(maxmin[0]), RandomFloat(seed));
+    return lerp(UnpackColor(maxmin.y), UnpackColor(maxmin.x), RandomFloat(seed));
 }
 
 float3 RandomDirection(inout uint seed)

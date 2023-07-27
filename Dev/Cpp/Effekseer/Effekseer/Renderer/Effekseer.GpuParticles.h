@@ -41,9 +41,9 @@ public:
 			return *this;
 		}
 	};
-	using float3x4 = Effekseer::Matrix43;
+
+	using float3x4 = std::array<float4, 3>; // row_major
 	using float4x4 = Effekseer::Matrix44;
-	using float3x3 = std::array<float4, 3>;  // 16byte alignment needed
 
 	struct Settings
 	{
