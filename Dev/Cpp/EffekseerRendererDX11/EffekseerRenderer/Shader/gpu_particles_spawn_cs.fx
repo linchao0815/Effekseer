@@ -1,27 +1,24 @@
 #include "gpu_particles_common.h"
 
-cbuffer cb : register(b0)
+cbuffer cb0 : register(b0)
 {
     Constants constants;
 };
 cbuffer cb1 : register(b1)
 {
-    uint EmitterID;
-    uint ParticleHead;
+    ParameterSet paramSet;
+}
+cbuffer cb2 : register(b2)
+{
+    Emitter emitter;
 }
 
-StructuredBuffer<ParameterSet> ParamSets : register(t0);
-StructuredBuffer<Emitter> Emitters : register(t1);
-StructuredBuffer<EmitPoint> EmitPoints : register(t2);
+StructuredBuffer<EmitPoint> EmitPoints : register(t0);
 RWStructuredBuffer<Particle> Particles : register(u0);
 
 [numthreads(1, 1, 1)]
 void main(uint3 dtid : SV_DispatchThreadID)
 {
-    Emitter emitter = Emitters[EmitterID];
-    uint paramID = (emitter.FlagBits >> 1) & 0x3FF;
-    ParameterSet paramSet = ParamSets[paramID];
-    
     float paramSeed = emitter.Seed ^ (emitter.TotalEmitCount + dtid.x);
     float3 position = emitter.Transform._m03_m13_m23;
     float3 direction = RandomSpread(paramSeed, paramSet.Direction, paramSet.Spread.x * 3.141592f / 180.0f);
@@ -56,7 +53,7 @@ void main(uint3 dtid : SV_DispatchThreadID)
 
     uint particleID = emitter.ParticleHead + (emitter.TotalEmitCount + dtid.x) % emitter.ParticleSize;
     Particle particle;
-    particle.FlagBits = 0x01 | (paramID << 1);
+    particle.FlagBits = 0x01;
     particle.Seed = paramSeed;
     particle.LifeAge = 0.0f;
     

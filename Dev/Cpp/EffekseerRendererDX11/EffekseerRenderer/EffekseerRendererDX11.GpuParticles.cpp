@@ -68,10 +68,6 @@ void GpuParticles::InitShaders()
 	m_renderShader = graphics->CreateShaderFromBinary(
 		ShaderData(VS_ParticleRender), ShaderSize(VS_ParticleRender),
 		ShaderData(PS_ParticleRender), ShaderSize(PS_ParticleRender));
-
-	m_cmdParticleClear.Shader = m_csParticleClear;
-	m_cmdParticleSpawn.Shader = m_csParticleSpawn;
-	m_cmdParticleUpdate.Shader = m_csParticleUpdate;
 }
 
 }

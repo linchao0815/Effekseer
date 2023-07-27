@@ -1,16 +1,16 @@
 #include "gpu_particles_common.h"
 
-cbuffer cb : register(b0)
+cbuffer cb0 : register(b0)
 {
     Constants constants;
 };
 cbuffer cb1 : register(b1)
 {
-    uint EmitterID;
-    uint ParticleHead;
-    uint TrailHead;
-    uint TrailJoints;
-    uint TrailPhase;
+    ParameterSet paramSet;
+}
+cbuffer cb2 : register(b2)
+{
+    Emitter emitter;
 }
 
 struct VS_Input
@@ -32,20 +32,19 @@ struct VS_Output
     float4 Color : COLOR0;
 };
 
-StructuredBuffer<ParameterSet> ParamSets : register(t8);
-StructuredBuffer<Particle> Particles : register(t9);
-StructuredBuffer<Trail> Trails : register(t10);
+StructuredBuffer<Particle> Particles : register(t8);
+StructuredBuffer<Trail> Trails : register(t9);
 
 VS_Output main(const VS_Input input)
 {
     VS_Output output;
     
-    uint index = ParticleHead + input.InstanceID;
+    uint index = emitter.ParticleHead + input.InstanceID;
     Particle particle = Particles[index];
     if (particle.FlagBits & 0x01) {
         uint paramID = (particle.FlagBits >> 1) & 0x3FF;
         uint updateCount = (particle.FlagBits >> 11) & 0xFF;
-        ParameterSet paramSet = ParamSets[paramID];
+        
         float3 position = input.Pos;
         float2 uv = input.UV;
         float4 color = input.Color;
@@ -66,16 +65,16 @@ VS_Output main(const VS_Input input)
             position = mul(particle.Transform, float4(position, 1.0f)).xyz;
         } else if (paramSet.ShapeType == 2) {
             // Trail Transform
-            uint trailLength = min(TrailJoints, updateCount);
+            uint trailLength = min(paramSet.ShapeData, updateCount);
             float3 trailPosition;
             float3 trailDirection;
             if (input.VertexID / 2 == 0) {
                 trailPosition = particle.Transform._m03_m13_m23;
                 trailDirection = normalize(UnpackFloat4(particle.Velocity).xyz);
             } else {
-                uint trailID = TrailHead + input.InstanceID * TrailJoints;
+                uint trailID = emitter.TrailHead + input.InstanceID * paramSet.ShapeData;
                 uint trailIndex = min(input.VertexID / 2, trailLength);
-                trailID += (TrailJoints + TrailPhase - trailIndex) % TrailJoints;
+                trailID += (paramSet.ShapeData + emitter.TrailPhase - trailIndex) % paramSet.ShapeData;
                 Trail trail = Trails[trailID];
                 trailPosition = trail.Position;
                 trailDirection = normalize(UnpackNormalizedFloat3(trail.Direction));

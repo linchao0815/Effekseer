@@ -155,20 +155,15 @@ protected:
 	BlockAllocator m_trailAllocator;
 
 	UniformBufferRef m_ubufConstants;
-	UniformBufferRef m_ubufParticleArgs;
+	std::vector<UniformBufferRef> m_ubufParamSets;
+	std::vector<UniformBufferRef> m_ubufEmitters;
 
-	ComputeBufferRef m_cbufParamSets;
-	ComputeBufferRef m_cbufEmitters;
 	ComputeBufferRef m_cbufParticles;
 	ComputeBufferRef m_cbufTrails;
 
 	ComputeShaderRef m_csParticleSpawn;
 	ComputeShaderRef m_csParticleClear;
 	ComputeShaderRef m_csParticleUpdate;
-
-	ComputeCommand m_cmdParticleSpawn;
-	ComputeCommand m_cmdParticleClear;
-	ComputeCommand m_cmdParticleUpdate;
 
 	TextureRef m_dummyVectorField;
 

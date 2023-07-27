@@ -251,6 +251,8 @@ bool GpuParticles::InitSystem(const Settings& settings)
 	{
 		m_paramFreeList.push_back(index);
 		m_emitterFreeList.push_back(index);
+		m_ubufParamSets.push_back(graphics->CreateUniformBuffer(sizeof(ParameterSet), nullptr));
+		m_ubufEmitters.push_back(graphics->CreateUniformBuffer(sizeof(Emitter), nullptr));
 	}
 	m_newParamSetIDs.reserve(settings.EmitterMaxCount);
 	m_newEmitterIDs.reserve(settings.EmitterMaxCount);
@@ -260,33 +262,10 @@ bool GpuParticles::InitSystem(const Settings& settings)
 
 	Constants cdata{};
 	m_ubufConstants = graphics->CreateUniformBuffer(sizeof(Constants), &cdata);
-	ParticleArgs pargs{};
-	m_ubufParticleArgs = graphics->CreateUniformBuffer(sizeof(ParticleArgs), &pargs);
-	
-	m_cbufParamSets = graphics->CreateComputeBuffer((int32_t)settings.EmitterMaxCount, (int32_t)sizeof(ParameterSet), nullptr);
-	m_cbufEmitters = graphics->CreateComputeBuffer((int32_t)settings.EmitterMaxCount, (int32_t)sizeof(Emitter), nullptr);
 	m_cbufParticles = graphics->CreateComputeBuffer((int32_t)settings.ParticleMaxCount, (int32_t)sizeof(Particle), nullptr);
 	m_cbufTrails = graphics->CreateComputeBuffer((int32_t)settings.TrailMaxCount, (int32_t)sizeof(Trail), nullptr);
 
 	InitShaders();
-
-	m_cmdParticleClear.UniformBufferPtrs[0] = m_ubufConstants;
-	m_cmdParticleClear.UniformBufferPtrs[1] = m_ubufParticleArgs;
-	m_cmdParticleClear.ROComputeBufferPtrs[0] = m_cbufParamSets;
-	m_cmdParticleClear.RWComputeBufferPtrs[0] = m_cbufParticles;
-
-	m_cmdParticleSpawn.UniformBufferPtrs[0] = m_ubufConstants;
-	m_cmdParticleSpawn.UniformBufferPtrs[1] = m_ubufParticleArgs;
-	m_cmdParticleSpawn.ROComputeBufferPtrs[0] = m_cbufParamSets;
-	m_cmdParticleSpawn.ROComputeBufferPtrs[1] = m_cbufEmitters;
-	m_cmdParticleSpawn.RWComputeBufferPtrs[0] = m_cbufParticles;
-
-	m_cmdParticleUpdate.UniformBufferPtrs[0] = m_ubufConstants;
-	m_cmdParticleUpdate.UniformBufferPtrs[1] = m_ubufParticleArgs;
-	m_cmdParticleUpdate.ROComputeBufferPtrs[0] = m_cbufParamSets;
-	m_cmdParticleUpdate.ROComputeBufferPtrs[1] = m_cbufEmitters;
-	m_cmdParticleUpdate.RWComputeBufferPtrs[0] = m_cbufParticles;
-	m_cmdParticleUpdate.RWComputeBufferPtrs[1] = m_cbufTrails;
 
 	m_vertexLayout = EffekseerRenderer::GetModelRendererVertexLayout(graphics);
 
@@ -337,7 +316,7 @@ void GpuParticles::UpdateFrame(float deltaTime)
 	for (auto paramID : m_newParamSetIDs)
 	{
 		// Initialize parameter data
-		graphics->UpdateComputeBuffer(m_cbufParamSets, sizeof(ParameterSet), paramID * sizeof(ParameterSet), &m_paramSets[paramID]);
+		graphics->UpdateUniformBuffer(m_ubufParamSets[paramID], sizeof(ParameterSet), 0, &m_paramSets[paramID]);
 	}
 	m_newParamSetIDs.clear();
 
@@ -345,20 +324,26 @@ void GpuParticles::UpdateFrame(float deltaTime)
 	{
 		// Initialize particle data region
 		auto& emitter = m_emitters[emitterID];
-		ParticleArgs pargs{};
-		pargs.EmitterID = emitterID;
-		pargs.ParticleHead = emitter.ParticleHead;
-		graphics->UpdateUniformBuffer(m_ubufParticleArgs, sizeof(pargs), 0, &pargs);
+		graphics->UpdateUniformBuffer(m_ubufEmitters[emitterID], sizeof(Emitter), 0, &emitter);
 
-		m_cmdParticleClear.DispatchCount = emitter.ParticleSize;
-		m_cmdParticleClear.ThreadCount = 256;
-		graphics->Dispatch(m_cmdParticleClear);
+		ComputeCommand command;
+		command.Shader = m_csParticleClear;
+
+		command.UniformBufferPtrs[0] = m_ubufConstants;
+		command.UniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
+		command.UniformBufferPtrs[2] = m_ubufEmitters[emitterID];
+		command.RWComputeBufferPtrs[0] = m_cbufParticles;
+
+		command.DispatchCount = emitter.ParticleSize;
+		command.ThreadCount = 256;
+		graphics->Dispatch(command);
 	}
 	m_newEmitterIDs.clear();
 
 	// Update emitter data
-	for (auto& emitter : m_emitters)
+	for (EmitterID emitterID = 0; emitterID < (EmitterID)m_emitters.size(); emitterID++)
 	{
+		auto& emitter = m_emitters[emitterID];
 		if (emitter.IsAlive())
 		{
 			auto& paramSet = m_paramSets[emitter.GetParamID()];
@@ -391,9 +376,10 @@ void GpuParticles::UpdateFrame(float deltaTime)
 				}
 			}
 			emitter.TimeCount += deltaTime;
+
+			graphics->UpdateUniformBuffer(m_ubufEmitters[emitterID], sizeof(Emitter), 0, &emitter);
 		}
 	}
-	graphics->UpdateComputeBuffer(m_cbufEmitters, (int32_t)(sizeof(Emitter) * m_emitters.size()), 0, m_emitters.data());
 
 	// Spawn particles
 	for (EmitterID emitterID = 0; emitterID < (EmitterID)m_emitters.size(); emitterID++)
@@ -404,15 +390,18 @@ void GpuParticles::UpdateFrame(float deltaTime)
 			auto& paramSet = m_paramSets[emitter.GetParamID()];
 			auto& paramRes = m_resources[emitter.GetParamID()];
 
-			ParticleArgs pargs{};
-			pargs.EmitterID = emitterID;
-			pargs.ParticleHead = emitter.ParticleHead;
-			graphics->UpdateUniformBuffer(m_ubufParticleArgs, sizeof(pargs), 0, &pargs);
+			ComputeCommand command;
+			command.Shader = m_csParticleSpawn;
 
-			m_cmdParticleSpawn.ROComputeBufferPtrs[2] = paramRes.EmitPoints;
-			m_cmdParticleSpawn.DispatchCount = emitter.NextEmitCount;
-			m_cmdParticleSpawn.ThreadCount = 1;
-			graphics->Dispatch(m_cmdParticleSpawn);
+			command.UniformBufferPtrs[0] = m_ubufConstants;
+			command.UniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
+			command.UniformBufferPtrs[2] = m_ubufEmitters[emitterID];
+			command.RWComputeBufferPtrs[0] = m_cbufParticles;
+			command.ROComputeBufferPtrs[0] = paramRes.EmitPoints;
+
+			command.DispatchCount = emitter.NextEmitCount;
+			command.ThreadCount = 1;
+			graphics->Dispatch(command);
 		}
 	}
 
@@ -425,25 +414,27 @@ void GpuParticles::UpdateFrame(float deltaTime)
 			auto& paramSet = m_paramSets[emitter.GetParamID()];
 			auto& paramRes = m_resources[emitter.GetParamID()];
 
-			ParticleArgs pargs{};
-			pargs.EmitterID = emitterID;
-			pargs.ParticleHead = emitter.ParticleHead;
 			if (emitter.TrailSize > 0)
 			{
-				pargs.TrailHead = emitter.TrailHead;
-				pargs.TrailJoints = paramSet.ShapeData;
-				pargs.TrailPhase = emitter.TrailPhase;
 				emitter.TrailPhase = (emitter.TrailPhase + 1) % paramSet.ShapeData;
 			}
-			graphics->UpdateUniformBuffer(m_ubufParticleArgs, sizeof(pargs), 0, &pargs);
 
-			m_cmdParticleUpdate.TexturePtrs[0] = (paramRes.NoiseVectorField) ? paramRes.NoiseVectorField : m_dummyVectorField;
-			m_cmdParticleUpdate.TextureSamplingTypes[0] = Effekseer::Backend::TextureSamplingType::Linear;
-			m_cmdParticleUpdate.TextureWrapTypes[0] = Effekseer::Backend::TextureWrapType::Repeat;
+			ComputeCommand command;
+			command.Shader = m_csParticleUpdate;
 
-			m_cmdParticleUpdate.DispatchCount = emitter.ParticleSize;
-			m_cmdParticleUpdate.ThreadCount = 256;
-			graphics->Dispatch(m_cmdParticleUpdate);
+			command.UniformBufferPtrs[0] = m_ubufConstants;
+			command.UniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
+			command.UniformBufferPtrs[2] = m_ubufEmitters[emitterID];
+			command.RWComputeBufferPtrs[0] = m_cbufParticles;
+			command.RWComputeBufferPtrs[1] = m_cbufTrails;
+
+			command.TexturePtrs[0] = (paramRes.NoiseVectorField) ? paramRes.NoiseVectorField : m_dummyVectorField;
+			command.TextureSamplingTypes[0] = Effekseer::Backend::TextureSamplingType::Linear;
+			command.TextureWrapTypes[0] = Effekseer::Backend::TextureWrapType::Repeat;
+
+			command.DispatchCount = emitter.ParticleSize;
+			command.ThreadCount = 256;
+			graphics->Dispatch(command);
 		}
 	}
 }
@@ -470,16 +461,15 @@ void GpuParticles::RenderFrame()
 				pargs.TrailJoints = paramSet.ShapeData;
 				pargs.TrailPhase = emitter.TrailPhase;
 			}
-			graphics->UpdateUniformBuffer(m_ubufParticleArgs, sizeof(pargs), 0, &pargs);
 
 			Effekseer::Backend::DrawParameter drawParams;
 			drawParams.PipelineStatePtr = paramRes.PiplineState;
-			drawParams.ComputeBufferPtrs[0] = m_cbufParamSets;
-			drawParams.ComputeBufferPtrs[1] = m_cbufParticles;
-			drawParams.ComputeBufferPtrs[2] = m_cbufTrails;
+			drawParams.ComputeBufferPtrs[0] = m_cbufParticles;
+			drawParams.ComputeBufferPtrs[1] = m_cbufTrails;
 
 			drawParams.VertexUniformBufferPtrs[0] = m_ubufConstants;
-			drawParams.VertexUniformBufferPtrs[1] = m_ubufParticleArgs;
+			drawParams.VertexUniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
+			drawParams.VertexUniformBufferPtrs[2] = m_ubufEmitters[emitterID];
 
 			Effekseer::Backend::TextureRef textures[2];
 			if (auto colorTex = paramRes.Effect->GetColorImage(paramSet.ColorTexIndex))

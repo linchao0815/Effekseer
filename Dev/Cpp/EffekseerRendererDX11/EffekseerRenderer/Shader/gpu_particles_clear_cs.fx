@@ -1,13 +1,16 @@
 #include "gpu_particles_common.h"
 
-cbuffer cb : register(b0)
+cbuffer cb0 : register(b0)
 {
     Constants constants;
 };
 cbuffer cb1 : register(b1)
 {
-    uint EmitterID;
-    uint ParticleHead;
+    ParameterSet paramSet;
+}
+cbuffer cb2 : register(b2)
+{
+    Emitter emitter;
 }
 
 StructuredBuffer<ParameterSet> ParamSets : register(t0);
@@ -16,7 +19,7 @@ RWStructuredBuffer<Particle> Particles : register(u0);
 [numthreads(256, 1, 1)]
 void main(uint3 dtid : SV_DispatchThreadID)
 {
-    uint particleID = ParticleHead + dtid.x;
+    uint particleID = emitter.ParticleHead + dtid.x;
     
     Particle particle;
     particle.FlagBits = 0;

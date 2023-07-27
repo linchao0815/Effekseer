@@ -1,20 +1,18 @@
 #include "gpu_particles_common.h"
 
-cbuffer cb : register(b0)
+cbuffer cb0 : register(b0)
 {
     Constants constants;
 };
 cbuffer cb1 : register(b1)
 {
-    uint EmitterID;
-    uint ParticleHead;
-    uint TrailHead;
-    uint TrailJoints;
-    uint TrailPhase;
+    ParameterSet paramSet;
+}
+cbuffer cb2 : register(b2)
+{
+    Emitter emitter;
 }
 
-StructuredBuffer<ParameterSet> ParamSets : register(t0);
-StructuredBuffer<Emitter> Emitters : register(t1);
 RWStructuredBuffer<Particle> Particles : register(u0);
 RWStructuredBuffer<Trail> Trails : register(u1);
 Texture3D<float4> NoiseVFTex : register(t4);
@@ -40,14 +38,11 @@ float3 Vortex(float rotation, float attraction, float3 center, float3 axis, floa
 [numthreads(256, 1, 1)]
 void main(uint3 dtid : SV_DispatchThreadID)
 {
-    uint particleID = ParticleHead + dtid.x;
+    uint particleID = emitter.ParticleHead + dtid.x;
     Particle particle = Particles[particleID];
     
     if (particle.FlagBits & 0x01) {
-        uint paramID = (particle.FlagBits >> 1) & 0x3FF;
         uint updateCount = (particle.FlagBits >> 11) & 0xFF;
-        ParameterSet paramSet = ParamSets[paramID];
-        Emitter emitter = Emitters[EmitterID];
         float deltaTime = constants.DeltaTime;
 
         // Randomize parameters
@@ -67,8 +62,8 @@ void main(uint3 dtid : SV_DispatchThreadID)
         float3 position = particle.Transform._m03_m13_m23;
         float3 velocity = UnpackFloat4(particle.Velocity).xyz;
 
-        if (TrailJoints > 0) {
-            uint trailID = TrailHead + dtid.x * TrailJoints + TrailPhase;
+        if (emitter.TrailSize > 0) {
+            uint trailID = emitter.TrailHead + dtid.x * paramSet.ShapeData + emitter.TrailPhase;
             Trail trail;
             trail.Position = position;
             trail.Direction = PackNormalizedFloat3(velocity);
