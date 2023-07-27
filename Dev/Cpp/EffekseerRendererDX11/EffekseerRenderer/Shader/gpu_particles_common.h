@@ -167,10 +167,10 @@ float3x4 TRSMatrix(float3 translation, float3 rotation, float3 scale) {
 
 uint RandomUint(inout uint seed)
 {
-    seed ^= (seed << 13);
-    seed ^= (seed >> 17);
-    seed ^= (seed << 5);
-    return seed;
+    uint state = seed;
+    seed = seed * 747796405u + 2891336453u;
+    uint word = ((state >> ((state >> 28u) + 4u)) ^ state) * 277803737u;
+    return (word >> 22u) ^ word;
 }
 
 float RandomFloat(inout uint seed)

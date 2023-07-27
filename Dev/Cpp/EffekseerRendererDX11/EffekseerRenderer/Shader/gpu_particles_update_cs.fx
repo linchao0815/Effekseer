@@ -42,7 +42,7 @@ void main(uint3 dtid : SV_DispatchThreadID)
     Particle particle = Particles[particleID];
     
     if (particle.FlagBits & 0x01) {
-        uint updateCount = (particle.FlagBits >> 11) & 0xFF;
+        uint updateCount = (particle.FlagBits >> 1) & 0xFF;
         float deltaTime = constants.DeltaTime;
 
         // Randomize parameters
@@ -71,8 +71,8 @@ void main(uint3 dtid : SV_DispatchThreadID)
         }
         
         // Increase count
-        particle.FlagBits &= ~(0xFF << 21);
-        particle.FlagBits |= clamp(updateCount + 1, 0, 255) << 21;
+        particle.FlagBits &= ~(0xFF << 1);
+        particle.FlagBits |= clamp(updateCount + 1, 0, 255) << 1;
 
         // Aging
         particle.LifeAge += constants.DeltaTime;

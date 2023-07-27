@@ -340,7 +340,12 @@ void GpuParticles::UpdateFrame(float deltaTime)
 	}
 	m_newEmitterIDs.clear();
 
-	// Update emitter data
+	if (deltaTime <= 0.0f)
+	{
+		return;
+	}
+
+	// Spawn particles
 	for (EmitterID emitterID = 0; emitterID < (EmitterID)m_emitters.size(); emitterID++)
 	{
 		auto& emitter = m_emitters[emitterID];
@@ -378,30 +383,22 @@ void GpuParticles::UpdateFrame(float deltaTime)
 			emitter.TimeCount += deltaTime;
 
 			graphics->UpdateUniformBuffer(m_ubufEmitters[emitterID], sizeof(Emitter), 0, &emitter);
-		}
-	}
 
-	// Spawn particles
-	for (EmitterID emitterID = 0; emitterID < (EmitterID)m_emitters.size(); emitterID++)
-	{
-		auto& emitter = m_emitters[emitterID];
-		if (emitter.IsAlive())
-		{
-			auto& paramSet = m_paramSets[emitter.GetParamID()];
-			auto& paramRes = m_resources[emitter.GetParamID()];
+			if (emitter.NextEmitCount > 0)
+			{
+				ComputeCommand command;
+				command.Shader = m_csParticleSpawn;
 
-			ComputeCommand command;
-			command.Shader = m_csParticleSpawn;
+				command.UniformBufferPtrs[0] = m_ubufConstants;
+				command.UniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
+				command.UniformBufferPtrs[2] = m_ubufEmitters[emitterID];
+				command.RWComputeBufferPtrs[0] = m_cbufParticles;
+				command.ROComputeBufferPtrs[0] = paramRes.EmitPoints;
 
-			command.UniformBufferPtrs[0] = m_ubufConstants;
-			command.UniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
-			command.UniformBufferPtrs[2] = m_ubufEmitters[emitterID];
-			command.RWComputeBufferPtrs[0] = m_cbufParticles;
-			command.ROComputeBufferPtrs[0] = paramRes.EmitPoints;
-
-			command.DispatchCount = emitter.NextEmitCount;
-			command.ThreadCount = 1;
-			graphics->Dispatch(command);
+				command.DispatchCount = emitter.NextEmitCount;
+				command.ThreadCount = 1;
+				graphics->Dispatch(command);
+			}
 		}
 	}
 
@@ -413,11 +410,6 @@ void GpuParticles::UpdateFrame(float deltaTime)
 		{
 			auto& paramSet = m_paramSets[emitter.GetParamID()];
 			auto& paramRes = m_resources[emitter.GetParamID()];
-
-			if (emitter.TrailSize > 0)
-			{
-				emitter.TrailPhase = (emitter.TrailPhase + 1) % paramSet.ShapeData;
-			}
 
 			ComputeCommand command;
 			command.Shader = m_csParticleUpdate;
@@ -435,6 +427,11 @@ void GpuParticles::UpdateFrame(float deltaTime)
 			command.DispatchCount = emitter.ParticleSize;
 			command.ThreadCount = 256;
 			graphics->Dispatch(command);
+
+			if (emitter.TrailSize > 0)
+			{
+				emitter.TrailPhase = (emitter.TrailPhase + 1) % paramSet.ShapeData;
+			}
 		}
 	}
 }

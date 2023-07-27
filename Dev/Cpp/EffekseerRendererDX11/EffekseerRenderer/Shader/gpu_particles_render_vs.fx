@@ -42,8 +42,7 @@ VS_Output main(const VS_Input input)
     uint index = emitter.ParticleHead + input.InstanceID;
     Particle particle = Particles[index];
     if (particle.FlagBits & 0x01) {
-        uint paramID = (particle.FlagBits >> 1) & 0x3FF;
-        uint updateCount = (particle.FlagBits >> 11) & 0xFF;
+        uint updateCount = (particle.FlagBits >> 1) & 0xFF;
         
         float3 position = input.Pos;
         float2 uv = input.UV;

@@ -21,7 +21,7 @@ void main(uint3 dtid : SV_DispatchThreadID)
 {
     float paramSeed = emitter.Seed ^ (emitter.TotalEmitCount + dtid.x);
     float3 position = emitter.Transform._m03_m13_m23;
-    float3 direction = RandomSpread(paramSeed, paramSet.Direction, paramSet.Spread.x * 3.141592f / 180.0f);
+    float3 direction = RandomSpread(paramSeed, paramSet.Direction, paramSet.Spread * 3.141592f / 180.0f);
     float speed = RandomFloatRange(paramSeed, paramSet.InitialSpeed);
 
     if (paramSet.EmitShapeType == 1) {
