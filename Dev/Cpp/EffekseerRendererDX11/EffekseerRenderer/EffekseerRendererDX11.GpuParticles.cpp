@@ -57,17 +57,28 @@ void GpuParticles::OnResetDevice()
 {
 }
 
-void GpuParticles::InitShaders()
+bool GpuParticles::InitSystem(const Settings& settings)
 {
+	bool result = EffekseerRenderer::GpuParticles::InitSystem(settings);
+	if (result == false)
+	{
+		return false;
+	}
+
 	auto graphics = GetRenderer()->GetGraphicsDevice();
 
-	m_csParticleClear = graphics->CreateComputeShader(ShaderData(CS_ParticleClear), ShaderSize(CS_ParticleClear));
-	m_csParticleSpawn = graphics->CreateComputeShader(ShaderData(CS_ParticleSpawn), ShaderSize(CS_ParticleSpawn));
-	m_csParticleUpdate = graphics->CreateComputeShader(ShaderData(CS_ParticleUpdate), ShaderSize(CS_ParticleUpdate));
+	Shaders shaders;
+	shaders.csParticleClear = graphics->CreateComputeShader(ShaderData(CS_ParticleClear), ShaderSize(CS_ParticleClear));
+	shaders.csParticleSpawn = graphics->CreateComputeShader(ShaderData(CS_ParticleSpawn), ShaderSize(CS_ParticleSpawn));
+	shaders.csParticleUpdate = graphics->CreateComputeShader(ShaderData(CS_ParticleUpdate), ShaderSize(CS_ParticleUpdate));
 
-	m_renderShader = graphics->CreateShaderFromBinary(
+	shaders.rsParticleRender = graphics->CreateShaderFromBinary(
 		ShaderData(VS_ParticleRender), ShaderSize(VS_ParticleRender),
 		ShaderData(PS_ParticleRender), ShaderSize(PS_ParticleRender));
+
+	SetShaders(shaders);
+
+	return true;
 }
 
 }

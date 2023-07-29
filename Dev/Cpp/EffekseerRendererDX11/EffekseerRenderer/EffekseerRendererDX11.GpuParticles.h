@@ -16,12 +16,12 @@ public:
 
 	virtual ~GpuParticles();
 
+public: // GpuParticles
+	virtual bool InitSystem(const Settings& settings) override;
+
 public: // For device restore
 	virtual void OnLostDevice();
 	virtual void OnResetDevice();
-
-public: // GpuParticles
-	virtual void InitShaders() override;
 };
 
 }

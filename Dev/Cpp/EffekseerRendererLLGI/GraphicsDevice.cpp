@@ -361,6 +361,40 @@ void VertexLayout::MakeGenerated()
 	}
 }
 
+RenderPass::RenderPass(GraphicsDevice* graphicsDevice)
+	: graphicsDevice_(graphicsDevice)
+{
+	ES_SAFE_ADDREF(graphicsDevice_);
+	graphicsDevice_->Register(this);
+}
+
+RenderPass::~RenderPass()
+{
+	graphicsDevice_->Unregister(this);
+	Effekseer::SafeRelease(graphicsDevice_);
+}
+
+bool RenderPass::Init(Effekseer::FixedSizeVector<Effekseer::Backend::TextureRef, Effekseer::Backend::RenderTargetMax>& textures, Effekseer::Backend::TextureRef depthTexture)
+{
+	LLGI::Texture* llgiTextures[Effekseer::Backend::RenderTargetMax] = {};
+	for (size_t i = 0; i < Effekseer::Backend::RenderTargetMax; i++)
+	{
+		llgiTextures[i] = textures.at(i).DownCast<Backend::Texture>()->GetTexture().get();
+	}
+	LLGI::Texture* llgiDepthTexture = depthTexture.DownCast<Backend::Texture>()->GetTexture().get();
+
+	renderPass_ = LLGI::CreateSharedPtr(graphicsDevice_->GetGraphics()->CreateRenderPass(llgiTextures, Effekseer::Backend::RenderTargetMax, llgiDepthTexture));
+	if (renderPass_ == nullptr)
+	{
+		return false;
+	}
+
+	textures_ = textures;
+	depthTexture_ = depthTexture;
+
+	return true;
+}
+
 Shader::Shader(GraphicsDevice* graphicsDevice)
 	: graphicsDevice_(graphicsDevice)
 {
@@ -382,6 +416,135 @@ bool Shader::Init(const void* vertexShaderData, int32_t vertexShaderDataSize, co
 	vertexShader_ = LLGI::CreateSharedPtr(graphicsDevice_->GetGraphics()->CreateShader(vsd.data(), static_cast<int32_t>(vsd.size())));
 	pixelShader_ = LLGI::CreateSharedPtr(graphicsDevice_->GetGraphics()->CreateShader(psd.data(), static_cast<int32_t>(psd.size())));
 	return vertexShader_ != nullptr && pixelShader_ != nullptr;
+}
+
+bool Shader::InitAsCompute(const void* computeShaderData, int32_t computeShaderDataSize)
+{
+	auto csd = Deserialize(computeShaderData, computeShaderDataSize);
+
+	computeShader_ = LLGI::CreateSharedPtr(graphicsDevice_->GetGraphics()->CreateShader(csd.data(), static_cast<int32_t>(csd.size())));
+	return computeShader_ != nullptr;
+}
+
+UniformBuffer::UniformBuffer(GraphicsDevice* graphicsDevice)
+	: graphicsDevice_(graphicsDevice)
+{
+	ES_SAFE_ADDREF(graphicsDevice_);
+	graphicsDevice_->Register(this);
+}
+
+UniformBuffer::~UniformBuffer()
+{
+	graphicsDevice_->Unregister(this);
+	Effekseer::SafeRelease(graphicsDevice_);
+}
+
+bool UniformBuffer::Init(int32_t size, const void* initialData)
+{
+	buffer_ = LLGI::CreateSharedPtr(graphicsDevice_->GetGraphics()->CreateBuffer(LLGI::BufferUsageType::Constant, size));
+
+	return buffer_ != nullptr;
+}
+
+void UniformBuffer::UpdateData(const void* src, int32_t size, int32_t offset)
+{
+	void* dst = buffer_->Lock(offset, size);
+	memcpy(dst, src, size);
+	buffer_->Unlock();
+}
+
+ComputeBuffer::ComputeBuffer(GraphicsDevice* graphicsDevice)
+	: graphicsDevice_(graphicsDevice)
+{
+	ES_SAFE_ADDREF(graphicsDevice_);
+	graphicsDevice_->Register(this);
+}
+
+ComputeBuffer::~ComputeBuffer()
+{
+	graphicsDevice_->Unregister(this);
+	Effekseer::SafeRelease(graphicsDevice_);
+}
+
+bool ComputeBuffer::Init(int32_t stride, int32_t size, const void* initialData)
+{
+	stride_ = stride;
+	buffer_ = LLGI::CreateSharedPtr(graphicsDevice_->GetGraphics()->CreateBuffer(LLGI::BufferUsageType::Compute , size));
+
+	return buffer_ != nullptr;
+}
+
+void ComputeBuffer::UpdateData(const void* src, int32_t size, int32_t offset)
+{
+	void* dst = buffer_->Lock(offset, size);
+	memcpy(dst, src, size);
+	buffer_->Unlock();
+}
+
+PipelineState::PipelineState(GraphicsDevice* graphicsDevice)
+{
+	ES_SAFE_ADDREF(graphicsDevice_);
+	graphicsDevice_->Register(this);
+}
+
+PipelineState::~PipelineState()
+{
+	graphicsDevice_->Unregister(this);
+	Effekseer::SafeRelease(graphicsDevice_);
+}
+
+bool PipelineState::Init(const Effekseer::Backend::PipelineStateParameter& param)
+{
+	param_ = param;
+
+	pip_ = LLGI::CreateSharedPtr(graphicsDevice_->GetGraphics()->CreatePiplineState());
+	if (pip_ == nullptr)
+	{
+		return false;
+	}
+
+	auto shader = param.ShaderPtr.DownCast<Backend::Shader>();
+	if (auto vertexShader = shader->GetVertexShader())
+	{
+		pip_->SetShader(LLGI::ShaderStageType::Vertex, vertexShader);
+	}
+	if (auto pixelShader = shader->GetPixelShader())
+	{
+		pip_->SetShader(LLGI::ShaderStageType::Pixel, pixelShader);
+	}
+	if (auto computeShader = shader->GetComputeShader())
+	{
+		pip_->SetShader(LLGI::ShaderStageType::Compute, computeShader);
+	}
+
+	pip_->Culling = static_cast<LLGI::CullingMode>(param.Culling);
+	pip_->Topology = static_cast<LLGI::TopologyType>(param.Topology);
+	
+	pip_->IsBlendEnabled = param.IsBlendEnabled;
+	pip_->BlendSrcFunc = static_cast<LLGI::BlendFuncType>(param.BlendSrcFunc);
+	pip_->BlendDstFunc = static_cast<LLGI::BlendFuncType>(param.BlendDstFunc);
+	pip_->BlendSrcFuncAlpha = static_cast<LLGI::BlendFuncType>(param.BlendSrcFuncAlpha);
+	pip_->BlendDstFuncAlpha = static_cast<LLGI::BlendFuncType>(param.BlendDstFuncAlpha);
+	pip_->BlendEquationRGB = static_cast<LLGI::BlendEquationType>(param.BlendEquationRGB);
+	pip_->BlendEquationAlpha = static_cast<LLGI::BlendEquationType>(param.BlendEquationAlpha);
+
+	pip_->IsDepthTestEnabled = param.IsDepthTestEnabled;
+	pip_->IsDepthWriteEnabled = param.IsDepthWriteEnabled;
+	pip_->DepthFunc = static_cast<LLGI::DepthFuncType>(param.DepthFunc);
+	
+	if (auto vertexLayout = param.VertexLayoutPtr.DownCast<Backend::VertexLayout>())
+	{
+		auto elements = vertexLayout->GetElements();
+		pip_->VertexLayoutCount = (int32_t)elements.size();
+		for (size_t i = 0; i < elements.size(); i++)
+		{
+			pip_->VertexLayouts[i] = elements[i].Format;
+			pip_->VertexLayoutNames[i] = elements[i].Name;
+			pip_->VertexLayoutSemantics[i] = elements[i].Semantic;
+		}
+	}
+
+	return true;
 }
 
 GraphicsDevice::GraphicsDevice(LLGI::Graphics* graphics)
@@ -518,6 +681,187 @@ Effekseer::Backend::ShaderRef GraphicsDevice::CreateShaderFromBinary(const void*
 	}
 
 	return ret;
+}
+
+Effekseer::Backend::ShaderRef GraphicsDevice::CreateComputeShader(const void* csData, int32_t csDataSize)
+{
+	auto ret = Effekseer::MakeRefPtr<Shader>(this);
+
+	if (!ret->InitAsCompute(csData, csDataSize))
+	{
+		return nullptr;
+	}
+
+	return ret;
+}
+
+Effekseer::Backend::UniformBufferRef GraphicsDevice::CreateUniformBuffer(int32_t size, const void* initialData)
+{
+	auto ret = Effekseer::MakeRefPtr<UniformBuffer>(this);
+
+	if (!ret->Init(size, initialData))
+	{
+		return nullptr;
+	}
+
+	return ret;
+}
+
+Effekseer::Backend::ComputeBufferRef GraphicsDevice::CreateComputeBuffer(int32_t elementCount, int32_t elementSize, const void* initialData)
+{
+	auto ret = Effekseer::MakeRefPtr<ComputeBuffer>(this);
+
+	if (!ret->Init(elementSize, elementCount * elementSize, initialData))
+	{
+		return nullptr;
+	}
+
+	return ret;
+}
+
+Effekseer::Backend::RenderPassRef GraphicsDevice::CreateRenderPass(Effekseer::FixedSizeVector<Effekseer::Backend::TextureRef, Effekseer::Backend::RenderTargetMax>& textures, Effekseer::Backend::TextureRef& depthTexture)
+{
+	auto ret = Effekseer::MakeRefPtr<RenderPass>(this);
+
+	if (!ret->Init(textures, depthTexture))
+	{
+		return nullptr;
+	}
+
+	return ret;
+}
+
+void GraphicsDevice::SetCommandList(LLGI::CommandList* commandList)
+{
+	commandList_ = commandList;
+}
+
+void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
+{
+}
+
+void GraphicsDevice::BeginRenderPass(Effekseer::Backend::RenderPassRef& renderPass, bool isColorCleared, bool isDepthCleared, Effekseer::Color clearColor)
+{
+	if (renderPass == nullptr)
+	{
+		return;
+	}
+
+	auto llgiRenderPass = renderPass.DownCast<Backend::RenderPass>()->GetRenderPass();
+	llgiRenderPass->SetIsColorCleared(isColorCleared);
+	llgiRenderPass->SetClearColor(LLGI::Color8(clearColor.R, clearColor.G, clearColor.B, clearColor.A));
+	llgiRenderPass->SetIsDepthCleared(isDepthCleared);
+
+	commandList_->BeginRenderPass(llgiRenderPass);
+}
+
+void GraphicsDevice::EndRenderPass()
+{
+	commandList_->EndRenderPass();
+}
+
+void GraphicsDevice::Dispatch(const Effekseer::Backend::DispatchParameter& dispatchParam)
+{
+	auto pipeline = dispatchParam.PipelineStatePtr.DownCast<PipelineState>();
+	if (pipeline == nullptr)
+	{
+		return;
+	}
+	commandList_->SetPipelineState(pipeline->GetPipelineState());
+
+	for (int32_t slot = 0; slot < dispatchParam.BufferSlotCount; slot++)
+	{
+		if (auto computeBuffer = dispatchParam.ROComputeBufferPtrs[slot].DownCast<ComputeBuffer>())
+		{
+			commandList_->SetComputeBuffer(computeBuffer->GetBuffer(), computeBuffer->GetStride(), slot, LLGI::ShaderStageType::Compute);
+		}
+		else
+		{
+			commandList_->SetComputeBuffer(nullptr, 0, slot, LLGI::ShaderStageType::Compute);
+		}
+	}
+	for (int32_t slot = 0; slot < dispatchParam.BufferSlotCount; slot++)
+	{
+		if (auto computeBuffer = dispatchParam.RWComputeBufferPtrs[slot].DownCast<ComputeBuffer>())
+		{
+			commandList_->SetComputeBuffer(computeBuffer->GetBuffer(), computeBuffer->GetStride(), 4 + slot, LLGI::ShaderStageType::Compute);
+		}
+		else
+		{
+			commandList_->SetComputeBuffer(nullptr, 0, 4 + slot, LLGI::ShaderStageType::Compute);
+		}
+	}
+
+	for (int32_t slot = 0; slot < 1; slot++)
+	{
+		if (auto uniformBuffer = dispatchParam.UniformBufferPtrs[slot].DownCast<UniformBuffer>())
+		{
+			commandList_->SetConstantBuffer(uniformBuffer->GetBuffer(), LLGI::ShaderStageType::Compute);
+		}
+		else
+		{
+			commandList_->SetConstantBuffer(nullptr, LLGI::ShaderStageType::Compute);
+		}
+	}
+
+	for (int32_t slot = 0; slot < dispatchParam.TextureSlotCount; slot++)
+	{
+		LLGI::TextureMinMagFilter filter = (dispatchParam.TextureSamplingTypes[slot] == Effekseer::Backend::TextureSamplingType::Nearest) ?
+			LLGI::TextureMinMagFilter::Nearest : LLGI::TextureMinMagFilter::Linear;
+		LLGI::TextureWrapMode wrap = (dispatchParam.TextureWrapTypes[slot] == Effekseer::Backend::TextureWrapType::Clamp) ?
+			LLGI::TextureWrapMode::Clamp : LLGI::TextureWrapMode::Repeat;
+		
+		if (auto texture = dispatchParam.TexturePtrs[slot].DownCast<Texture>())
+		{
+			commandList_->SetTexture(texture->GetTexture().get(), wrap, filter, slot, LLGI::ShaderStageType::Compute);
+		}
+		else
+		{
+			commandList_->SetTexture(nullptr, wrap, filter, slot, LLGI::ShaderStageType::Compute);
+		}
+	}
+
+	auto gc = dispatchParam.GroupCount;
+	auto tc = dispatchParam.ThreadCount;
+	commandList_->Dispatch(gc[0], gc[1], gc[2], tc[0], tc[1], tc[2]);
+}
+
+void GraphicsDevice::BeginComputePass()
+{
+	commandList_->BeginComputePass();
+}
+
+void GraphicsDevice::EndComputePass()
+{
+	commandList_->EndComputePass();
+}
+
+bool GraphicsDevice::UpdateUniformBuffer(Effekseer::Backend::UniformBufferRef& buffer, int32_t size, int32_t offset, const void* data)
+{
+	if (buffer == nullptr)
+	{
+		return false;
+	}
+
+	auto b = buffer.DownCast<Backend::UniformBuffer>();
+
+	b->UpdateData(data, size, offset);
+
+	return true;
+}
+
+bool GraphicsDevice::UpdateComputeBuffer(Effekseer::Backend::ComputeBufferRef& buffer, int32_t size, int32_t offset, const void* data)
+{
+	if (buffer == nullptr)
+	{
+		return false;
+	}
+
+	auto b = buffer.DownCast<Backend::ComputeBuffer>();
+
+	b->UpdateData(data, size, offset);
+
+	return true;
 }
 
 } // namespace Backend

@@ -1029,18 +1029,7 @@ bool Shader::Init(const void* vertexShaderData, int32_t vertexShaderDataSize, co
 	return true;
 }
 
-ComputeShader::ComputeShader(GraphicsDevice* graphicsDevice)
-	: graphicsDevice_(graphicsDevice)
-{
-	ES_SAFE_ADDREF(graphicsDevice_);
-}
-
-ComputeShader::~ComputeShader()
-{
-	ES_SAFE_RELEASE(graphicsDevice_);
-}
-
-bool ComputeShader::Init(const void* computeShaderData, int32_t computeShaderDataSize)
+bool Shader::InitAsCompute(const void* computeShaderData, int32_t computeShaderDataSize)
 {
 	ID3D11ComputeShader* cs = nullptr;
 	if (FAILED(graphicsDevice_->GetDevice()->CreateComputeShader(computeShaderData, computeShaderDataSize, nullptr, &cs)))
@@ -1070,6 +1059,12 @@ bool PipelineState::Init(const Effekseer::Backend::PipelineStateParameter& param
 	}
 
 	auto shader = static_cast<Shader*>(param.ShaderPtr.Get());
+	if (shader->GetComputeShader() != nullptr)
+	{
+		param_ = param;
+		return true;
+	}
+
 	auto vertexLayout = param.VertexLayoutPtr.DownCast<VertexLayout>();
 
 	D3D11_RASTERIZER_DESC rsDesc;
@@ -1457,11 +1452,11 @@ Effekseer::Backend::ShaderRef GraphicsDevice::CreateShaderFromCodes(const Effeks
 	return nullptr;
 }
 
-Effekseer::Backend::ComputeShaderRef GraphicsDevice::CreateComputeShader(const void* csData, int32_t csDataSize)
+Effekseer::Backend::ShaderRef GraphicsDevice::CreateComputeShader(const void* csData, int32_t csDataSize)
 {
-	auto ret = Effekseer::MakeRefPtr<ComputeShader>(this);
+	auto ret = Effekseer::MakeRefPtr<Shader>(this);
 
-	if (!ret->Init(csData, csDataSize))
+	if (!ret->InitAsCompute(csData, csDataSize))
 	{
 		return nullptr;
 	}
@@ -1689,7 +1684,8 @@ void GraphicsDevice::Dispatch(const Effekseer::Backend::DispatchParameter& dispa
 	constexpr int32_t BufferSlotCount = Effekseer::Backend::DispatchParameter::BufferSlotCount;
 	constexpr int32_t TextureSlotCount = Effekseer::Backend::DispatchParameter::TextureSlotCount;
 
-	auto shader = dispatchParam.Shader.DownCast<ComputeShader>();
+	auto pipline = dispatchParam.PipelineStatePtr.DownCast<PipelineState>();
+	auto shader = pipline->GetParam().ShaderPtr.DownCast<Shader>();
 
 	std::array<ID3D11Buffer*, BufferSlotCount> csCBufs = {};
 	std::array<ID3D11ShaderResourceView*, BufferSlotCount + TextureSlotCount> csSRVs = {};
@@ -1738,7 +1734,9 @@ void GraphicsDevice::Dispatch(const Effekseer::Backend::DispatchParameter& dispa
 	context_->CSSetShaderResources(0, (UINT)csSRVs.size(), csSRVs.data());
 	context_->CSSetSamplers(BufferSlotCount, (UINT)csSamplers.size(), csSamplers.data());
 	context_->CSSetUnorderedAccessViews(0, (UINT)csUAVs.size(), csUAVs.data(), nullptr);
-	context_->Dispatch(std::min(dispatchParam.DispatchCount / dispatchParam.ThreadCount, 65536), 1, 1);
+	
+	auto gc = dispatchParam.GroupCount;
+	context_->Dispatch(std::min(gc[0], 65536), std::min(gc[1], 65536), std::min(gc[2], 65536));
 
 	std::array<ID3D11UnorderedAccessView*, 4> csClearUAVs = {};
 	context_->CSSetUnorderedAccessViews(0, (UINT)csClearUAVs.size(), csClearUAVs.data(), nullptr);

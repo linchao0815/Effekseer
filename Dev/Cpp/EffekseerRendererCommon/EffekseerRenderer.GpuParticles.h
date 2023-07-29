@@ -9,7 +9,6 @@ namespace EffekseerRenderer
 class GpuParticles : public Effekseer::GpuParticles
 {
 public:
-	using ComputeShaderRef = Effekseer::Backend::ComputeShaderRef;
 	using ComputeBufferRef = Effekseer::Backend::ComputeBufferRef;
 	using UniformBufferRef = Effekseer::Backend::UniformBufferRef;
 	using TextureRef = Effekseer::Backend::TextureRef;
@@ -18,14 +17,22 @@ public:
 	using VertexLayoutRef = Effekseer::Backend::VertexLayoutRef;
 	using PipelineStateRef = Effekseer::Backend::PipelineStateRef;
 
+	struct Shaders
+	{
+		ShaderRef csParticleClear;
+		ShaderRef csParticleSpawn;
+		ShaderRef csParticleUpdate;
+		ShaderRef rsParticleRender;
+	};
+
 public:
 	GpuParticles(Renderer* renderer);
 
 	virtual ~GpuParticles();
 
-	virtual bool InitSystem(const Settings& settings = {}) override;
+	virtual bool InitSystem(const Settings& settings) override;
 
-	virtual void InitShaders() = 0;
+	virtual void SetShaders(const Shaders& shaders);
 
 	virtual void UpdateFrame(float deltaTime) override;
 
@@ -161,13 +168,14 @@ protected:
 	ComputeBufferRef m_cbufParticles;
 	ComputeBufferRef m_cbufTrails;
 
-	ComputeShaderRef m_csParticleSpawn;
-	ComputeShaderRef m_csParticleClear;
-	ComputeShaderRef m_csParticleUpdate;
+	PipelineStateRef m_pipelineParticleClear;
+	PipelineStateRef m_pipelineParticleSpawn;
+	PipelineStateRef m_pipelineParticleUpdate;
+
+	Shaders m_shaders;
 
 	TextureRef m_dummyVectorField;
 
-	ShaderRef m_renderShader;
 	VertexLayoutRef m_vertexLayout;
 	Effekseer::ModelRef m_modelSprite;
 	Effekseer::ModelRef m_modelTrail;

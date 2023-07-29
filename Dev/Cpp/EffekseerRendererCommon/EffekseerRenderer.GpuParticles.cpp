@@ -265,8 +265,6 @@ bool GpuParticles::InitSystem(const Settings& settings)
 	m_cbufParticles = graphics->CreateComputeBuffer((int32_t)settings.ParticleMaxCount, (int32_t)sizeof(Particle), nullptr);
 	m_cbufTrails = graphics->CreateComputeBuffer((int32_t)settings.TrailMaxCount, (int32_t)sizeof(Trail), nullptr);
 
-	InitShaders();
-
 	m_vertexLayout = EffekseerRenderer::GetModelRendererVertexLayout(graphics);
 
 	m_modelSprite = CreateSpriteModel();
@@ -284,6 +282,29 @@ bool GpuParticles::InitSystem(const Settings& settings)
 	}
 
 	return true;
+}
+
+void GpuParticles::SetShaders(const Shaders& shaders)
+{
+	m_shaders = shaders;
+
+	auto graphics = m_rendererBase->GetGraphicsDevice();
+
+	{
+		Effekseer::Backend::PipelineStateParameter params{};
+		params.ShaderPtr = m_shaders.csParticleClear;
+		m_pipelineParticleClear = graphics->CreatePipelineState(params);
+	}
+	{
+		Effekseer::Backend::PipelineStateParameter params{};
+		params.ShaderPtr = m_shaders.csParticleSpawn;
+		m_pipelineParticleSpawn = graphics->CreatePipelineState(params);
+	}
+	{
+		Effekseer::Backend::PipelineStateParameter params{};
+		params.ShaderPtr = m_shaders.csParticleUpdate;
+		m_pipelineParticleUpdate = graphics->CreatePipelineState(params);
+	}
 }
 
 void GpuParticles::UpdateFrame(float deltaTime)
@@ -327,15 +348,15 @@ void GpuParticles::UpdateFrame(float deltaTime)
 		graphics->UpdateUniformBuffer(m_ubufEmitters[emitterID], sizeof(Emitter), 0, &emitter);
 
 		ComputeCommand command;
-		command.Shader = m_csParticleClear;
+		command.PipelineStatePtr = m_pipelineParticleClear;
 
 		command.UniformBufferPtrs[0] = m_ubufConstants;
 		command.UniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
 		command.UniformBufferPtrs[2] = m_ubufEmitters[emitterID];
 		command.RWComputeBufferPtrs[0] = m_cbufParticles;
 
-		command.DispatchCount = emitter.ParticleSize;
-		command.ThreadCount = 256;
+		command.GroupCount = { (int32_t)emitter.ParticleSize / 256, 1, 1 };
+		command.ThreadCount = { 256, 1, 1 };
 		graphics->Dispatch(command);
 	}
 	m_newEmitterIDs.clear();
@@ -387,7 +408,7 @@ void GpuParticles::UpdateFrame(float deltaTime)
 			if (emitter.NextEmitCount > 0)
 			{
 				ComputeCommand command;
-				command.Shader = m_csParticleSpawn;
+				command.PipelineStatePtr = m_pipelineParticleSpawn;
 
 				command.UniformBufferPtrs[0] = m_ubufConstants;
 				command.UniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
@@ -395,8 +416,8 @@ void GpuParticles::UpdateFrame(float deltaTime)
 				command.RWComputeBufferPtrs[0] = m_cbufParticles;
 				command.ROComputeBufferPtrs[0] = paramRes.EmitPoints;
 
-				command.DispatchCount = emitter.NextEmitCount;
-				command.ThreadCount = 1;
+				command.GroupCount = { (int32_t)emitter.NextEmitCount, 1, 1 };
+				command.ThreadCount = { 1, 1, 1 };
 				graphics->Dispatch(command);
 			}
 		}
@@ -412,7 +433,7 @@ void GpuParticles::UpdateFrame(float deltaTime)
 			auto& paramRes = m_resources[emitter.GetParamID()];
 
 			ComputeCommand command;
-			command.Shader = m_csParticleUpdate;
+			command.PipelineStatePtr = m_pipelineParticleUpdate;
 
 			command.UniformBufferPtrs[0] = m_ubufConstants;
 			command.UniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
@@ -424,8 +445,8 @@ void GpuParticles::UpdateFrame(float deltaTime)
 			command.TextureSamplingTypes[0] = Effekseer::Backend::TextureSamplingType::Linear;
 			command.TextureWrapTypes[0] = Effekseer::Backend::TextureWrapType::Repeat;
 
-			command.DispatchCount = emitter.ParticleSize;
-			command.ThreadCount = 256;
+			command.GroupCount = { (int32_t)emitter.ParticleSize / 256, 1, 1 };
+			command.ThreadCount = { 256, 1, 1 };
 			graphics->Dispatch(command);
 
 			if (emitter.TrailSize > 0)
@@ -586,7 +607,7 @@ GpuParticles::ParamID GpuParticles::AddParamSet(const ParameterSet& paramSet, co
 	pipParams.IsDepthTestEnabled = paramSet.ZTest;
 	pipParams.IsDepthWriteEnabled = paramSet.ZWrite;
 	pipParams.Culling = CullingType::Clockwise;
-	pipParams.ShaderPtr = m_renderShader;
+	pipParams.ShaderPtr = m_shaders.rsParticleRender;
 	pipParams.VertexLayoutPtr = m_vertexLayout;
 
 	paramRes.PiplineState = graphics->CreatePipelineState(pipParams);

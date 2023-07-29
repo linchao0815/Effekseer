@@ -19,7 +19,6 @@ class VertexBuffer;
 class IndexBuffer;
 class UniformBuffer;
 class Shader;
-class ComputeShader;
 class VertexLayout;
 class FrameBuffer;
 class Texture;
@@ -33,7 +32,6 @@ using VertexBufferRef = RefPtr<VertexBuffer>;
 using IndexBufferRef = RefPtr<IndexBuffer>;
 using UniformBufferRef = RefPtr<UniformBuffer>;
 using ShaderRef = RefPtr<Shader>;
-using ComputeShaderRef = RefPtr<ComputeShader>;
 using VertexLayoutRef = RefPtr<VertexLayout>;
 using FrameBufferRef = RefPtr<FrameBuffer>;
 using TextureRef = RefPtr<Texture>;
@@ -262,14 +260,6 @@ public:
 	virtual ~Shader() = default;
 };
 
-class ComputeShader
-	: public ReferenceObject
-{
-public:
-	ComputeShader() = default;
-	virtual ~ComputeShader() = default;
-};
-
 class FrameBuffer
 	: public ReferenceObject
 {
@@ -327,7 +317,7 @@ public:
 	static const int BufferSlotCount = 4;
 	static const int TextureSlotCount = 4;
 
-	ComputeShaderRef Shader;
+	PipelineStateRef PipelineStatePtr;
 
 	std::array<UniformBufferRef, BufferSlotCount> UniformBufferPtrs;
 	std::array<ComputeBufferRef, BufferSlotCount> RWComputeBufferPtrs;
@@ -337,8 +327,8 @@ public:
 	std::array<TextureWrapType, TextureSlotCount> TextureWrapTypes;
 	std::array<TextureSamplingType, TextureSlotCount> TextureSamplingTypes;
 
-	int32_t DispatchCount = 0;
-	int32_t ThreadCount = 0;
+	std::array<int32_t, 3> GroupCount = {1, 1, 1};
+	std::array<int32_t, 3> ThreadCount = {1, 1, 1};
 };
 
 enum class VertexLayoutFormat
@@ -635,9 +625,9 @@ public:
 		return ShaderRef{};
 	}
 
-	virtual ComputeShaderRef CreateComputeShader(const void* csData, int32_t csDataSize)
+	virtual ShaderRef CreateComputeShader(const void* csData, int32_t csDataSize)
 	{
-		return ComputeShaderRef{};
+		return ShaderRef{};
 	}
 
 	/**
@@ -668,6 +658,14 @@ public:
 	}
 
 	virtual void Dispatch(const DispatchParameter& dispatchParam)
+	{
+	}
+
+	virtual void BeginComputePass()
+	{
+	}
+
+	virtual void EndComputePass()
 	{
 	}
 

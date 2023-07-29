@@ -322,11 +322,13 @@ private:
 	Effekseer::CustomVector<uint8_t> vsData_;
 	D3D11VertexShaderPtr vs_;
 	D3D11PixelShaderPtr ps_;
+	D3D11ComputeShaderPtr cs_;
 
 public:
 	Shader(GraphicsDevice* graphicsDevice);
 	~Shader() override;
 	bool Init(const void* vertexShaderData, int32_t vertexShaderDataSize, const void* pixelShaderData, int32_t pixelShaderDataSize);
+	bool InitAsCompute(const void* computeShaderData, int32_t computeShaderDataSize);
 
 	const Effekseer::CustomVector<uint8_t>& GetVertexShaderData() const
 	{
@@ -342,20 +344,6 @@ public:
 	{
 		return ps_.get();
 	}
-};
-
-class ComputeShader
-	: public DeviceObject,
-	  public Effekseer::Backend::ComputeShader
-{
-private:
-	GraphicsDevice* graphicsDevice_ = nullptr;
-	D3D11ComputeShaderPtr cs_;
-
-public:
-	ComputeShader(GraphicsDevice* graphicsDevice);
-	~ComputeShader() override;
-	bool Init(const void* computeShaderData, int32_t computeShaderDataSize);
 
 	ID3D11ComputeShader* GetComputeShader() const
 	{
@@ -463,7 +451,7 @@ public:
 
 	Effekseer::Backend::ShaderRef CreateShaderFromCodes(const Effekseer::CustomVector<Effekseer::StringView<char>>& vsCodes, const Effekseer::CustomVector<Effekseer::StringView<char>>& psCodes, Effekseer::Backend::UniformLayoutRef layout = nullptr) override;
 
-	Effekseer::Backend::ComputeShaderRef CreateComputeShader(const void* csData, int32_t csDataSize) override;
+	Effekseer::Backend::ShaderRef CreateComputeShader(const void* csData, int32_t csDataSize) override;
 
 	Effekseer::Backend::PipelineStateRef CreatePipelineState(const Effekseer::Backend::PipelineStateParameter& param) override;
 

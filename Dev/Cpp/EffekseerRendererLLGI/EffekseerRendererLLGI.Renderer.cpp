@@ -550,6 +550,8 @@ bool RendererImplemented::EndRendering()
 void RendererImplemented::SetCommandList(Effekseer::RefPtr<EffekseerRenderer::CommandList> commandList)
 {
 	commandList_ = commandList;
+	auto cl = commandList_.DownCast<CommandList>();
+	GetGraphicsDevice().DownCast<Backend::GraphicsDevice>()->SetCommandList(cl->GetInternal());
 }
 
 Effekseer::Backend::IndexBufferRef RendererImplemented::GetIndexBuffer()
