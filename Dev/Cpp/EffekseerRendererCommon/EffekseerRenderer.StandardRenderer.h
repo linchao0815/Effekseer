@@ -549,7 +549,7 @@ public:
 		}
 		else
 		{
-			shader_ = m_renderer->GetShader(renderState.Collector.ShaderType);
+			shader_ = (SHADER*)m_renderer->GetImpl()->GetShader(renderState.Collector.ShaderType);
 		}
 
 		// validate
@@ -692,7 +692,7 @@ public:
 			float lightAmbientColor[4];
 
 			::Effekseer::SIMD::Vec3f lightDirection3 = m_renderer->GetLightDirection();
-			lightDirection3 = lightDirection3.Normalize();
+			lightDirection3 = lightDirection3.GetNormal();
 			VectorToFloat4(lightDirection3, lightDirection);
 			ColorToFloat4(m_renderer->GetLightColor(), lightColor);
 			ColorToFloat4(m_renderer->GetLightAmbientColor(), lightAmbientColor);

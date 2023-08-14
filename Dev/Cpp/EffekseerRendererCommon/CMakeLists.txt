@@ -23,6 +23,7 @@ set(PublicHeaders
 )
 
 set(LocalHeaders
+    EffekseerRendererFlags.h
     EffekseerRenderer.CommonUtils.h
     EffekseerRenderer.DDSTextureLoader.h
     EffekseerRenderer.PngTextureLoader.h
