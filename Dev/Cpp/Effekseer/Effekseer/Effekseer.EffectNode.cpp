@@ -306,10 +306,12 @@ void EffectNodeImplemented::LoadParameter(unsigned char*& pos, EffectNode* paren
 
 			if (gpuParticleEnabled)
 			{
+				auto gpuParticlesParams = LoadGpuParticlesParameter(pos, ef->GetVersion());
+
 				GpuParticles = setting->GetGpuParticles();
 				if (GpuParticles != nullptr)
 				{
-					GpuParticlesParamID = GpuParticles->AddParamSet(LoadGpuParticlesParameter(pos, ef->GetVersion()), m_effect);
+					GpuParticlesParamID = GpuParticles->AddParamSet(gpuParticlesParams, m_effect);
 				}
 			}
 		}
