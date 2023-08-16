@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Utils/Input.h"
+#include "../Utils/Window.h"
 #include <DX12/LLGI.CommandListDX12.h>
 #include <DX12/LLGI.GraphicsDX12.h>
 #include <EffekseerRendererDX12.h>
