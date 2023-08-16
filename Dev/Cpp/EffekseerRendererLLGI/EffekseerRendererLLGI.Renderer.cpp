@@ -544,8 +544,10 @@ bool RendererImplemented::EndRendering()
 void RendererImplemented::SetCommandList(Effekseer::RefPtr<EffekseerRenderer::CommandList> commandList)
 {
 	commandList_ = commandList;
+
+	auto device = GetGraphicsDevice().DownCast<Backend::GraphicsDevice>();
 	auto cl = commandList_.DownCast<CommandList>();
-	GetGraphicsDevice().DownCast<Backend::GraphicsDevice>()->SetCommandList(cl->GetInternal());
+	device->SetCommandList((cl) ? cl->GetInternal() : nullptr);
 }
 
 Effekseer::Backend::IndexBufferRef RendererImplemented::GetIndexBuffer()

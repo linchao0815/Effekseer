@@ -238,9 +238,7 @@ public:
 		graphicsDevice->BeginRenderPass(buffers[targetIndex].renderPass, true, true, Effekseer::Color(80, 80, 80, 255));
 		Effekseer::Backend::DrawParameter drawParam;
 
-		drawParam.TextureCount = buffers[sourceIndex].textures.size();
-
-		for (int i = 0; i < drawParam.TextureCount; i++)
+		for (int i = 0; i < drawParam.TextureSlotCount; i++)
 		{
 			drawParam.TexturePtrs[i] = buffers[sourceIndex].textures.at(i);
 			drawParam.TextureSamplingTypes[i] = Effekseer::Backend::TextureSamplingType::Nearest;
@@ -277,8 +275,7 @@ public:
 		graphicsDevice->BeginRenderPass(windowRenderPass, true, true, Effekseer::Color(80, 80, 80, 255));
 		Effekseer::Backend::DrawParameter drawParam;
 
-		drawParam.TextureCount = buffers[pingpong].textures.size();
-		for (int i = 0; i < drawParam.TextureCount; i++)
+		for (int i = 0; i < drawParam.TextureSlotCount; i++)
 		{
 			drawParam.TexturePtrs[i] = buffers[pingpong].textures.at(i);
 			drawParam.TextureSamplingTypes[i] = Effekseer::Backend::TextureSamplingType::Nearest;

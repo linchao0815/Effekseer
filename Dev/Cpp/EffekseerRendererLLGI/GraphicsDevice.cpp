@@ -773,34 +773,34 @@ void GraphicsDevice::Dispatch(const Effekseer::Backend::DispatchParameter& dispa
 	{
 		if (auto computeBuffer = dispatchParam.ROComputeBufferPtrs[slot].DownCast<ComputeBuffer>())
 		{
-			commandList_->SetComputeBuffer(computeBuffer->GetBuffer(), computeBuffer->GetStride(), slot, LLGI::ShaderStageType::Compute);
+			commandList_->SetComputeBuffer(computeBuffer->GetBuffer(), computeBuffer->GetStride(), slot);
 		}
 		else
 		{
-			commandList_->SetComputeBuffer(nullptr, 0, slot, LLGI::ShaderStageType::Compute);
+			commandList_->SetComputeBuffer(nullptr, 0, slot);
 		}
 	}
 	for (int32_t slot = 0; slot < dispatchParam.BufferSlotCount; slot++)
 	{
 		if (auto computeBuffer = dispatchParam.RWComputeBufferPtrs[slot].DownCast<ComputeBuffer>())
 		{
-			commandList_->SetComputeBuffer(computeBuffer->GetBuffer(), computeBuffer->GetStride(), 4 + slot, LLGI::ShaderStageType::Compute);
+			commandList_->SetComputeBuffer(computeBuffer->GetBuffer(), computeBuffer->GetStride(), 4 + slot);
 		}
 		else
 		{
-			commandList_->SetComputeBuffer(nullptr, 0, 4 + slot, LLGI::ShaderStageType::Compute);
+			commandList_->SetComputeBuffer(nullptr, 0, 4 + slot);
 		}
 	}
 
-	for (int32_t slot = 0; slot < 1; slot++)
+	for (int32_t slot = 0; slot < dispatchParam.BufferSlotCount; slot++)
 	{
 		if (auto uniformBuffer = dispatchParam.UniformBufferPtrs[slot].DownCast<UniformBuffer>())
 		{
-			commandList_->SetConstantBuffer(uniformBuffer->GetBuffer(), LLGI::ShaderStageType::Compute);
+			commandList_->SetConstantBuffer(uniformBuffer->GetBuffer(), slot);
 		}
 		else
 		{
-			commandList_->SetConstantBuffer(nullptr, LLGI::ShaderStageType::Compute);
+			commandList_->SetConstantBuffer(nullptr, slot);
 		}
 	}
 
@@ -813,11 +813,11 @@ void GraphicsDevice::Dispatch(const Effekseer::Backend::DispatchParameter& dispa
 		
 		if (auto texture = dispatchParam.TexturePtrs[slot].DownCast<Texture>())
 		{
-			commandList_->SetTexture(texture->GetTexture().get(), wrap, filter, slot, LLGI::ShaderStageType::Compute);
+			commandList_->SetTexture(texture->GetTexture().get(), wrap, filter, slot);
 		}
 		else
 		{
-			commandList_->SetTexture(nullptr, wrap, filter, slot, LLGI::ShaderStageType::Compute);
+			commandList_->SetTexture(nullptr, wrap, filter, slot);
 		}
 	}
 
