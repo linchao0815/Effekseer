@@ -441,7 +441,8 @@ UniformBuffer::~UniformBuffer()
 
 bool UniformBuffer::Init(int32_t size, const void* initialData)
 {
-	buffer_ = LLGI::CreateSharedPtr(graphicsDevice_->GetGraphics()->CreateBuffer(LLGI::BufferUsageType::Constant, size));
+	buffer_ = LLGI::CreateSharedPtr(graphicsDevice_->GetGraphics()->CreateBuffer(
+		LLGI::BufferUsageType::Constant | LLGI::BufferUsageType::MapWrite, size));
 
 	return buffer_ != nullptr;
 }
@@ -482,6 +483,7 @@ void ComputeBuffer::UpdateData(const void* src, int32_t size, int32_t offset)
 }
 
 PipelineState::PipelineState(GraphicsDevice* graphicsDevice)
+	: graphicsDevice_(graphicsDevice)
 {
 	ES_SAFE_ADDREF(graphicsDevice_);
 	graphicsDevice_->Register(this);
@@ -719,6 +721,18 @@ Effekseer::Backend::ComputeBufferRef GraphicsDevice::CreateComputeBuffer(int32_t
 	return ret;
 }
 
+Effekseer::Backend::PipelineStateRef GraphicsDevice::CreatePipelineState(const Effekseer::Backend::PipelineStateParameter& param)
+{
+	auto ret = Effekseer::MakeRefPtr<PipelineState>(this);
+
+	if (!ret->Init(param))
+	{
+		return nullptr;
+	}
+
+	return ret;
+}
+
 Effekseer::Backend::RenderPassRef GraphicsDevice::CreateRenderPass(Effekseer::FixedSizeVector<Effekseer::Backend::TextureRef, Effekseer::Backend::RenderTargetMax>& textures, Effekseer::Backend::TextureRef& depthTexture)
 {
 	auto ret = Effekseer::MakeRefPtr<RenderPass>(this);
@@ -738,6 +752,34 @@ void GraphicsDevice::SetCommandList(LLGI::CommandList* commandList)
 
 void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 {
+	auto pip = drawParam.PipelineStatePtr.DownCast<Backend::PipelineState>();
+	auto vb = drawParam.VertexBufferPtr.DownCast<Backend::VertexBuffer>();
+	auto ib = drawParam.IndexBufferPtr.DownCast<Backend::IndexBuffer>();
+
+	commandList_->SetPipelineState(pip->GetPipelineState());
+	commandList_->SetVertexBuffer(vb->GetBuffer(), drawParam.VertexStride, 0);
+	commandList_->SetIndexBuffer(ib->GetBuffer(), drawParam.IndexStride, drawParam.IndexOffset);
+
+	for (int32_t slot = 0; slot < (int32_t)drawParam.BufferSlotCount; slot++)
+	{
+		auto buf = drawParam.VertexUniformBufferPtrs[slot].DownCast<Backend::UniformBuffer>();
+		commandList_->SetConstantBuffer((buf) ? buf->GetBuffer() : nullptr, slot);
+	}
+	for (int32_t slot = 0; slot < (int32_t)drawParam.BufferSlotCount; slot++)
+	{
+		auto buf = drawParam.ComputeBufferPtrs[slot].DownCast<Backend::ComputeBuffer>();
+		commandList_->SetComputeBuffer((buf) ? buf->GetBuffer() : nullptr, 
+			(buf) ? buf->GetStride() : 0, slot);
+	}
+	for (int32_t slot = 0; slot < (int32_t)drawParam.TextureSlotCount; slot++)
+	{
+		auto tex = drawParam.TexturePtrs[slot].DownCast<Backend::Texture>();
+		commandList_->SetTexture((tex) ? tex->GetTexture().get() : nullptr,
+			(LLGI::TextureWrapMode)drawParam.TextureWrapTypes[slot],
+			(LLGI::TextureMinMagFilter)drawParam.TextureSamplingTypes[slot], slot);
+	}
+
+	commandList_->Draw(drawParam.PrimitiveCount, drawParam.InstanceCount);
 }
 
 void GraphicsDevice::BeginRenderPass(Effekseer::Backend::RenderPassRef& renderPass, bool isColorCleared, bool isDepthCleared, Effekseer::Color clearColor)

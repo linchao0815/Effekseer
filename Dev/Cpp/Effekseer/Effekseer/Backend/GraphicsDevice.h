@@ -304,12 +304,14 @@ public:
 	std::array<ComputeBufferRef, BufferSlotCount> ComputeBufferPtrs;
 
 	std::array<TextureRef, TextureSlotCount> TexturePtrs;
-	std::array<TextureWrapType, TextureSlotCount> TextureWrapTypes{};
-	std::array<TextureSamplingType, TextureSlotCount> TextureSamplingTypes{};
+	std::array<TextureWrapType, TextureSlotCount> TextureWrapTypes = {};
+	std::array<TextureSamplingType, TextureSlotCount> TextureSamplingTypes = {};
 
+	int32_t VertexStride = 0;
+	int32_t IndexStride = 0;
+	int32_t IndexOffset = 0;
 	int32_t PrimitiveCount = 0;
 	int32_t InstanceCount = 0;
-	int32_t IndexOffset = 0;
 };
 
 struct DispatchParameter

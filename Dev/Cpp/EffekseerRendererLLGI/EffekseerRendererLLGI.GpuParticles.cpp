@@ -1,0 +1,58 @@
+﻿#include "EffekseerRendererLLGI.GpuParticles.h"
+#include "EffekseerRendererLLGI.Shader.h"
+
+namespace EffekseerRendererLLGI
+{
+
+GpuParticles::GpuParticles(RendererImplemented* renderer)
+	: EffekseerRenderer::GpuParticles(renderer)
+{
+}
+
+GpuParticles::~GpuParticles()
+{
+}
+
+bool GpuParticles::InitSystem(const Settings& settings)
+{
+	bool result = EffekseerRenderer::GpuParticles::InitSystem(settings);
+	if (result == false)
+	{
+		return false;
+	}
+
+	auto renderer = (RendererImplemented*)m_rendererBase;
+	auto graphics = renderer->GetGraphicsDevice();
+
+	auto& csClear = Backend::Serialize(renderer->fixedShader_.GpuParticles_Clear_CS);
+	auto& csSpawn = Backend::Serialize(renderer->fixedShader_.GpuParticles_Spawn_CS);
+	auto& csUpdate = Backend::Serialize(renderer->fixedShader_.GpuParticles_Update_CS);
+	auto& vsRender = Backend::Serialize(renderer->fixedShader_.GpuParticles_Update_CS);
+	auto& psRender = Backend::Serialize(renderer->fixedShader_.GpuParticles_Update_CS);
+
+	Shaders shaders;
+	shaders.csParticleClear = graphics->CreateComputeShader(csClear.data(), (int32_t)csClear.size());
+	shaders.csParticleSpawn = graphics->CreateComputeShader(csSpawn.data(), (int32_t)csSpawn.size());
+	shaders.csParticleUpdate = graphics->CreateComputeShader(csUpdate.data(), (int32_t)csUpdate.size());
+
+	shaders.rsParticleRender = graphics->CreateShaderFromBinary(
+		vsRender.data(), (int32_t)vsRender.size(),
+		psRender.data(), (int32_t)psRender.size());
+
+	SetShaders(shaders);
+
+	return true;
+}
+
+GpuParticles::PipelineStateRef GpuParticles::GetOrCreatePiplineState(const ParameterSet& paramSet)
+{
+	auto renderer = (RendererImplemented*)m_rendererBase;
+
+	auto pip = EffekseerRenderer::GpuParticles::GetOrCreatePiplineState(paramSet);
+	auto pipLLGI = pip.DownCast<Backend::PipelineState>();
+	pipLLGI->GetPipelineState()->SetRenderPassPipelineState(renderer->current
+
+	return pip;
+}
+
+}

@@ -7,6 +7,7 @@
 #include "EffekseerRendererLLGI.MaterialLoader.h"
 #include "EffekseerRendererLLGI.ModelRenderer.h"
 #include "EffekseerRendererLLGI.Shader.h"
+#include "EffekseerRendererLLGI.GpuParticles.h"
 
 #include "../EffekseerRendererCommon/EffekseerRenderer.RibbonRendererBase.h"
 #include "../EffekseerRendererCommon/EffekseerRenderer.RingRendererBase.h"
@@ -592,6 +593,16 @@ int32_t RendererImplemented::GetSquareMaxCount() const
 ::Effekseer::TrackRendererRef RendererImplemented::CreateTrackRenderer()
 {
 	return ::Effekseer::TrackRendererRef(new ::EffekseerRenderer::TrackRendererBase<RendererImplemented, false>(this));
+}
+
+::Effekseer::GpuParticlesRef RendererImplemented::CreateGpuParticles()
+{
+	auto gpuParticles = ::Effekseer::GpuParticlesRef(new ::EffekseerRendererLLGI::GpuParticles(this));
+	if (!gpuParticles->InitSystem())
+	{
+		return nullptr;
+	}
+	return gpuParticles;
 }
 
 ::Effekseer::TextureLoaderRef RendererImplemented::CreateTextureLoader(::Effekseer::FileInterfaceRef fileInterface)

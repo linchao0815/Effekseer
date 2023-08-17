@@ -159,6 +159,11 @@ public:
 	::Effekseer::TrackRendererRef CreateTrackRenderer() override;
 
 	/**
+		@brief	GPUパーティクルを生成する。
+	*/
+	::Effekseer::GpuParticlesRef CreateGpuParticles() override;
+
+	/**
 		@brief	テクスチャ読込クラスを生成する。
 	*/
 	::Effekseer::TextureLoaderRef CreateTextureLoader(::Effekseer::FileInterfaceRef fileInterface = nullptr) override;

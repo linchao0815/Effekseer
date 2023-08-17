@@ -113,13 +113,44 @@ static
 #include "ShaderHeader/model_lit_ps.h"
 } // namespace Model_Lit_PS
 
+namespace GpuParticles_Clear_CS
+{
+static
+#include "ShaderHeader/gpu_particles_clear_cs.h"
+} // namespace GpuParticles_Clear_CS
+
+namespace GpuParticles_Spawn_CS
+{
+static
+#include "ShaderHeader/gpu_particles_spawn_cs.h"
+} // namespace GpuParticles_Spawn_CS
+
+namespace GpuParticles_Update_CS
+{
+static
+#include "ShaderHeader/gpu_particles_update_cs.h"
+} // namespace GpuParticles_Update_CS
+
+namespace GpuParticles_Render_VS
+{
+static
+#include "ShaderHeader/gpu_particles_render_vs.h"
+} // namespace GpuParticles_Render_VS
+
+namespace GpuParticles_Render_PS
+{
+static
+#include "ShaderHeader/gpu_particles_render_ps.h"
+} // namespace GpuParticles_Render_PS
+
 namespace EffekseerRendererDX12
 {
 
 ::Effekseer::Backend::GraphicsDeviceRef CreateGraphicsDevice(ID3D12Device* device, ID3D12CommandQueue* commandQueue, int32_t swapBufferCount)
 {
 	std::function<std::tuple<D3D12_CPU_DESCRIPTOR_HANDLE, LLGI::Texture*>()> getScreenFunc =
-		[]() -> std::tuple<D3D12_CPU_DESCRIPTOR_HANDLE, LLGI::Texture*> {
+		[]() -> std::tuple<D3D12_CPU_DESCRIPTOR_HANDLE, LLGI::Texture*>
+	{
 		return std::tuple<D3D12_CPU_DESCRIPTOR_HANDLE, LLGI::Texture*>();
 	};
 
@@ -140,7 +171,8 @@ namespace EffekseerRendererDX12
 {
 	auto renderer = ::Effekseer::MakeRefPtr<::EffekseerRendererLLGI::RendererImplemented>(squareMaxCount);
 
-	auto allocate_ = [](std::vector<LLGI::DataStructure>& ds, const unsigned char* data, int32_t size) -> void {
+	auto allocate_ = [](std::vector<LLGI::DataStructure>& ds, const unsigned char* data, int32_t size) -> void
+	{
 		ds.resize(1);
 		ds[0].Size = size;
 		ds[0].Data = data;
@@ -176,6 +208,12 @@ namespace EffekseerRendererDX12
 		renderer->fixedShader_.ModelDistortion_VS, Model_Distortion_VS::g_main, sizeof(Model_Distortion_VS::g_main));
 	allocate_(
 		renderer->fixedShader_.ModelDistortion_PS, Model_Distortion_PS::g_main, sizeof(Model_Distortion_PS::g_main));
+
+	allocate_(renderer->fixedShader_.GpuParticles_Clear_CS, GpuParticles_Clear_CS::g_main, sizeof(GpuParticles_Clear_CS::g_main));
+	allocate_(renderer->fixedShader_.GpuParticles_Spawn_CS, GpuParticles_Spawn_CS::g_main, sizeof(GpuParticles_Spawn_CS::g_main));
+	allocate_(renderer->fixedShader_.GpuParticles_Update_CS, GpuParticles_Update_CS::g_main, sizeof(GpuParticles_Update_CS::g_main));
+	allocate_(renderer->fixedShader_.GpuParticles_Render_VS, GpuParticles_Render_VS::g_main, sizeof(GpuParticles_Render_VS::g_main));
+	allocate_(renderer->fixedShader_.GpuParticles_Render_PS, GpuParticles_Render_PS::g_main, sizeof(GpuParticles_Render_PS::g_main));
 
 	renderer->platformType_ = Effekseer::CompiledMaterialPlatformType::DirectX12;
 	renderer->materialCompiler_ = new Effekseer::MaterialCompilerDX12();

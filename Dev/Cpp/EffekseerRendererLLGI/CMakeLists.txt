@@ -8,6 +8,7 @@ set(PublicHeaders
 set(LocalHeaders
     EffekseerRendererLLGI.Base.h
     EffekseerRendererLLGI.Base.Pre.h
+    EffekseerRendererLLGI.GpuParticles.h
     EffekseerRendererLLGI.MaterialLoader.h
     EffekseerRendererLLGI.ModelRenderer.h
     EffekseerRendererLLGI.Renderer.h
@@ -19,6 +20,7 @@ set(LocalHeaders
 
 set(LocalSources
     Common.cpp
+    EffekseerRendererLLGI.GpuParticles.cpp
     EffekseerRendererLLGI.MaterialLoader.cpp
     EffekseerRendererLLGI.ModelRenderer.cpp
     EffekseerRendererLLGI.Renderer.cpp

@@ -352,6 +352,8 @@ public:
 
 	Effekseer::Backend::ComputeBufferRef CreateComputeBuffer(int32_t elementCount, int32_t elementSize, const void* initialData) override;
 
+	Effekseer::Backend::PipelineStateRef CreatePipelineState(const Effekseer::Backend::PipelineStateParameter& param) override;
+
 	Effekseer::Backend::RenderPassRef CreateRenderPass(Effekseer::FixedSizeVector<Effekseer::Backend::TextureRef, Effekseer::Backend::RenderTargetMax>& textures, Effekseer::Backend::TextureRef& depthTexture) override;
 
 	void SetCommandList(LLGI::CommandList* commandList);

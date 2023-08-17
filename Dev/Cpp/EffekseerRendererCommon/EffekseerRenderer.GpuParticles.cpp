@@ -314,8 +314,8 @@ void GpuParticles::UpdateFrame(float deltaTime)
 
 	// Update constant buffer
 	Constants cdata{};
-	cdata.ProjMat = m_rendererBase->GetProjectionMatrix();
-	cdata.CameraMat = m_rendererBase->GetCameraMatrix();
+	cdata.ProjMat = renderer->GetProjectionMatrix();
+	cdata.CameraMat = renderer->GetCameraMatrix();
 
 	Effekseer::Matrix44	inv{};
 	Effekseer::Matrix44::Inverse(inv, cdata.CameraMat);
@@ -329,8 +329,8 @@ void GpuParticles::UpdateFrame(float deltaTime)
 		float4{ inv.Values[0][1], 1.0f, inv.Values[2][1], 0.0f },
 		float4{ inv.Values[0][2], 0.0f, inv.Values[2][2], 0.0f }
 	};
-	cdata.CameraPos = m_rendererBase->GetCameraPosition();
-	cdata.CameraFront = m_rendererBase->GetCameraFrontDirection();
+	cdata.CameraPos = renderer->GetCameraPosition();
+	cdata.CameraFront = renderer->GetCameraFrontDirection();
 	cdata.DeltaTime = deltaTime;
 	graphics->UpdateUniformBuffer(m_ubufConstants, sizeof(Constants), 0, &cdata);
 
@@ -460,7 +460,7 @@ void GpuParticles::UpdateFrame(float deltaTime)
 void GpuParticles::RenderFrame()
 {
 	auto renderer = m_rendererBase;
-	auto graphics = m_rendererBase->GetGraphicsDevice();
+	auto graphics = renderer->GetGraphicsDevice();
 
 	for (EmitterID emitterID = 0; emitterID < (EmitterID)m_emitters.size(); emitterID++)
 	{
@@ -527,7 +527,9 @@ void GpuParticles::RenderFrame()
 				for (int32_t i = 0; i < modelFrameCount; i++)
 				{
 					drawParams.VertexBufferPtr = model->GetVertexBuffer(i);
+					drawParams.VertexStride = sizeof(Effekseer::Model::Vertex);
 					drawParams.IndexBufferPtr = model->GetIndexBuffer(i);
+					drawParams.IndexStride = 2;
 
 					if (emitter.TrailSize > 0)
 					{
@@ -564,53 +566,7 @@ GpuParticles::ParamID GpuParticles::AddParamSet(const ParameterSet& paramSet, co
 
 	ParameterRes paramRes;
 	paramRes.Effect = effect;
-
-	using namespace Effekseer::Backend;
-	PipelineStateParameter pipParams;
-	if ((Effekseer::AlphaBlendType)paramSet.BlendType == Effekseer::AlphaBlendType::Opacity)
-	{
-		pipParams.IsBlendEnabled = false;
-	}
-	else
-	{
-		pipParams.IsBlendEnabled = true;
-		switch ((Effekseer::AlphaBlendType)paramSet.BlendType)
-		{
-		case Effekseer::AlphaBlendType::Blend:
-			pipParams.BlendEquationRGB = BlendEquationType::Add;
-			pipParams.BlendSrcFunc = BlendFuncType::SrcAlpha;
-			pipParams.BlendDstFunc = BlendFuncType::OneMinusSrcAlpha;
-			break;
-		case Effekseer::AlphaBlendType::Add:
-			pipParams.BlendEquationRGB = BlendEquationType::Add;
-			pipParams.BlendSrcFunc = BlendFuncType::SrcAlpha;
-			pipParams.BlendDstFunc = BlendFuncType::One;
-			break;
-		case Effekseer::AlphaBlendType::Sub:
-			pipParams.BlendDstFunc = BlendFuncType::One;
-			pipParams.BlendSrcFunc = BlendFuncType::SrcAlpha;
-			pipParams.BlendEquationRGB = BlendEquationType::ReverseSub;
-			pipParams.BlendSrcFuncAlpha = BlendFuncType::Zero;
-			pipParams.BlendDstFuncAlpha = BlendFuncType::One;
-			pipParams.BlendEquationAlpha = BlendEquationType::Add;
-			break;
-		case Effekseer::AlphaBlendType::Mul:
-			pipParams.BlendDstFunc = BlendFuncType::SrcColor;
-			pipParams.BlendSrcFunc = BlendFuncType::Zero;
-			pipParams.BlendEquationRGB = BlendEquationType::Add;
-			pipParams.BlendSrcFuncAlpha = BlendFuncType::Zero;
-			pipParams.BlendDstFuncAlpha = BlendFuncType::One;
-			pipParams.BlendEquationAlpha = BlendEquationType::Add;
-			break;
-		}
-	}
-	pipParams.IsDepthTestEnabled = paramSet.ZTest;
-	pipParams.IsDepthWriteEnabled = paramSet.ZWrite;
-	pipParams.Culling = CullingType::Clockwise;
-	pipParams.ShaderPtr = m_shaders.rsParticleRender;
-	pipParams.VertexLayoutPtr = m_vertexLayout;
-
-	paramRes.PiplineState = graphics->CreatePipelineState(pipParams);
+	paramRes.PiplineState = GetOrCreatePiplineState(pipParams);
 
 	if (paramSet.TurbulencePower != 0.0f)
 	{
@@ -625,7 +581,7 @@ GpuParticles::ParamID GpuParticles::AddParamSet(const ParameterSet& paramSet, co
 		initialData.resize(sizeof(uint32_t) * 8 * 8 * 8);
 		memcpy(initialData.data(), noise.VectorField(), initialData.size());
 
-		paramRes.NoiseVectorField = m_rendererBase->GetGraphicsDevice()->CreateTexture(texParam, initialData);
+		paramRes.NoiseVectorField = graphics->CreateTexture(texParam, initialData);
 	}
 	m_resources[paramID] = std::move(paramRes);
 
@@ -764,6 +720,57 @@ void GpuParticles::SetColor(EmitterID emitterID, Effekseer::Color color)
 
 	auto& emitter = m_emitters[emitterID];
 	emitter.Color = color;
+}
+
+GpuParticles::PipelineStateRef GpuParticles::GetOrCreatePiplineState(const ParameterSet& paramSet)
+{
+	using namespace Effekseer::Backend;
+
+	PipelineStateParameter pipParams;
+	if ((Effekseer::AlphaBlendType)paramSet.BlendType == Effekseer::AlphaBlendType::Opacity)
+	{
+		pipParams.IsBlendEnabled = false;
+	}
+	else
+	{
+		pipParams.IsBlendEnabled = true;
+		switch ((Effekseer::AlphaBlendType)paramSet.BlendType)
+		{
+		case Effekseer::AlphaBlendType::Blend:
+			pipParams.BlendEquationRGB = BlendEquationType::Add;
+			pipParams.BlendSrcFunc = BlendFuncType::SrcAlpha;
+			pipParams.BlendDstFunc = BlendFuncType::OneMinusSrcAlpha;
+			break;
+		case Effekseer::AlphaBlendType::Add:
+			pipParams.BlendEquationRGB = BlendEquationType::Add;
+			pipParams.BlendSrcFunc = BlendFuncType::SrcAlpha;
+			pipParams.BlendDstFunc = BlendFuncType::One;
+			break;
+		case Effekseer::AlphaBlendType::Sub:
+			pipParams.BlendDstFunc = BlendFuncType::One;
+			pipParams.BlendSrcFunc = BlendFuncType::SrcAlpha;
+			pipParams.BlendEquationRGB = BlendEquationType::ReverseSub;
+			pipParams.BlendSrcFuncAlpha = BlendFuncType::Zero;
+			pipParams.BlendDstFuncAlpha = BlendFuncType::One;
+			pipParams.BlendEquationAlpha = BlendEquationType::Add;
+			break;
+		case Effekseer::AlphaBlendType::Mul:
+			pipParams.BlendDstFunc = BlendFuncType::SrcColor;
+			pipParams.BlendSrcFunc = BlendFuncType::Zero;
+			pipParams.BlendEquationRGB = BlendEquationType::Add;
+			pipParams.BlendSrcFuncAlpha = BlendFuncType::Zero;
+			pipParams.BlendDstFuncAlpha = BlendFuncType::One;
+			pipParams.BlendEquationAlpha = BlendEquationType::Add;
+			break;
+		}
+	}
+	pipParams.IsDepthTestEnabled = paramSet.ZTest;
+	pipParams.IsDepthWriteEnabled = paramSet.ZWrite;
+	pipParams.Culling = CullingType::Clockwise;
+	pipParams.ShaderPtr = m_shaders.rsParticleRender;
+	pipParams.VertexLayoutPtr = m_vertexLayout;
+
+	return m_rendererBase->GetGraphicsDevice()->CreatePipelineState(pipParams);
 }
 
 }
