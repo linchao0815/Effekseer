@@ -124,6 +124,11 @@ public:
 		return graphicsDevice_->GetGraphics();
 	}
 
+	std::shared_ptr<LLGI::RenderPassPipelineState> GetCurrentRenderPassPipelineState() const
+	{
+		return currentRenderPassPipelineState_;
+	}
+
 	Effekseer::Backend::IndexBufferRef GetIndexBuffer();
 
 	/**

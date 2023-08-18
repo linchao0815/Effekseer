@@ -55,7 +55,7 @@ public:
 	virtual void SetColor(EmitterID emitterID, Effekseer::Color color) override;
 
 protected:
-	virtual PipelineStateRef GetOrCreatePiplineState(const ParameterSet& paramSet);
+	PipelineStateRef CreatePiplineState(const ParameterSet& paramSet);
 
 protected:
 	static constexpr uint32_t EmitterUnitSize = 16;

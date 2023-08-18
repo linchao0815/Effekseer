@@ -566,7 +566,7 @@ GpuParticles::ParamID GpuParticles::AddParamSet(const ParameterSet& paramSet, co
 
 	ParameterRes paramRes;
 	paramRes.Effect = effect;
-	paramRes.PiplineState = GetOrCreatePiplineState(pipParams);
+	paramRes.PiplineState = CreatePiplineState(paramSet);
 
 	if (paramSet.TurbulencePower != 0.0f)
 	{
@@ -722,7 +722,7 @@ void GpuParticles::SetColor(EmitterID emitterID, Effekseer::Color color)
 	emitter.Color = color;
 }
 
-GpuParticles::PipelineStateRef GpuParticles::GetOrCreatePiplineState(const ParameterSet& paramSet)
+GpuParticles::PipelineStateRef GpuParticles::CreatePiplineState(const ParameterSet& paramSet)
 {
 	using namespace Effekseer::Backend;
 

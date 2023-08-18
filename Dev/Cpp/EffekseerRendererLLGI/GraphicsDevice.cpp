@@ -499,54 +499,70 @@ bool PipelineState::Init(const Effekseer::Backend::PipelineStateParameter& param
 {
 	param_ = param;
 
-	pip_ = LLGI::CreateSharedPtr(graphicsDevice_->GetGraphics()->CreatePiplineState());
-	if (pip_ == nullptr)
+	return true;
+}
+
+LLGI::PipelineState* PipelineState::GetOrCreatePipelineState(LLGI::RenderPassPipelineState* renderPassPipelineState)
+{
+	if (auto it = pips_.find(renderPassPipelineState); it != pips_.end())
 	{
-		return false;
+		return it->second.get();
 	}
 
-	auto shader = param.ShaderPtr.DownCast<Backend::Shader>();
+	auto pip = LLGI::CreateSharedPtr(graphicsDevice_->GetGraphics()->CreatePiplineState());
+	if (pip == nullptr)
+	{
+		return nullptr;
+	}
+
+	auto shader = param_.ShaderPtr.DownCast<Backend::Shader>();
 	if (auto vertexShader = shader->GetVertexShader())
 	{
-		pip_->SetShader(LLGI::ShaderStageType::Vertex, vertexShader);
+		pip->SetShader(LLGI::ShaderStageType::Vertex, vertexShader);
 	}
 	if (auto pixelShader = shader->GetPixelShader())
 	{
-		pip_->SetShader(LLGI::ShaderStageType::Pixel, pixelShader);
+		pip->SetShader(LLGI::ShaderStageType::Pixel, pixelShader);
 	}
 	if (auto computeShader = shader->GetComputeShader())
 	{
-		pip_->SetShader(LLGI::ShaderStageType::Compute, computeShader);
+		pip->SetShader(LLGI::ShaderStageType::Compute, computeShader);
 	}
 
-	pip_->Culling = static_cast<LLGI::CullingMode>(param.Culling);
-	pip_->Topology = static_cast<LLGI::TopologyType>(param.Topology);
-	
-	pip_->IsBlendEnabled = param.IsBlendEnabled;
-	pip_->BlendSrcFunc = static_cast<LLGI::BlendFuncType>(param.BlendSrcFunc);
-	pip_->BlendDstFunc = static_cast<LLGI::BlendFuncType>(param.BlendDstFunc);
-	pip_->BlendSrcFuncAlpha = static_cast<LLGI::BlendFuncType>(param.BlendSrcFuncAlpha);
-	pip_->BlendDstFuncAlpha = static_cast<LLGI::BlendFuncType>(param.BlendDstFuncAlpha);
-	pip_->BlendEquationRGB = static_cast<LLGI::BlendEquationType>(param.BlendEquationRGB);
-	pip_->BlendEquationAlpha = static_cast<LLGI::BlendEquationType>(param.BlendEquationAlpha);
+	pip->Culling = static_cast<LLGI::CullingMode>(param_.Culling);
+	pip->Topology = static_cast<LLGI::TopologyType>(param_.Topology);
 
-	pip_->IsDepthTestEnabled = param.IsDepthTestEnabled;
-	pip_->IsDepthWriteEnabled = param.IsDepthWriteEnabled;
-	pip_->DepthFunc = static_cast<LLGI::DepthFuncType>(param.DepthFunc);
-	
-	if (auto vertexLayout = param.VertexLayoutPtr.DownCast<Backend::VertexLayout>())
+	pip->IsBlendEnabled = param_.IsBlendEnabled;
+	pip->BlendSrcFunc = static_cast<LLGI::BlendFuncType>(param_.BlendSrcFunc);
+	pip->BlendDstFunc = static_cast<LLGI::BlendFuncType>(param_.BlendDstFunc);
+	pip->BlendSrcFuncAlpha = static_cast<LLGI::BlendFuncType>(param_.BlendSrcFuncAlpha);
+	pip->BlendDstFuncAlpha = static_cast<LLGI::BlendFuncType>(param_.BlendDstFuncAlpha);
+	pip->BlendEquationRGB = static_cast<LLGI::BlendEquationType>(param_.BlendEquationRGB);
+	pip->BlendEquationAlpha = static_cast<LLGI::BlendEquationType>(param_.BlendEquationAlpha);
+
+	pip->IsDepthTestEnabled = param_.IsDepthTestEnabled;
+	pip->IsDepthWriteEnabled = param_.IsDepthWriteEnabled;
+	pip->DepthFunc = static_cast<LLGI::DepthFuncType>(param_.DepthFunc);
+
+	if (auto vertexLayout = param_.VertexLayoutPtr.DownCast<Backend::VertexLayout>())
 	{
-		auto elements = vertexLayout->GetElements();
-		pip_->VertexLayoutCount = (int32_t)elements.size();
+		auto& elements = vertexLayout->GetElements();
+		pip->VertexLayoutCount = (int32_t)elements.size();
 		for (size_t i = 0; i < elements.size(); i++)
 		{
-			pip_->VertexLayouts[i] = elements[i].Format;
-			pip_->VertexLayoutNames[i] = elements[i].Name;
-			pip_->VertexLayoutSemantics[i] = elements[i].Semantic;
+			pip->VertexLayouts[i] = elements[i].Format;
+			pip->VertexLayoutNames[i] = "TEXCOORD";
+			pip->VertexLayoutSemantics[i] = static_cast<int32_t>(i);
 		}
 	}
 
-	return true;
+	pip->SetRenderPassPipelineState(renderPassPipelineState);
+	if (pip->Compile())
+	{
+		pips_.emplace(renderPassPipelineState, pip);
+		return pip.get();
+	}
+	return nullptr;
 }
 
 GraphicsDevice::GraphicsDevice(LLGI::Graphics* graphics)
@@ -750,13 +766,18 @@ void GraphicsDevice::SetCommandList(LLGI::CommandList* commandList)
 	commandList_ = commandList;
 }
 
+void GraphicsDevice::SetRenderPassPipelineState(LLGI::RenderPassPipelineState* renderPassPipelineState)
+{
+	renderPassPipelineState_ = renderPassPipelineState;
+}
+
 void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 {
 	auto pip = drawParam.PipelineStatePtr.DownCast<Backend::PipelineState>();
 	auto vb = drawParam.VertexBufferPtr.DownCast<Backend::VertexBuffer>();
 	auto ib = drawParam.IndexBufferPtr.DownCast<Backend::IndexBuffer>();
 
-	commandList_->SetPipelineState(pip->GetPipelineState());
+	commandList_->SetPipelineState(pip->GetOrCreatePipelineState(renderPassPipelineState_));
 	commandList_->SetVertexBuffer(vb->GetBuffer(), drawParam.VertexStride, 0);
 	commandList_->SetIndexBuffer(ib->GetBuffer(), drawParam.IndexStride, drawParam.IndexOffset);
 
@@ -809,7 +830,7 @@ void GraphicsDevice::Dispatch(const Effekseer::Backend::DispatchParameter& dispa
 	{
 		return;
 	}
-	commandList_->SetPipelineState(pipeline->GetPipelineState());
+	commandList_->SetPipelineState(pipeline->GetOrCreatePipelineState(nullptr));
 
 	for (int32_t slot = 0; slot < dispatchParam.BufferSlotCount; slot++)
 	{

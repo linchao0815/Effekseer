@@ -487,20 +487,23 @@ void RendererImplemented::SetRestorationOfStatesFlag(bool flag)
 
 void RendererImplemented::ChangeRenderPassPipelineState(LLGI::RenderPassPipelineStateKey key)
 {
+	auto gd = graphicsDevice_.DownCast<EffekseerRendererLLGI::Backend::GraphicsDevice>();
+
 	auto it = renderpassPipelineStates_.find(key);
 	if (it != renderpassPipelineStates_.end())
 	{
 		currentRenderPassPipelineState_ = it->second;
+		gd->SetRenderPassPipelineState(currentRenderPassPipelineState_.get());
 	}
 	else
 	{
-		auto gd = graphicsDevice_.DownCast<EffekseerRendererLLGI::Backend::GraphicsDevice>();
 		auto pipelineState = LLGI::CreateSharedPtr(gd->GetGraphics()->CreateRenderPassPipelineState(key));
 		if (pipelineState != nullptr)
 		{
 			renderpassPipelineStates_[key] = pipelineState;
 		}
 		currentRenderPassPipelineState_ = pipelineState;
+		gd->SetRenderPassPipelineState(currentRenderPassPipelineState_.get());
 	}
 }
 

@@ -13,7 +13,6 @@ cbuffer cb2 : register(b2)
     Emitter emitter;
 }
 
-StructuredBuffer<ParameterSet> ParamSets : register(t0);
 RWStructuredBuffer<Particle> Particles : register(u0);
 
 [numthreads(256, 1, 1)]

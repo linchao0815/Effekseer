@@ -27,8 +27,8 @@ bool GpuParticles::InitSystem(const Settings& settings)
 	auto& csClear = Backend::Serialize(renderer->fixedShader_.GpuParticles_Clear_CS);
 	auto& csSpawn = Backend::Serialize(renderer->fixedShader_.GpuParticles_Spawn_CS);
 	auto& csUpdate = Backend::Serialize(renderer->fixedShader_.GpuParticles_Update_CS);
-	auto& vsRender = Backend::Serialize(renderer->fixedShader_.GpuParticles_Update_CS);
-	auto& psRender = Backend::Serialize(renderer->fixedShader_.GpuParticles_Update_CS);
+	auto& vsRender = Backend::Serialize(renderer->fixedShader_.GpuParticles_Render_VS);
+	auto& psRender = Backend::Serialize(renderer->fixedShader_.GpuParticles_Render_PS);
 
 	Shaders shaders;
 	shaders.csParticleClear = graphics->CreateComputeShader(csClear.data(), (int32_t)csClear.size());
@@ -42,17 +42,6 @@ bool GpuParticles::InitSystem(const Settings& settings)
 	SetShaders(shaders);
 
 	return true;
-}
-
-GpuParticles::PipelineStateRef GpuParticles::GetOrCreatePiplineState(const ParameterSet& paramSet)
-{
-	auto renderer = (RendererImplemented*)m_rendererBase;
-
-	auto pip = EffekseerRenderer::GpuParticles::GetOrCreatePiplineState(paramSet);
-	auto pipLLGI = pip.DownCast<Backend::PipelineState>();
-	pipLLGI->GetPipelineState()->SetRenderPassPipelineState(renderer->current
-
-	return pip;
 }
 
 }

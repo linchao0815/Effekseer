@@ -16,9 +16,6 @@ public:
 
 public: // GpuParticles
 	virtual bool InitSystem(const Settings& settings) override;
-
-protected:
-	PipelineStateRef GetOrCreatePiplineState(const ParameterSet& paramSet) override;
 };
 
 }

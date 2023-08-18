@@ -289,7 +289,7 @@ class PipelineState
 {
 private:
 	GraphicsDevice* graphicsDevice_ = nullptr;
-	std::shared_ptr<LLGI::PipelineState> pip_;
+	std::map<LLGI::RenderPassPipelineState*, std::shared_ptr<LLGI::PipelineState>> pips_;
 	Effekseer::Backend::PipelineStateParameter param_;
 
 public:
@@ -298,10 +298,7 @@ public:
 
 	bool Init(const Effekseer::Backend::PipelineStateParameter& param);
 
-	LLGI::PipelineState* GetPipelineState() const
-	{
-		return pip_.get();
-	}
+	LLGI::PipelineState* GetOrCreatePipelineState(LLGI::RenderPassPipelineState* renderPassPipelineState);
 
 	const Effekseer::Backend::PipelineStateParameter& GetParam() const
 	{
@@ -316,6 +313,7 @@ private:
 	std::set<DeviceObject*> objects_;
 	LLGI::Graphics* graphics_ = nullptr;
 	LLGI::CommandList* commandList_ = nullptr;
+	LLGI::RenderPassPipelineState* renderPassPipelineState_ = nullptr;
 
 public:
 	GraphicsDevice(LLGI::Graphics* graphics);
@@ -357,6 +355,8 @@ public:
 	Effekseer::Backend::RenderPassRef CreateRenderPass(Effekseer::FixedSizeVector<Effekseer::Backend::TextureRef, Effekseer::Backend::RenderTargetMax>& textures, Effekseer::Backend::TextureRef& depthTexture) override;
 
 	void SetCommandList(LLGI::CommandList* commandList);
+
+	void SetRenderPassPipelineState(LLGI::RenderPassPipelineState* renderPassPipelineState);
 
 	void Draw(const Effekseer::Backend::DrawParameter& drawParam) override;
 
