@@ -382,7 +382,7 @@ void Instance::FirstUpdate()
 	{
 		if (auto gpuParticles = m_pManager->GetGpuParticles())
 		{
-			m_gpuEmitterID = gpuParticles->AddEmitter(m_pEffectNode->GpuParticlesParamID);
+			m_gpuEmitterID = gpuParticles->NewEmitter(m_pEffectNode->GpuParticlesParamID, (GpuParticles::ParticleGroupID)GetInstanceGlobal());
 
 			gpuParticles->SetTransform(m_gpuEmitterID, ToStruct(globalMatrix_rendered));
 
@@ -395,6 +395,8 @@ void Instance::FirstUpdate()
 			{
 				gpuParticles->SetColor(m_gpuEmitterID, ColorInheritance);
 			}
+
+			gpuParticles->StartEmit(m_gpuEmitterID);
 		}
 	}
 }
@@ -629,6 +631,7 @@ bool Instance::AreChildrenActive() const
 			return true;
 		}
 	}
+
 	return false;
 }
 
@@ -910,7 +913,7 @@ void Instance::Kill()
 
 		if (m_gpuEmitterID >= 0)
 		{
-			m_pManager->GetGpuParticles()->RemoveEmitter(m_gpuEmitterID);
+			m_pManager->GetGpuParticles()->StopEmit(m_gpuEmitterID);
 			m_gpuEmitterID = -1;
 		}
 

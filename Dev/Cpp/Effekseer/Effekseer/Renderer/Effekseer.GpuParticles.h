@@ -146,6 +146,7 @@ public:
 	};
 	using EmitterID = int32_t;
 	using ParamID = int32_t;
+	using ParticleGroupID = int64_t;
 	static constexpr int32_t InvalidID = -1;
 
 public:
@@ -165,15 +166,21 @@ public:
 
 	virtual const ParameterSet* GetParamSet(ParamID paramID) const { return nullptr; }
 
-	virtual EmitterID AddEmitter(ParamID paramID) { return InvalidID; }
+	virtual EmitterID NewEmitter(ParamID paramID, ParticleGroupID groupID) { return InvalidID; }
 
-	virtual void RemoveEmitter(EmitterID emitterID) {}
+	virtual void StartEmit(EmitterID emitterID) {}
 
-	virtual void StopEmitter(EmitterID emitterID) {}
+	virtual void StopEmit(EmitterID emitterID) {}
 
 	virtual void SetTransform(EmitterID emitterID, const Effekseer::Matrix43& transform) {}
 
 	virtual void SetColor(EmitterID emitterID, Effekseer::Color color) {}
+
+	virtual void KillParticles(ParticleGroupID groupID) {}
+
+	virtual int32_t GetParticleCountByGroup(ParticleGroupID groupID) { return 0; }
+
+	virtual int32_t GetParticleCountByEmitter(EmitterID emitterID) { return 0; }
 
 protected:
 	Settings m_settings;

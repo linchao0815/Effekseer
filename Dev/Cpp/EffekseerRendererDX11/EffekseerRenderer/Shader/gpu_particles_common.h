@@ -59,10 +59,14 @@ struct Emitter
     uint TrailHead;
     uint TrailSize;
     uint TrailPhase;
-    float TimeCount;
     uint NextEmitCount;
     uint TotalEmitCount;
     uint EmitPointCount;
+    float TimeCount;
+    float TimeStopped;
+    uint Reserved0;
+    uint Reserved1;
+    uint Reserved2;
     uint Color;
     row_major float3x4 Transform;
 };

@@ -375,50 +375,68 @@ void GpuParticles::UpdateFrame(float deltaTime)
 			auto& paramSet = m_paramSets[emitter.GetParamID()];
 			auto& paramRes = m_resources[emitter.GetParamID()];
 
-			if (paramSet.EmitShapeType == EmitShape::Model)
-			{
-				if (!paramRes.EmitPoints)
-				{
-					if (auto model = paramRes.Effect->GetModel(paramSet.EmitShapeData.ModelIndex))
-					{
-						auto points = GeneratePointCache(model, 16 * 1024, 1);
-						paramRes.EmitPointCount = (uint32_t)points.size();
-						paramRes.EmitPoints = graphics->CreateComputeBuffer(
-							(int32_t)points.size(), (int32_t)sizeof(Effekseer::Model::Vertex), points.data());
-					}
-				}
-				emitter.EmitPointCount = paramRes.EmitPointCount;
-			}
-
-			emitter.TotalEmitCount += emitter.NextEmitCount;
-
-			if (emitter.TimeCount >= paramSet.EmitOffset)
-			{
-				emitter.NextEmitCount = (uint32_t)(round(paramSet.EmitPerFrame * deltaTime));
-				
-				if (paramSet.EmitCount >= 0)
-				{
-					emitter.NextEmitCount = std::clamp((int32_t)emitter.NextEmitCount, 0, paramSet.EmitCount - (int32_t)emitter.TotalEmitCount);
-				}
-			}
 			emitter.TimeCount += deltaTime;
 
-			graphics->UpdateUniformBuffer(m_ubufEmitters[emitterID], sizeof(Emitter), 0, &emitter);
+			emitter.TotalEmitCount += emitter.NextEmitCount;
+			emitter.NextEmitCount = 0;
 
-			if (emitter.NextEmitCount > 0)
+			if (emitter.TotalEmitCount >= paramSet.EmitCount)
 			{
-				ComputeCommand command;
-				command.PipelineStatePtr = m_pipelineParticleSpawn;
+				emitter.SetEmitting(false);
+				emitter.TimeStopped = emitter.TimeCount;
+			}
 
-				command.UniformBufferPtrs[0] = m_ubufConstants;
-				command.UniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
-				command.UniformBufferPtrs[2] = m_ubufEmitters[emitterID];
-				command.RWComputeBufferPtrs[0] = m_cbufParticles;
-				command.ROComputeBufferPtrs[0] = paramRes.EmitPoints;
+			if (emitter.IsEmitting())
+			{
+				if (emitter.TimeCount >= paramSet.EmitOffset)
+				{
+					emitter.NextEmitCount = (uint32_t)(round(paramSet.EmitPerFrame * deltaTime));
 
-				command.GroupCount = { (int32_t)emitter.NextEmitCount, 1, 1 };
-				command.ThreadCount = { 1, 1, 1 };
-				graphics->Dispatch(command);
+					if (paramSet.EmitCount >= 0)
+					{
+						emitter.NextEmitCount = std::clamp((int32_t)emitter.NextEmitCount, 0, paramSet.EmitCount - (int32_t)emitter.TotalEmitCount);
+					}
+				}
+
+				if (paramSet.EmitShapeType == EmitShape::Model)
+				{
+					if (!paramRes.EmitPoints)
+					{
+						if (auto model = paramRes.Effect->GetModel(paramSet.EmitShapeData.ModelIndex))
+						{
+							auto points = GeneratePointCache(model, 16 * 1024, 1);
+							paramRes.EmitPointCount = (uint32_t)points.size();
+							paramRes.EmitPoints = graphics->CreateComputeBuffer(
+								(int32_t)points.size(), (int32_t)sizeof(Effekseer::Model::Vertex), points.data());
+						}
+					}
+					emitter.EmitPointCount = paramRes.EmitPointCount;
+				}
+
+				graphics->UpdateUniformBuffer(m_ubufEmitters[emitterID], sizeof(Emitter), 0, &emitter);
+
+				if (emitter.NextEmitCount > 0)
+				{
+					ComputeCommand command;
+					command.PipelineStatePtr = m_pipelineParticleSpawn;
+
+					command.UniformBufferPtrs[0] = m_ubufConstants;
+					command.UniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
+					command.UniformBufferPtrs[2] = m_ubufEmitters[emitterID];
+					command.RWComputeBufferPtrs[0] = m_cbufParticles;
+					command.ROComputeBufferPtrs[0] = paramRes.EmitPoints;
+
+					command.GroupCount = { (int32_t)emitter.NextEmitCount, 1, 1 };
+					command.ThreadCount = { 1, 1, 1 };
+					graphics->Dispatch(command);
+				}
+			}
+			else
+			{
+				if (GetParticleCountByEmitter(emitterID) == 0)
+				{
+					FreeEmitter(emitterID);
+				}
 			}
 		}
 	}
@@ -469,16 +487,6 @@ void GpuParticles::RenderFrame()
 		{
 			auto& paramSet = m_paramSets[emitter.GetParamID()];
 			auto& paramRes = m_resources[emitter.GetParamID()];
-
-			ParticleArgs pargs{};
-			pargs.EmitterID = emitterID;
-			pargs.ParticleHead = emitter.ParticleHead;
-			if (emitter.TrailSize > 0)
-			{
-				pargs.TrailHead = emitter.TrailHead;
-				pargs.TrailJoints = paramSet.ShapeData;
-				pargs.TrailPhase = emitter.TrailPhase;
-			}
 
 			Effekseer::Backend::DrawParameter drawParams;
 			drawParams.PipelineStatePtr = paramRes.PiplineState;
@@ -590,26 +598,18 @@ GpuParticles::ParamID GpuParticles::AddParamSet(const ParameterSet& paramSet, co
 
 void GpuParticles::RemoveParamSet(ParamID paramID)
 {
-	if (paramID < 0)
-	{
-		return;
-	}
-
+	assert(paramID >= 0 && paramID < m_paramSets.size());
 	std::lock_guard<std::mutex> lock(m_mutex);
 	m_paramFreeList.push_front(paramID);
 }
 
 const GpuParticles::ParameterSet* GpuParticles::GetParamSet(ParamID paramID) const
 {
-	if (paramID < 0 || paramID >= m_paramSets.size())
-	{
-		return nullptr;
-	}
-
+	assert(paramID >= 0 && paramID < m_paramSets.size());
 	return &m_paramSets[paramID];
 }
 
-GpuParticles::EmitterID GpuParticles::AddEmitter(ParamID paramID)
+GpuParticles::EmitterID GpuParticles::NewEmitter(ParamID paramID, ParticleGroupID groupID)
 {
 	std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -619,24 +619,27 @@ GpuParticles::EmitterID GpuParticles::AddEmitter(ParamID paramID)
 	}
 
 	EmitterID emitterID = m_emitterFreeList.front();
-	
+
 	auto& paramSet = m_paramSets[paramID];
-	uint32_t particlesMaxCount = (uint32_t)(round((double)paramSet.LifeTime[1] * paramSet.EmitPerFrame));
+	uint32_t particlesMaxCount = (uint32_t)(round((double)paramSet.LifeTime[0] * paramSet.EmitPerFrame));
 	particlesMaxCount = std::min(particlesMaxCount, (uint32_t)paramSet.EmitCount);
 	particlesMaxCount = RoundUp(particlesMaxCount, ParticleUnitSize);
 
 	Emitter& emitter = m_emitters[emitterID];
-	emitter.SetFlagBits(true, paramID);
+	emitter.SetFlagBits(true, false, paramID);
 	emitter.Seed = m_random();
 	emitter.ParticleHead = 0;
 	emitter.ParticleSize = 0;
 	emitter.TrailHead = 0;
 	emitter.TrailSize = 0;
 	emitter.TrailPhase = 0;
-	emitter.TimeCount = 0.0f;
 	emitter.NextEmitCount = 0;
 	emitter.TotalEmitCount = 0;
 	emitter.EmitPointCount = 0;
+	emitter.TimeCount = 0.0f;
+	emitter.TimeStopped = 0.0f;
+	emitter.GroupID = groupID;
+	emitter.Color = Effekseer::Color(255, 255, 255, 255);
 	emitter.Transform = {
 		float4{ 1.0f, 0.0f, 0.0f, 0.0f },
 		float4{ 0.0f, 1.0f, 0.0f, 0.0f },
@@ -669,41 +672,39 @@ GpuParticles::EmitterID GpuParticles::AddEmitter(ParamID paramID)
 	return emitterID;
 }
 
-void GpuParticles::RemoveEmitter(EmitterID emitterID)
+void GpuParticles::FreeEmitter(EmitterID emitterID)
 {
-	if (emitterID < 0 || emitterID >= (EmitterID)m_emitters.size())
-	{
-		return;
-	}
-
-	std::lock_guard<std::mutex> lock(m_mutex);
+	assert(emitterID >= 0 && emitterID < m_emitters.size());
 
 	Emitter& emitter = m_emitters[emitterID];
 	emitter.FlagBits = 0;
-	m_newEmitterIDs.push_back(emitterID);
+	emitter.GroupID = 0;
 
-	m_particleAllocator.Deallocate({emitter.ParticleHead, emitter.ParticleSize});
-	m_trailAllocator.Deallocate({emitter.TrailHead, emitter.TrailSize});
-
+	m_particleAllocator.Deallocate({ emitter.ParticleHead, emitter.ParticleSize });
+	m_trailAllocator.Deallocate({ emitter.TrailHead, emitter.TrailSize });
 	m_emitterFreeList.push_front(emitterID);
 }
 
-void GpuParticles::StopEmitter(EmitterID emitterID)
+void GpuParticles::StartEmit(EmitterID emitterID)
 {
-	if (emitterID < 0 || emitterID >= (EmitterID)m_emitters.size())
-	{
-		return;
-	}
+	assert(emitterID >= 0 && emitterID < m_emitters.size());
+	Emitter& emitter = m_emitters[emitterID];
+	emitter.SetEmitting(true);
+	emitter.TimeCount = 0.0f;
+}
+
+void GpuParticles::StopEmit(EmitterID emitterID)
+{
+	assert(emitterID >= 0 && emitterID < m_emitters.size());
+	Emitter& emitter = m_emitters[emitterID];
+	emitter.SetEmitting(false);
+	emitter.TimeStopped = emitter.TimeCount;
 }
 
 void GpuParticles::SetTransform(EmitterID emitterID, const Effekseer::Matrix43& transform)
 {
-	if (emitterID < 0 || emitterID >= (EmitterID)m_emitters.size())
-	{
-		return;
-	}
-
-	auto& emitter = m_emitters[emitterID];
+	assert(emitterID >= 0 && emitterID < m_emitters.size());
+	Emitter& emitter = m_emitters[emitterID];
 	emitter.Transform = {
 		float4{ transform.Value[0][0], transform.Value[0][1], transform.Value[0][2], transform.Value[3][0] },
 		float4{ transform.Value[1][0], transform.Value[1][1], transform.Value[1][2], transform.Value[3][1] },
@@ -713,13 +714,73 @@ void GpuParticles::SetTransform(EmitterID emitterID, const Effekseer::Matrix43& 
 
 void GpuParticles::SetColor(EmitterID emitterID, Effekseer::Color color)
 {
-	if (emitterID < 0 || emitterID >= (EmitterID)m_emitters.size())
+	assert(emitterID >= 0 && emitterID < m_emitters.size());
+	Emitter& emitter = m_emitters[emitterID];
+	emitter.Color = color;
+}
+
+void GpuParticles::KillParticles(ParticleGroupID groupID)
+{
+	std::lock_guard<std::mutex> lock(m_mutex);
+
+	for (EmitterID emitterID = 0; emitterID < (EmitterID)m_emitters.size(); emitterID++)
 	{
-		return;
+		auto& emitter = m_emitters[emitterID];
+		if (emitter.IsAlive() && emitter.GroupID == groupID)
+		{
+			FreeEmitter(emitterID);
+		}
+	}
+}
+
+int32_t GpuParticles::GetParticleCountByGroup(ParticleGroupID groupID)
+{
+	int32_t count = 0;
+
+	for (EmitterID emitterID = 0; emitterID < (EmitterID)m_emitters.size(); emitterID++)
+	{
+		auto& emitter = m_emitters[emitterID];
+		if (emitter.IsAlive() && emitter.GroupID == groupID)
+		{
+			count += GetParticleCountByEmitter(emitterID);
+		}
+	}
+	return count;
+}
+
+
+int32_t GpuParticles::GetParticleCountByEmitter(EmitterID emitterID)
+{
+	assert(emitterID >= 0 && emitterID < m_emitters.size());
+
+	Emitter& emitter = m_emitters[emitterID];
+	if (!emitter.IsAlive())
+	{
+		return 0;
 	}
 
-	auto& emitter = m_emitters[emitterID];
-	emitter.Color = color;
+	ParameterSet& paramSet = m_paramSets[emitter.GetParamID()];
+
+	int32_t maxParticleCount = static_cast<int32_t>(paramSet.LifeTime[0] * paramSet.EmitPerFrame);
+	float emitDuration = static_cast<float>(paramSet.EmitCount) / static_cast<float>(paramSet.EmitPerFrame);
+	float timeCount = std::max(0.0f, emitter.TimeCount - paramSet.EmitOffset);
+
+	if (!emitter.IsEmitting())
+	{
+		emitDuration = std::min(emitDuration, emitter.TimeStopped - paramSet.EmitOffset);
+	}
+	if (timeCount < paramSet.LifeTime[0])
+	{
+		return static_cast<int32_t>(paramSet.EmitPerFrame * timeCount);
+	}
+	else if (timeCount < emitDuration)
+	{
+		return maxParticleCount;
+	}
+	else
+	{
+		return std::max(0, maxParticleCount - static_cast<int32_t>(paramSet.EmitPerFrame * (timeCount - emitDuration)));
+	}
 }
 
 GpuParticles::PipelineStateRef GpuParticles::CreatePiplineState(const ParameterSet& paramSet)

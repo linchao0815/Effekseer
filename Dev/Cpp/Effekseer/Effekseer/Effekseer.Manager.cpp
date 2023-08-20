@@ -173,19 +173,33 @@ void ManagerImplemented::StopStoppingEffects()
 			{
 				Instance* pRootInstance = group->GetFirst();
 
-				if (pRootInstance && pRootInstance->IsActive() && !pRootInstance->IsFirstTime())
+				if (pRootInstance && pRootInstance->IsActive())
 				{
-					if (!pRootInstance->AreChildrenActive())
+					if (pRootInstance->IsFirstTime() || pRootInstance->AreChildrenActive())
 					{
-						// when a sound is not playing.
-						if (m_soundPlayer == nullptr || !m_soundPlayer->CheckPlayingTag(draw_set.GlobalPointer))
-						{
-							isRemoving = true;
-						}
+						continue;
 					}
 				}
 			}
+
+			// when a sound is playing.
+			if (m_soundPlayer && m_soundPlayer->CheckPlayingTag(draw_set.GlobalPointer))
+			{
+				continue;
+			}
+
+			// when gpu particles are found
+			if (auto gpuParticles = GetGpuParticles())
+			{
+				if (gpuParticles->GetParticleCountByGroup((GpuParticles::ParticleGroupID)draw_set.GlobalPointer) > 0)
+				{
+					continue;
+				}
+			}
+			
+			isRemoving = true;
 		}
+
 
 		if (isRemoving)
 		{
@@ -352,6 +366,11 @@ void ManagerImplemented::ExecuteEvents()
 			if (GetSoundPlayer() != nullptr)
 			{
 				GetSoundPlayer()->StopTag(ds.second.GlobalPointer);
+			}
+
+			if (GetGpuParticles() != nullptr)
+			{
+				GetGpuParticles()->KillParticles((GpuParticles::ParticleGroupID)ds.second.GlobalPointer);
 			}
 		}
 

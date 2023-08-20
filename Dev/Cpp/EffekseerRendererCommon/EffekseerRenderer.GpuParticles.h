@@ -44,17 +44,25 @@ public:
 
 	virtual const ParameterSet* GetParamSet(ParamID paramID) const override;
 
-	virtual EmitterID AddEmitter(ParamID paramID) override;
+	virtual EmitterID NewEmitter(ParamID paramID, ParticleGroupID groupID) override;
 
-	virtual void RemoveEmitter(EmitterID emitterID) override;
+	virtual void StartEmit(EmitterID emitterID) override;
 
-	virtual void StopEmitter(EmitterID emitterID) override;
+	virtual void StopEmit(EmitterID emitterID) override;
+
+	virtual void KillParticles(ParticleGroupID groupID) override;
 
 	virtual void SetTransform(EmitterID emitterID, const Effekseer::Matrix43& transform) override;
 
 	virtual void SetColor(EmitterID emitterID, Effekseer::Color color) override;
 
+	virtual int32_t GetParticleCountByGroup(ParticleGroupID groupID) override;
+
+	virtual int32_t GetParticleCountByEmitter(EmitterID emitterID) override;
+
 protected:
+	void FreeEmitter(EmitterID emitterID);
+
 	PipelineStateRef CreatePiplineState(const ParameterSet& paramSet);
 
 protected:
@@ -63,36 +71,51 @@ protected:
 
 	struct Emitter
 	{
-		uint32_t FlagBits;  // Alive:1, ParamID:10
+		uint32_t FlagBits;  // Alive:1, Emitting:1, ParamID:10
 		uint32_t Seed;
 		uint32_t ParticleHead;
 		uint32_t ParticleSize;
 		uint32_t TrailHead;
 		uint32_t TrailSize;
 		uint32_t TrailPhase;
-		float TimeCount;
 		uint32_t NextEmitCount;
 		uint32_t TotalEmitCount;
 		uint32_t EmitPointCount;
+		float TimeCount;
+		float TimeStopped;
+		ParticleGroupID GroupID;
+		uint32_t Reserved;
 		Effekseer::Color Color;
 		float3x4 Transform;
 
 		bool IsAlive() const
 		{
-			return FlagBits & 0x01;
+			return (FlagBits & 1) != 0;
+		}
+		bool IsEmitting() const
+		{
+			return (FlagBits & 2) != 0;
 		}
 		uint32_t GetParamID() const
 		{
-			return (FlagBits >> 1) & 0x3F;
+			return (FlagBits >> 2) & 0x3F;
 		}
-		void SetFlagBits(bool alive, uint32_t paramID)
+		void SetFlagBits(bool alive, bool emission, uint32_t paramID)
 		{
-			FlagBits = (uint32_t)alive | (paramID << 1);
+			FlagBits = ((uint32_t)alive) | ((uint32_t)emission << 1) | (paramID << 2);
+		}
+		void SetAlive(bool alive)
+		{
+			FlagBits = (FlagBits & ~1) | ((uint32_t)alive << 0);
+		}
+		void SetEmitting(bool emitting)
+		{
+			FlagBits = (FlagBits & ~2) | ((uint32_t)emitting << 1);
 		}
 	};
 	struct Particle
 	{
-		uint32_t FlagBits;  // Alive:1, ParamID:10, UpdateCount:8
+		uint32_t FlagBits;  // Alive:1, UpdateCount:8
 		uint32_t Seed;
 		float LifeAge;
 		uint32_t InheritColor;
@@ -117,15 +140,6 @@ protected:
 		float DeltaTime;
 		float3 CameraFront;
 		float Reserved;
-	};
-	struct ParticleArgs
-	{
-		uint32_t EmitterID;
-		uint32_t ParticleHead;
-		uint32_t TrailHead;
-		uint32_t TrailJoints;
-		uint32_t TrailPhase;
-		uint32_t Reserved[3];
 	};
 	struct Block
 	{
