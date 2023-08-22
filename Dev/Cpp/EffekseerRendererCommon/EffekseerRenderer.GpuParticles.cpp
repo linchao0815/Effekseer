@@ -433,7 +433,7 @@ void GpuParticles::UpdateFrame(float deltaTime)
 			}
 			else
 			{
-				if (GetParticleCountByEmitter(emitterID) == 0)
+				if (GetEmitterParticleCount(emitter, paramSet) == 0)
 				{
 					FreeEmitter(emitterID);
 				}
@@ -733,7 +733,7 @@ void GpuParticles::KillParticles(ParticleGroupID groupID)
 	}
 }
 
-int32_t GpuParticles::GetParticleCountByGroup(ParticleGroupID groupID)
+int32_t GpuParticles::GetParticleCount(ParticleGroupID groupID)
 {
 	int32_t count = 0;
 
@@ -742,25 +742,15 @@ int32_t GpuParticles::GetParticleCountByGroup(ParticleGroupID groupID)
 		auto& emitter = m_emitters[emitterID];
 		if (emitter.IsAlive() && emitter.GroupID == groupID)
 		{
-			count += GetParticleCountByEmitter(emitterID);
+			count += GetEmitterParticleCount(emitter, m_paramSets[emitter.GetParamID()]);
 		}
 	}
 	return count;
 }
 
 
-int32_t GpuParticles::GetParticleCountByEmitter(EmitterID emitterID)
+int32_t GpuParticles::GetEmitterParticleCount(const Emitter& emitter, const ParameterSet& paramSet)
 {
-	assert(emitterID >= 0 && emitterID < m_emitters.size());
-
-	Emitter& emitter = m_emitters[emitterID];
-	if (!emitter.IsAlive())
-	{
-		return 0;
-	}
-
-	ParameterSet& paramSet = m_paramSets[emitter.GetParamID()];
-
 	int32_t maxParticleCount = static_cast<int32_t>(paramSet.LifeTime[0] * paramSet.EmitPerFrame);
 	float emitDuration = static_cast<float>(paramSet.EmitCount) / static_cast<float>(paramSet.EmitPerFrame);
 	float timeCount = std::max(0.0f, emitter.TimeCount - paramSet.EmitOffset);

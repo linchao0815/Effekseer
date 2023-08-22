@@ -25,50 +25,6 @@ public:
 		ShaderRef rsParticleRender;
 	};
 
-public:
-	GpuParticles(Renderer* renderer);
-
-	virtual ~GpuParticles();
-
-	virtual bool InitSystem(const Settings& settings) override;
-
-	virtual void SetShaders(const Shaders& shaders);
-
-	virtual void UpdateFrame(float deltaTime) override;
-
-	virtual void RenderFrame() override;
-
-	virtual ParamID AddParamSet(const ParameterSet& paramSet, const Effekseer::Effect* effect) override;
-
-	virtual void RemoveParamSet(ParamID paramID) override;
-
-	virtual const ParameterSet* GetParamSet(ParamID paramID) const override;
-
-	virtual EmitterID NewEmitter(ParamID paramID, ParticleGroupID groupID) override;
-
-	virtual void StartEmit(EmitterID emitterID) override;
-
-	virtual void StopEmit(EmitterID emitterID) override;
-
-	virtual void KillParticles(ParticleGroupID groupID) override;
-
-	virtual void SetTransform(EmitterID emitterID, const Effekseer::Matrix43& transform) override;
-
-	virtual void SetColor(EmitterID emitterID, Effekseer::Color color) override;
-
-	virtual int32_t GetParticleCountByGroup(ParticleGroupID groupID) override;
-
-	virtual int32_t GetParticleCountByEmitter(EmitterID emitterID) override;
-
-protected:
-	void FreeEmitter(EmitterID emitterID);
-
-	PipelineStateRef CreatePiplineState(const ParameterSet& paramSet);
-
-protected:
-	static constexpr uint32_t EmitterUnitSize = 16;
-	static constexpr uint32_t ParticleUnitSize = 256;
-
 	struct Emitter
 	{
 		uint32_t FlagBits;  // Alive:1, Emitting:1, ParamID:10
@@ -163,6 +119,51 @@ protected:
 		ComputeBufferRef EmitPoints;
 		uint32_t EmitPointCount = 0;
 	};
+
+public:
+	GpuParticles(Renderer* renderer);
+
+	virtual ~GpuParticles();
+
+	virtual bool InitSystem(const Settings& settings) override;
+
+	virtual void SetShaders(const Shaders& shaders);
+
+	virtual void UpdateFrame(float deltaTime) override;
+
+	virtual void RenderFrame() override;
+
+	virtual ParamID AddParamSet(const ParameterSet& paramSet, const Effekseer::Effect* effect) override;
+
+	virtual void RemoveParamSet(ParamID paramID) override;
+
+	virtual const ParameterSet* GetParamSet(ParamID paramID) const override;
+
+	virtual EmitterID NewEmitter(ParamID paramID, ParticleGroupID groupID) override;
+
+	virtual void StartEmit(EmitterID emitterID) override;
+
+	virtual void StopEmit(EmitterID emitterID) override;
+
+	virtual void SetTransform(EmitterID emitterID, const Effekseer::Matrix43& transform) override;
+
+	virtual void SetColor(EmitterID emitterID, Effekseer::Color color) override;
+
+	virtual void KillParticles(ParticleGroupID groupID) override;
+
+	virtual int32_t GetParticleCount(ParticleGroupID groupID) override;
+
+protected:
+	PipelineStateRef CreatePiplineState(const ParameterSet& paramSet);
+
+private:
+	int32_t GetEmitterParticleCount(const Emitter& emitter, const ParameterSet& paramSet);
+
+	void FreeEmitter(EmitterID emitterID);
+
+protected:
+	static constexpr uint32_t EmitterUnitSize = 16;
+	static constexpr uint32_t ParticleUnitSize = 256;
 
 	Renderer* m_rendererBase;
 	std::mutex m_mutex;

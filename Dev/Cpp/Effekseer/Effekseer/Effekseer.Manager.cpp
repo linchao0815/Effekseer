@@ -191,7 +191,7 @@ void ManagerImplemented::StopStoppingEffects()
 			// when gpu particles are found
 			if (auto gpuParticles = GetGpuParticles())
 			{
-				if (gpuParticles->GetParticleCountByGroup((GpuParticles::ParticleGroupID)draw_set.GlobalPointer) > 0)
+				if (gpuParticles->GetParticleCount((GpuParticles::ParticleGroupID)draw_set.GlobalPointer) > 0)
 				{
 					continue;
 				}

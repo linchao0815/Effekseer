@@ -178,9 +178,7 @@ public:
 
 	virtual void KillParticles(ParticleGroupID groupID) {}
 
-	virtual int32_t GetParticleCountByGroup(ParticleGroupID groupID) { return 0; }
-
-	virtual int32_t GetParticleCountByEmitter(EmitterID emitterID) { return 0; }
+	virtual int32_t GetParticleCount(ParticleGroupID groupID) { return 0; }
 
 protected:
 	Settings m_settings;
