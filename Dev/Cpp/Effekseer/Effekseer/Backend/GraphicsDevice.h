@@ -9,6 +9,7 @@
 #include <array>
 #include <stdint.h>
 #include <string>
+#include <variant>
 
 namespace Effekseer
 {
@@ -289,11 +290,24 @@ enum class TextureSamplingType
 	Nearest,
 };
 
+struct TextureBinder
+{
+	TextureRef Texture;
+	TextureWrapType WrapType = TextureWrapType::Repeat;
+	TextureSamplingType SamplingType = TextureSamplingType::Linear;
+};
+struct ComputeBufferBinder
+{
+	ComputeBufferRef ComputeBuffer;
+	bool ReadOnly;
+};
+using ResourceBinder = std::variant<std::nullptr_t, TextureBinder, ComputeBufferBinder>;
+
 struct DrawParameter
 {
 public:
 	static const int BufferSlotCount = 4;
-	static const int TextureSlotCount = 8;
+	static const int ResourceSlotCount = 16;
 
 	VertexBufferRef VertexBufferPtr;
 	IndexBufferRef IndexBufferPtr;
@@ -301,17 +315,21 @@ public:
 
 	std::array<UniformBufferRef, BufferSlotCount> VertexUniformBufferPtrs;
 	std::array<UniformBufferRef, BufferSlotCount> PixelUniformBufferPtrs;
-	std::array<ComputeBufferRef, BufferSlotCount> ComputeBufferPtrs;
-
-	std::array<TextureRef, TextureSlotCount> TexturePtrs;
-	std::array<TextureWrapType, TextureSlotCount> TextureWrapTypes = {};
-	std::array<TextureSamplingType, TextureSlotCount> TextureSamplingTypes = {};
+	std::array<ResourceBinder, ResourceSlotCount> ResourceBinders;
 
 	int32_t VertexStride = 0;
-	int32_t IndexStride = 0;
 	int32_t IndexOffset = 0;
 	int32_t PrimitiveCount = 0;
 	int32_t InstanceCount = 0;
+
+	void SetTexture(int32_t slot, TextureRef texture, TextureWrapType wrapType, TextureSamplingType samplingType)
+	{
+		ResourceBinders[slot] = TextureBinder{texture, wrapType, samplingType};
+	}
+	void SetComputeBuffer(int32_t slot, ComputeBufferRef computeBuffer)
+	{
+		ResourceBinders[slot] = ComputeBufferBinder{computeBuffer, true};
+	}
 };
 
 struct DispatchParameter
@@ -319,19 +337,24 @@ struct DispatchParameter
 public:
 	static const int BufferSlotCount = 4;
 	static const int TextureSlotCount = 4;
+	static const int ResourceSlotCount = 16;
 
 	PipelineStateRef PipelineStatePtr;
 
 	std::array<UniformBufferRef, BufferSlotCount> UniformBufferPtrs;
-	std::array<ComputeBufferRef, BufferSlotCount> RWComputeBufferPtrs;
-	std::array<ComputeBufferRef, BufferSlotCount> ROComputeBufferPtrs;
-
-	std::array<TextureRef, TextureSlotCount> TexturePtrs;
-	std::array<TextureWrapType, TextureSlotCount> TextureWrapTypes;
-	std::array<TextureSamplingType, TextureSlotCount> TextureSamplingTypes;
+	std::array<ResourceBinder, ResourceSlotCount> ResourceBinders;
 
 	std::array<int32_t, 3> GroupCount = {1, 1, 1};
 	std::array<int32_t, 3> ThreadCount = {1, 1, 1};
+
+	void SetTexture(int32_t slot, TextureRef texture, TextureWrapType wrapType, TextureSamplingType samplingType)
+	{
+		ResourceBinders[slot] = TextureBinder{texture, wrapType, samplingType};
+	}
+	void SetComputeBuffer(int32_t slot, ComputeBufferRef computeBuffer, bool readonly)
+	{
+		ResourceBinders[slot] = ComputeBufferBinder{computeBuffer, readonly};
+	}
 };
 
 enum class VertexLayoutFormat

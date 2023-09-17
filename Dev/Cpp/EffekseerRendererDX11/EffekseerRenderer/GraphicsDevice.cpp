@@ -1491,7 +1491,7 @@ void GraphicsDevice::SetViewport(int32_t x, int32_t y, int32_t width, int32_t he
 void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 {
 	constexpr int32_t BufferSlotCount = Effekseer::Backend::DrawParameter::BufferSlotCount;
-	constexpr int32_t TextureSlotCount = Effekseer::Backend::DrawParameter::TextureSlotCount;
+	constexpr int32_t ResourceSlotCount = Effekseer::Backend::DrawParameter::ResourceSlotCount;
 
 	if (drawParam.VertexBufferPtr == nullptr ||
 		drawParam.IndexBufferPtr == nullptr ||
@@ -1568,30 +1568,31 @@ void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 	}
 
 	// Shader Resources
-	std::array<ID3D11SamplerState*, TextureSlotCount> samplers{};
-	std::array<ID3D11ShaderResourceView*, TextureSlotCount + BufferSlotCount> srvs{};
-	for (int32_t i = 0; i < TextureSlotCount; i++)
+	std::array<ID3D11SamplerState*, ResourceSlotCount> samplers{};
+	std::array<ID3D11ShaderResourceView*, ResourceSlotCount> srvs{};
+	for (int32_t slot = 0; slot < (int32_t)ResourceSlotCount; slot++)
 	{
-		if (auto texture = static_cast<Texture*>(drawParam.TexturePtrs[i].Get()))
+		auto& binder = drawParam.ResourceBinders[slot];
+		if (auto textureBinder = std::get_if<Effekseer::Backend::TextureBinder>(&binder))
 		{
-			auto texSamplingType = drawParam.TextureSamplingTypes[i];
-			auto texWrapType = drawParam.TextureWrapTypes[i];
-			samplers[i] = samplers_[static_cast<int>(texSamplingType)][static_cast<int>(texWrapType)].get();
-			srvs[i] = texture->GetSRV();
+			auto texture = textureBinder->Texture.DownCast<Backend::Texture>();
+			srvs[slot] = texture->GetSRV();
+			samplers[slot] = samplers_[static_cast<int>(textureBinder->SamplingType)][static_cast<int>(textureBinder->WrapType)].get();
 		}
-	}
-	for (int32_t i = 0; i < BufferSlotCount; i++)
-	{
-		if (auto buffer = static_cast<ComputeBuffer*>(drawParam.ComputeBufferPtrs[i].Get()))
+		else if (auto computeBufferBinder = std::get_if<Effekseer::Backend::ComputeBufferBinder>(&binder))
 		{
-			srvs[TextureSlotCount + i] = buffer->GetSRV();
+			auto computeBuffer = computeBufferBinder->ComputeBuffer.DownCast<Backend::ComputeBuffer>();
+			if (computeBufferBinder->ReadOnly)
+			{
+				srvs[slot] = computeBuffer->GetSRV();
+			}
 		}
 	}
 
-	GetContext()->VSSetShaderResources(0, TextureSlotCount + BufferSlotCount, srvs.data());
-	GetContext()->PSSetShaderResources(0, TextureSlotCount + BufferSlotCount, srvs.data());
-	GetContext()->VSSetSamplers(0, TextureSlotCount, samplers.data());
-	GetContext()->PSSetSamplers(0, TextureSlotCount, samplers.data());
+	GetContext()->VSSetShaderResources(0, ResourceSlotCount, srvs.data());
+	GetContext()->PSSetShaderResources(0, ResourceSlotCount, srvs.data());
+	GetContext()->VSSetSamplers(0, ResourceSlotCount, samplers.data());
+	GetContext()->PSSetSamplers(0, ResourceSlotCount, samplers.data());
 
 	// topology
 	int32_t indexPerPrimitive{};
@@ -1682,15 +1683,16 @@ void GraphicsDevice::EndRenderPass()
 void GraphicsDevice::Dispatch(const Effekseer::Backend::DispatchParameter& dispatchParam)
 {
 	constexpr int32_t BufferSlotCount = Effekseer::Backend::DispatchParameter::BufferSlotCount;
-	constexpr int32_t TextureSlotCount = Effekseer::Backend::DispatchParameter::TextureSlotCount;
+	constexpr int32_t ResourceSlotCount = Effekseer::Backend::DispatchParameter::ResourceSlotCount;
+	constexpr int32_t UAVSlotCount = 8;
 
 	auto pipline = dispatchParam.PipelineStatePtr.DownCast<PipelineState>();
 	auto shader = pipline->GetParam().ShaderPtr.DownCast<Shader>();
 
 	std::array<ID3D11Buffer*, BufferSlotCount> csCBufs = {};
-	std::array<ID3D11ShaderResourceView*, BufferSlotCount + TextureSlotCount> csSRVs = {};
-	std::array<ID3D11UnorderedAccessView*, BufferSlotCount> csUAVs = {};
-	std::array<ID3D11SamplerState*, TextureSlotCount> csSamplers = {};
+	std::array<ID3D11UnorderedAccessView*, UAVSlotCount> csUAVs = {};
+	std::array<ID3D11ShaderResourceView*, ResourceSlotCount> csSRVs = {};
+	std::array<ID3D11SamplerState*, ResourceSlotCount> csSamplers = {};
 
 	for (int32_t i = 0; i < BufferSlotCount; i++)
 	{
@@ -1701,44 +1703,39 @@ void GraphicsDevice::Dispatch(const Effekseer::Backend::DispatchParameter& dispa
 		}
 	}
 
-	for (int32_t i = 0; i < BufferSlotCount; i++)
+	for (int32_t slot = 0; slot < (int32_t)ResourceSlotCount; slot++)
 	{
-		if (auto computeBuffer = dispatchParam.ROComputeBufferPtrs[i].DownCast<ComputeBuffer>())
+		auto& binder = dispatchParam.ResourceBinders[slot];
+		if (auto textureBinder = std::get_if<Effekseer::Backend::TextureBinder>(&binder))
 		{
-			csSRVs[i] = computeBuffer->GetSRV();
+			auto texture = textureBinder->Texture.DownCast<Backend::Texture>();
+			csSRVs[slot] = texture->GetSRV();
+			csSamplers[slot] = samplers_[static_cast<int>(textureBinder->SamplingType)][static_cast<int>(textureBinder->WrapType)].get();
 		}
-	}
-
-	for (int32_t i = 0; i < BufferSlotCount; i++)
-	{
-		if (auto computeBuffer = dispatchParam.RWComputeBufferPtrs[i].DownCast<ComputeBuffer>())
+		else if (auto computeBufferBinder = std::get_if<Effekseer::Backend::ComputeBufferBinder>(&binder))
 		{
-			csUAVs[i] = computeBuffer->GetUAV();
-		}
-	}
-
-	for (int32_t i = 0; i < TextureSlotCount; i++)
-	{
-		if (auto texture = dispatchParam.TexturePtrs[i].DownCast<Texture>())
-		{
-			csSRVs[BufferSlotCount + i] = texture->GetSRV();
-
-			auto texSamplingType = dispatchParam.TextureSamplingTypes[i];
-			auto texWrapType = dispatchParam.TextureWrapTypes[i];
-			csSamplers[i] = samplers_[static_cast<int>(texSamplingType)][static_cast<int>(texWrapType)].get();
+			auto computeBuffer = computeBufferBinder->ComputeBuffer.DownCast<Backend::ComputeBuffer>();
+			if (computeBufferBinder->ReadOnly)
+			{
+				csSRVs[slot] = computeBuffer->GetSRV();
+			}
+			else if (slot < (int32_t)csUAVs.size())
+			{
+				csUAVs[slot] = computeBuffer->GetUAV();
+			}
 		}
 	}
 
 	context_->CSSetShader(shader->GetComputeShader(), nullptr, 0);
 	context_->CSSetConstantBuffers(0, (UINT)csCBufs.size(), csCBufs.data());
 	context_->CSSetShaderResources(0, (UINT)csSRVs.size(), csSRVs.data());
-	context_->CSSetSamplers(BufferSlotCount, (UINT)csSamplers.size(), csSamplers.data());
+	context_->CSSetSamplers(0, (UINT)csSamplers.size(), csSamplers.data());
 	context_->CSSetUnorderedAccessViews(0, (UINT)csUAVs.size(), csUAVs.data(), nullptr);
 	
 	auto gc = dispatchParam.GroupCount;
 	context_->Dispatch(std::min(gc[0], 65536), std::min(gc[1], 65536), std::min(gc[2], 65536));
 
-	std::array<ID3D11UnorderedAccessView*, 4> csClearUAVs = {};
+	std::array<ID3D11UnorderedAccessView*, UAVSlotCount> csClearUAVs = {};
 	context_->CSSetUnorderedAccessViews(0, (UINT)csClearUAVs.size(), csClearUAVs.data(), nullptr);
 }
 

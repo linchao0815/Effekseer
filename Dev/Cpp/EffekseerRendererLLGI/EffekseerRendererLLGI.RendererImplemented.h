@@ -166,7 +166,7 @@ public:
 	/**
 		@brief	GPUパーティクルを生成する。
 	*/
-	::Effekseer::GpuParticlesRef CreateGpuParticles() override;
+	::Effekseer::GpuParticlesRef CreateGpuParticles(const Effekseer::GpuParticles::Settings& settings = {}) override;
 
 	/**
 		@brief	テクスチャ読込クラスを生成する。

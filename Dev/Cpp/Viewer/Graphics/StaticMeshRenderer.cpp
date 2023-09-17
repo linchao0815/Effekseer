@@ -194,9 +194,7 @@ void StaticMeshRenderer::Render(const RendererParameter& rendererParameter)
 
 	Effekseer::Backend::DrawParameter drawParam;
 
-	drawParam.TexturePtrs[0] = staticMesh_->Texture != nullptr ? staticMesh_->Texture : dummyTexture_;
-	drawParam.TextureSamplingTypes[0] = Backend::TextureSamplingType::Linear;
-	drawParam.TextureWrapTypes[0] = Backend::TextureWrapType::Repeat;
+	drawParam.SetTexture(0, staticMesh_->Texture != nullptr ? staticMesh_->Texture : dummyTexture_, Backend::TextureWrapType::Repeat, Backend::TextureSamplingType::Linear);
 
 	drawParam.VertexBufferPtr = staticMesh_->GetVertexBuffer();
 	drawParam.IndexBufferPtr = staticMesh_->GetIndexBuffer();

@@ -139,7 +139,7 @@ public:
 
 	::Effekseer::GPUTimerRef CreateGPUTimer() override;
 
-	::Effekseer::GpuParticlesRef CreateGpuParticles() override;
+	::Effekseer::GpuParticlesRef CreateGpuParticles(const Effekseer::GpuParticles::Settings& settings = {}) override;
 
 	::Effekseer::TextureLoaderRef CreateTextureLoader(::Effekseer::FileInterfaceRef fileInterface = nullptr);
 

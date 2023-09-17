@@ -202,12 +202,13 @@ bool Texture::Init(const Effekseer::Backend::TextureParameter& param, const Effe
 		count++;
 	}
 
-	LLGI::TextureInitializationParameter texParam;
-	texParam.Size = LLGI::Vec2I(param.Size[0], param.Size[1]);
-	texParam.MipMapCount = param.MipLevelCount < 1 ? count : param.MipLevelCount;
+	LLGI::TextureParameter texParam;
+	texParam.Dimension = param.Dimension;
+	texParam.Size = LLGI::Vec3I(param.Size[0], param.Size[1], param.Size[2]);
+	texParam.MipLevelCount = param.MipLevelCount < 1 ? count : param.MipLevelCount;
 
 	// TODO : Fix it
-	texParam.MipMapCount = 1;
+	texParam.MipLevelCount = 1;
 
 	LLGI::TextureFormatType format = LLGI::TextureFormatType::R8G8B8A8_UNORM;
 
@@ -776,31 +777,39 @@ void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 	auto pip = drawParam.PipelineStatePtr.DownCast<Backend::PipelineState>();
 	auto vb = drawParam.VertexBufferPtr.DownCast<Backend::VertexBuffer>();
 	auto ib = drawParam.IndexBufferPtr.DownCast<Backend::IndexBuffer>();
+	int32_t indexStride = ib->GetStrideType() == Effekseer::Backend::IndexBufferStrideType::Stride2 ? 2 : 4;
 
 	commandList_->SetPipelineState(pip->GetOrCreatePipelineState(renderPassPipelineState_));
 	commandList_->SetVertexBuffer(vb->GetBuffer(), drawParam.VertexStride, 0);
-	commandList_->SetIndexBuffer(ib->GetBuffer(), drawParam.IndexStride, drawParam.IndexOffset);
+	commandList_->SetIndexBuffer(ib->GetBuffer(), indexStride, drawParam.IndexOffset);
 
 	for (int32_t slot = 0; slot < (int32_t)drawParam.BufferSlotCount; slot++)
 	{
 		auto buf = drawParam.VertexUniformBufferPtrs[slot].DownCast<Backend::UniformBuffer>();
 		commandList_->SetConstantBuffer((buf) ? buf->GetBuffer() : nullptr, slot);
 	}
-	for (int32_t slot = 0; slot < (int32_t)drawParam.BufferSlotCount; slot++)
+	for (int32_t slot = 0; slot < (int32_t)drawParam.ResourceSlotCount; slot++)
 	{
-		auto buf = drawParam.ComputeBufferPtrs[slot].DownCast<Backend::ComputeBuffer>();
-		commandList_->SetComputeBuffer((buf) ? buf->GetBuffer() : nullptr, 
-			(buf) ? buf->GetStride() : 0, slot);
-	}
-	for (int32_t slot = 0; slot < (int32_t)drawParam.TextureSlotCount; slot++)
-	{
-		auto tex = drawParam.TexturePtrs[slot].DownCast<Backend::Texture>();
-		commandList_->SetTexture((tex) ? tex->GetTexture().get() : nullptr,
-			(LLGI::TextureWrapMode)drawParam.TextureWrapTypes[slot],
-			(LLGI::TextureMinMagFilter)drawParam.TextureSamplingTypes[slot], slot);
+		auto& binder = drawParam.ResourceBinders[slot];
+		if (auto textureBinder = std::get_if<Effekseer::Backend::TextureBinder>(&binder))
+		{
+			auto tex = textureBinder->Texture.DownCast<Backend::Texture>();
+			commandList_->SetTexture((tex) ? tex->GetTexture().get() : nullptr,
+				(LLGI::TextureWrapMode)textureBinder->WrapType,
+				(LLGI::TextureMinMagFilter)textureBinder->SamplingType, slot);
+		}
+		else if (auto computeBufferBinder = std::get_if<Effekseer::Backend::ComputeBufferBinder>(&binder))
+		{
+			auto buf = computeBufferBinder->ComputeBuffer.DownCast<Backend::ComputeBuffer>();
+			commandList_->SetComputeBuffer((buf) ? buf->GetBuffer() : nullptr,
+				(buf) ? buf->GetStride() : 0, slot, computeBufferBinder->ReadOnly);
+		}
 	}
 
 	commandList_->Draw(drawParam.PrimitiveCount, drawParam.InstanceCount);
+
+	commandList_->ResetTextures();
+	commandList_->ResetComputeBuffer();
 }
 
 void GraphicsDevice::BeginRenderPass(Effekseer::Backend::RenderPassRef& renderPass, bool isColorCleared, bool isDepthCleared, Effekseer::Color clearColor)
@@ -834,29 +843,6 @@ void GraphicsDevice::Dispatch(const Effekseer::Backend::DispatchParameter& dispa
 
 	for (int32_t slot = 0; slot < dispatchParam.BufferSlotCount; slot++)
 	{
-		if (auto computeBuffer = dispatchParam.ROComputeBufferPtrs[slot].DownCast<ComputeBuffer>())
-		{
-			commandList_->SetComputeBuffer(computeBuffer->GetBuffer(), computeBuffer->GetStride(), slot);
-		}
-		else
-		{
-			commandList_->SetComputeBuffer(nullptr, 0, slot);
-		}
-	}
-	for (int32_t slot = 0; slot < dispatchParam.BufferSlotCount; slot++)
-	{
-		if (auto computeBuffer = dispatchParam.RWComputeBufferPtrs[slot].DownCast<ComputeBuffer>())
-		{
-			commandList_->SetComputeBuffer(computeBuffer->GetBuffer(), computeBuffer->GetStride(), 4 + slot);
-		}
-		else
-		{
-			commandList_->SetComputeBuffer(nullptr, 0, 4 + slot);
-		}
-	}
-
-	for (int32_t slot = 0; slot < dispatchParam.BufferSlotCount; slot++)
-	{
 		if (auto uniformBuffer = dispatchParam.UniformBufferPtrs[slot].DownCast<UniformBuffer>())
 		{
 			commandList_->SetConstantBuffer(uniformBuffer->GetBuffer(), slot);
@@ -867,26 +853,37 @@ void GraphicsDevice::Dispatch(const Effekseer::Backend::DispatchParameter& dispa
 		}
 	}
 
-	for (int32_t slot = 0; slot < dispatchParam.TextureSlotCount; slot++)
+	for (int32_t slot = 0; slot < (int32_t)dispatchParam.ResourceSlotCount; slot++)
 	{
-		LLGI::TextureMinMagFilter filter = (dispatchParam.TextureSamplingTypes[slot] == Effekseer::Backend::TextureSamplingType::Nearest) ?
-			LLGI::TextureMinMagFilter::Nearest : LLGI::TextureMinMagFilter::Linear;
-		LLGI::TextureWrapMode wrap = (dispatchParam.TextureWrapTypes[slot] == Effekseer::Backend::TextureWrapType::Clamp) ?
-			LLGI::TextureWrapMode::Clamp : LLGI::TextureWrapMode::Repeat;
-		
-		if (auto texture = dispatchParam.TexturePtrs[slot].DownCast<Texture>())
+		auto& binder = dispatchParam.ResourceBinders[slot];
+		if (auto textureBinder = std::get_if<Effekseer::Backend::TextureBinder>(&binder))
 		{
-			commandList_->SetTexture(texture->GetTexture().get(), wrap, filter, slot);
+			LLGI::TextureWrapMode ws[2];
+			ws[(int)Effekseer::Backend::TextureWrapType::Clamp] = LLGI::TextureWrapMode::Clamp;
+			ws[(int)Effekseer::Backend::TextureWrapType::Repeat] = LLGI::TextureWrapMode::Repeat;
+
+			LLGI::TextureMinMagFilter fs[2];
+			fs[(int)Effekseer::Backend::TextureSamplingType::Linear] = LLGI::TextureMinMagFilter::Linear;
+			fs[(int)Effekseer::Backend::TextureSamplingType::Nearest] = LLGI::TextureMinMagFilter::Nearest;
+
+			auto tex = textureBinder->Texture.DownCast<Backend::Texture>();
+			commandList_->SetTexture((tex) ? tex->GetTexture().get() : nullptr,
+				ws[(size_t)textureBinder->WrapType], fs[(size_t)textureBinder->SamplingType], slot);
 		}
-		else
+		else if (auto computeBufferBinder = std::get_if<Effekseer::Backend::ComputeBufferBinder>(&binder))
 		{
-			commandList_->SetTexture(nullptr, wrap, filter, slot);
+			auto buf = computeBufferBinder->ComputeBuffer.DownCast<Backend::ComputeBuffer>();
+			commandList_->SetComputeBuffer((buf) ? buf->GetBuffer() : nullptr,
+				(buf) ? buf->GetStride() : 0, slot, computeBufferBinder->ReadOnly);
 		}
 	}
 
 	auto gc = dispatchParam.GroupCount;
 	auto tc = dispatchParam.ThreadCount;
 	commandList_->Dispatch(gc[0], gc[1], gc[2], tc[0], tc[1], tc[2]);
+
+	commandList_->ResetTextures();
+	commandList_->ResetComputeBuffer();
 }
 
 void GraphicsDevice::BeginComputePass()

@@ -90,9 +90,6 @@ PostProcess::PostProcess(Backend::GraphicsDeviceRef graphicsDevice, Backend::Sha
 		uniformBufferPS_ = graphicsDevice->CreateUniformBuffer(uniformBufferPSSize, nullptr);
 	}
 
-	drawParam_.TextureSamplingTypes.fill(Backend::TextureSamplingType::Linear);
-	drawParam_.TextureWrapTypes.fill(Backend::TextureWrapType::Clamp);
-
 	drawParam_.VertexBufferPtr = vb_;
 	drawParam_.IndexBufferPtr = ib_;
 	drawParam_.PipelineStatePtr = pip_;

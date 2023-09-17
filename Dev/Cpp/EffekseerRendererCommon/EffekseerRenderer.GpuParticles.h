@@ -192,7 +192,10 @@ protected:
 
 	Shaders m_shaders;
 
+	ComputeBufferRef m_dummyEmitPoints;
 	TextureRef m_dummyVectorField;
+	TextureRef m_dummyColorTexture;
+	TextureRef m_dummyNormalTexture;
 
 	VertexLayoutRef m_vertexLayout;
 	Effekseer::ModelRef m_modelSprite;

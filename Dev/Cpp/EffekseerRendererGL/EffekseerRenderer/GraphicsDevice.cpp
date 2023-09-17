@@ -1434,7 +1434,7 @@ void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 	GLExt::glUseProgram(shader->GetProgram());
 
 	// textures
-	for (int32_t i = 0; i < drawParam.TextureSlotCount; i++)
+	for (int32_t i = 0; i < drawParam.ResourceSlotCount; i++)
 	{
 		const auto textureSlot = shader->GetTextureLocations()[i];
 
@@ -1445,9 +1445,10 @@ void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 
 		GLExt::glUniform1i(textureSlot, i);
 
-		auto texture = static_cast<Texture*>(drawParam.TexturePtrs[i].Get());
-		if (texture != nullptr)
+		auto textureBinder = std::get_if<Effekseer::Backend::TextureBinder>(&drawParam.ResourceBinders[i]);
+		if (textureBinder != nullptr)
 		{
+			auto texture = textureBinder->Texture.DownCast<Backend::Texture>();
 			GLExt::glActiveTexture(GL_TEXTURE0 + i);
 			glBindTexture(texture->GetTarget(), texture->GetBuffer());
 
@@ -1462,7 +1463,7 @@ void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 			GLint filterMag = 0;
 			GLint wrap = 0;
 
-			if (drawParam.TextureSamplingTypes[i] == Effekseer::Backend::TextureSamplingType::Linear)
+			if (textureBinder->SamplingType == Effekseer::Backend::TextureSamplingType::Linear)
 			{
 				if (texture->GetParameter().MipLevelCount != 1)
 				{
@@ -1487,7 +1488,7 @@ void GraphicsDevice::Draw(const Effekseer::Backend::DrawParameter& drawParam)
 				filterMag = glfilterMag[0];
 			}
 
-			if (drawParam.TextureWrapTypes[i] == Effekseer::Backend::TextureWrapType::Clamp)
+			if (textureBinder->WrapType == Effekseer::Backend::TextureWrapType::Clamp)
 			{
 				wrap = glwrap[1];
 			}

@@ -719,8 +719,9 @@ void Preview::Render()
 			{
 				if (textures_[i]->Name == uniformLayout_->GetTextures()[j].c_str())
 				{
-					drawParam.TexturePtrs[j] = textures_[i]->TexturePtr->GetTexture();
-					drawParam.TextureWrapTypes[j] = textures_[i]->SamplerType == TextureSamplerType::Repeat ? Effekseer::Backend::TextureWrapType::Repeat : Effekseer::Backend::TextureWrapType::Clamp;
+					drawParam.SetTexture(j, textures_[i]->TexturePtr->GetTexture(), 
+						textures_[i]->SamplerType == TextureSamplerType::Repeat ? Effekseer::Backend::TextureWrapType::Repeat : Effekseer::Backend::TextureWrapType::Clamp,
+						Effekseer::Backend::TextureSamplingType::Linear);
 				}
 			}
 		}
@@ -729,8 +730,7 @@ void Preview::Render()
 		{
 			if (uniformLayout_->GetTextures()[j] == "efk_depth")
 			{
-				drawParam.TexturePtrs[j] = white_->GetTexture();
-				drawParam.TextureWrapTypes[j] = Effekseer::Backend::TextureWrapType::Clamp;
+				drawParam.SetTexture(j, white_->GetTexture(), Effekseer::Backend::TextureWrapType::Clamp, Effekseer::Backend::TextureSamplingType::Linear);
 			}
 		}
 

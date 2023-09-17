@@ -282,7 +282,7 @@ public:
 	/**
 		@brief	GPUパーティクルを生成する。
 	*/
-	virtual ::Effekseer::GpuParticlesRef CreateGpuParticles() { return nullptr; }
+	virtual ::Effekseer::GpuParticlesRef CreateGpuParticles(const Effekseer::GpuParticles::Settings& settings = {}) { return nullptr; }
 
 	/**
 		@brief	標準のテクスチャ読込クラスを生成する。

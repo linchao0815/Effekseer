@@ -280,6 +280,13 @@ bool GpuParticles::InitSystem(const Settings& settings)
 		texParam.Dimension = 3;
 		m_dummyVectorField = graphics->CreateTexture(texParam, {0, 0, 0, 0});
 	}
+	{
+		uint32_t dummyData[4] = {};
+		m_dummyEmitPoints = graphics->CreateComputeBuffer(16, 16, dummyData);
+	}
+
+	m_dummyColorTexture = m_rendererBase->GetImpl()->GetProxyTexture(EffekseerRenderer::ProxyTextureType::White);
+	m_dummyNormalTexture = m_rendererBase->GetImpl()->GetProxyTexture(EffekseerRenderer::ProxyTextureType::Normal);
 
 	return true;
 }
@@ -353,7 +360,7 @@ void GpuParticles::UpdateFrame(float deltaTime)
 		command.UniformBufferPtrs[0] = m_ubufConstants;
 		command.UniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
 		command.UniformBufferPtrs[2] = m_ubufEmitters[emitterID];
-		command.RWComputeBufferPtrs[0] = m_cbufParticles;
+		command.SetComputeBuffer(0, m_cbufParticles, false);
 
 		command.GroupCount = { (int32_t)emitter.ParticleSize / 256, 1, 1 };
 		command.ThreadCount = { 256, 1, 1 };
@@ -423,8 +430,8 @@ void GpuParticles::UpdateFrame(float deltaTime)
 					command.UniformBufferPtrs[0] = m_ubufConstants;
 					command.UniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
 					command.UniformBufferPtrs[2] = m_ubufEmitters[emitterID];
-					command.RWComputeBufferPtrs[0] = m_cbufParticles;
-					command.ROComputeBufferPtrs[0] = paramRes.EmitPoints;
+					command.SetComputeBuffer(0, m_cbufParticles, false);
+					command.SetComputeBuffer(1, (paramRes.EmitPoints) ? paramRes.EmitPoints : m_dummyEmitPoints, true);
 
 					command.GroupCount = { (int32_t)emitter.NextEmitCount, 1, 1 };
 					command.ThreadCount = { 1, 1, 1 };
@@ -456,12 +463,11 @@ void GpuParticles::UpdateFrame(float deltaTime)
 			command.UniformBufferPtrs[0] = m_ubufConstants;
 			command.UniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
 			command.UniformBufferPtrs[2] = m_ubufEmitters[emitterID];
-			command.RWComputeBufferPtrs[0] = m_cbufParticles;
-			command.RWComputeBufferPtrs[1] = m_cbufTrails;
+			command.SetComputeBuffer(0, m_cbufParticles, false);
+			command.SetComputeBuffer(1, m_cbufTrails, false);
 
-			command.TexturePtrs[0] = (paramRes.NoiseVectorField) ? paramRes.NoiseVectorField : m_dummyVectorField;
-			command.TextureSamplingTypes[0] = Effekseer::Backend::TextureSamplingType::Linear;
-			command.TextureWrapTypes[0] = Effekseer::Backend::TextureWrapType::Repeat;
+			command.SetTexture(2, (paramRes.NoiseVectorField) ? paramRes.NoiseVectorField : m_dummyVectorField,
+				Effekseer::Backend::TextureWrapType::Repeat, Effekseer::Backend::TextureSamplingType::Linear);
 
 			command.GroupCount = { (int32_t)emitter.ParticleSize / 256, 1, 1 };
 			command.ThreadCount = { 256, 1, 1 };
@@ -490,31 +496,31 @@ void GpuParticles::RenderFrame()
 
 			Effekseer::Backend::DrawParameter drawParams;
 			drawParams.PipelineStatePtr = paramRes.PiplineState;
-			drawParams.ComputeBufferPtrs[0] = m_cbufParticles;
-			drawParams.ComputeBufferPtrs[1] = m_cbufTrails;
 
 			drawParams.VertexUniformBufferPtrs[0] = m_ubufConstants;
 			drawParams.VertexUniformBufferPtrs[1] = m_ubufParamSets[emitter.GetParamID()];
 			drawParams.VertexUniformBufferPtrs[2] = m_ubufEmitters[emitterID];
 
-			Effekseer::Backend::TextureRef textures[2];
-			if (auto colorTex = paramRes.Effect->GetColorImage(paramSet.ColorTexIndex))
-			{
-				drawParams.TexturePtrs[0] = colorTex->GetBackend();
-			}
-			else
-			{
-				drawParams.TexturePtrs[0] = renderer->GetImpl()->GetProxyTexture(EffekseerRenderer::ProxyTextureType::White);
-			}
+			drawParams.SetComputeBuffer(0, m_cbufParticles);
+			drawParams.SetComputeBuffer(1, m_cbufTrails);
 
-			if (auto normalTex = paramRes.Effect->GetNormalImage(paramSet.NormalTexIndex))
+			Effekseer::Backend::TextureRef colorTex = m_dummyColorTexture;
+			if (auto tex = paramRes.Effect->GetColorImage(paramSet.ColorTexIndex))
 			{
-				drawParams.TexturePtrs[1] = normalTex->GetBackend();
+				colorTex = tex->GetBackend();
 			}
-			else
+			drawParams.SetTexture(2, colorTex, 
+				static_cast<Effekseer::Backend::TextureWrapType>(paramSet.ColorTexWrap), 
+				static_cast<Effekseer::Backend::TextureSamplingType>(paramSet.ColorTexFilter));
+
+			Effekseer::Backend::TextureRef normalTex = m_dummyNormalTexture;
+			if (auto tex = paramRes.Effect->GetColorImage(paramSet.NormalTexIndex))
 			{
-				drawParams.TexturePtrs[1] = renderer->GetImpl()->GetProxyTexture(EffekseerRenderer::ProxyTextureType::Normal);
+				normalTex = tex->GetBackend();
 			}
+			drawParams.SetTexture(3, colorTex, 
+				static_cast<Effekseer::Backend::TextureWrapType>(paramSet.NormalTexWrap), 
+				static_cast<Effekseer::Backend::TextureSamplingType>(paramSet.NormalTexFilter));
 
 			Effekseer::ModelRef model;
 			switch (paramSet.ShapeType)
@@ -537,7 +543,6 @@ void GpuParticles::RenderFrame()
 					drawParams.VertexBufferPtr = model->GetVertexBuffer(i);
 					drawParams.VertexStride = sizeof(Effekseer::Model::Vertex);
 					drawParams.IndexBufferPtr = model->GetIndexBuffer(i);
-					drawParams.IndexStride = 2;
 
 					if (emitter.TrailSize > 0)
 					{
@@ -817,7 +822,7 @@ GpuParticles::PipelineStateRef GpuParticles::CreatePiplineState(const ParameterS
 	}
 	pipParams.IsDepthTestEnabled = paramSet.ZTest;
 	pipParams.IsDepthWriteEnabled = paramSet.ZWrite;
-	pipParams.Culling = CullingType::Clockwise;
+	pipParams.Culling = CullingType::DoubleSide;
 	pipParams.ShaderPtr = m_shaders.rsParticleRender;
 	pipParams.VertexLayoutPtr = m_vertexLayout;
 

@@ -1017,7 +1017,7 @@ void EffectRenderer::Render(std::shared_ptr<RenderImage> renderImage)
 	if (parameter_.RenderingMethod == RenderingMethodType::Overdraw)
 	{
 		graphics_->GetGraphics()->SetRenderTarget({renderTargetImage}, nullptr);
-		overdrawEffect_->GetDrawParameter().TexturePtrs[0] = hdrRenderTexture;
+		overdrawEffect_->GetDrawParameter().SetTexture(0, hdrRenderTexture, Effekseer::Backend::TextureWrapType::Clamp, Effekseer::Backend::TextureSamplingType::Linear);
 		overdrawEffect_->Render();
 	}
 	else

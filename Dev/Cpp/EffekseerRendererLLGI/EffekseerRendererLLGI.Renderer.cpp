@@ -598,7 +598,7 @@ int32_t RendererImplemented::GetSquareMaxCount() const
 	return ::Effekseer::TrackRendererRef(new ::EffekseerRenderer::TrackRendererBase<RendererImplemented, false>(this));
 }
 
-::Effekseer::GpuParticlesRef RendererImplemented::CreateGpuParticles()
+::Effekseer::GpuParticlesRef RendererImplemented::CreateGpuParticles(const Effekseer::GpuParticles::Settings& settings)
 {
 	auto gpuParticles = ::Effekseer::GpuParticlesRef(new ::EffekseerRendererLLGI::GpuParticles(this));
 	if (!gpuParticles->InitSystem())
