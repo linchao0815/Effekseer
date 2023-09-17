@@ -31,7 +31,7 @@
 //       uint Reserved1;                // Offset:   52
 //       uint Reserved2;                // Offset:   56
 //       uint Color;                    // Offset:   60
-//       row_major float3x4 Transform;  // Offset:   64
+//       float4x3 Transform;            // Offset:   64
 //
 //   } emitter;                         // Offset:    0 Size:   112
 //
@@ -50,7 +50,7 @@
 //       uint2 Velocity;                // Offset:   16
 //       uint Color;                    // Offset:   24
 //       uint Padding;                  // Offset:   28
-//       row_major float3x4 Transform;  // Offset:   32
+//       float4x3 Transform;            // Offset:   32
 //
 //   } $Element;                        // Offset:    0 Size:    80
 //
@@ -96,10 +96,10 @@ ret
 
 const BYTE g_main[] =
 {
-     68,  88,  66,  67,   0, 153, 
-     67,  33, 214, 163,  39,  76, 
-    170, 144,  53,  52, 181,  69, 
-    218,  71,   1,   0,   0,   0, 
+     68,  88,  66,  67, 253, 203, 
+      7, 254,  68, 131, 193,  92, 
+     20,  93,  26,  55, 161, 102, 
+    134,  25,   1,   0,   0,   0, 
     192,   6,   0,   0,   5,   0, 
       0,   0,  52,   0,   0,   0, 
     160,   4,   0,   0, 176,   4, 
@@ -192,9 +192,9 @@ const BYTE g_main[] =
      67, 111, 108, 111, 114,   0, 
      84, 114,  97, 110, 115, 102, 
     111, 114, 109,   0, 102, 108, 
-    111,  97, 116,  51, 120,  52, 
-      0, 171,   2,   0,   3,   0, 
-      3,   0,   4,   0,   0,   0, 
+    111,  97, 116,  52, 120,  51, 
+      0, 171,   3,   0,   3,   0, 
+      4,   0,   3,   0,   0,   0, 
       0,   0,   0,   0,   0,   0, 
       0,   0,   0,   0,   0,   0, 
       0,   0,   0,   0,   0,   0, 

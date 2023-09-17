@@ -18,10 +18,10 @@ RWStructuredBuffer<Trail> Trails : register(u1);
 Texture3D<float4> NoiseVFTex : register(t2);
 SamplerState NoiseVFSamp : register(s2);
 
-float3 Vortex(float rotation, float attraction, float3 center, float3 axis, float3 position, float3x4 transform) {
+float3 Vortex(float rotation, float attraction, float3 center, float3 axis, float3 position, float4x3 transform) {
     
-    center = transform._m03_m13_m23 + center;
-    axis = normalize(mul(transform, float4(axis, 0.0f)));
+    center = transform[3] + center;
+    axis = normalize(mul(float4(axis, 0.0f), transform));
 
     float3 diff = position - center;
     float distance = length(diff);
@@ -46,20 +46,20 @@ void main(uint3 dtid : SV_DispatchThreadID)
         float deltaTime = constants.DeltaTime;
 
         // Randomize parameters
-        uint paramSeed = particle.Seed;
-        float lifeTime = RandomFloatRange(paramSeed, paramSet.LifeTime);
+        uint seed = particle.Seed;
+        float lifeTime = RandomFloatRange(seed, paramSet.LifeTime);
         float lifeRatio = particle.LifeAge / lifeTime;
-        float damping = RandomFloatRange(paramSeed, paramSet.Damping) * 0.01;
-        float4 initialAngleScale = RandomFloat4Range(paramSeed, paramSet.InitialAngleScale);
-        float4 targetAngleScale = RandomFloat4Range(paramSeed, paramSet.TargetAngleScale);
+        float damping = RandomFloatRange(seed, paramSet.Damping) * 0.01;
+        float4 initialAngleScale = RandomFloat4Range(seed, paramSet.InitialAngleScale);
+        float4 targetAngleScale = RandomFloat4Range(seed, paramSet.TargetAngleScale);
         float3 initialAngle = initialAngleScale.xyz;
         float3 angularVelocity = targetAngleScale.xyz;
         float initialScale = initialAngleScale.w;
         float terminalScale = targetAngleScale.w;
-        float4 colorStart = RandomColorRange(paramSeed, paramSet.ColorStart);
-        float4 colorEnd = RandomColorRange(paramSeed, paramSet.ColorEnd);
+        float4 colorStart = RandomColorRange(seed, paramSet.ColorStart);
+        float4 colorEnd = RandomColorRange(seed, paramSet.ColorEnd);
 
-        float3 position = float3(particle.Transform[0].w, particle.Transform[1].w, particle.Transform[2].w);
+        float3 position = particle.Transform[3];
         float3 velocity = UnpackFloat4(particle.Velocity).xyz;
 
         if (emitter.TrailSize > 0) {

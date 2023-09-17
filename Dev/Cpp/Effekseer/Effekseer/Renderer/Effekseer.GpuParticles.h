@@ -42,7 +42,7 @@ public:
 		}
 	};
 
-	using float3x4 = std::array<float4, 3>; // row_major
+	using float4x3 = std::array<float4, 3>;
 	using float4x4 = Effekseer::Matrix44;
 
 	struct Settings

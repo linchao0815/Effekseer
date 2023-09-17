@@ -281,8 +281,8 @@ bool GpuParticles::InitSystem(const Settings& settings)
 		m_dummyVectorField = graphics->CreateTexture(texParam, {0, 0, 0, 0});
 	}
 	{
-		uint32_t dummyData[4] = {};
-		m_dummyEmitPoints = graphics->CreateComputeBuffer(16, 16, dummyData);
+		Effekseer::Model::Vertex dummyData = {};
+		m_dummyEmitPoints = graphics->CreateComputeBuffer(sizeof(dummyData), sizeof(dummyData), &dummyData);
 	}
 
 	m_dummyColorTexture = m_rendererBase->GetImpl()->GetProxyTexture(EffekseerRenderer::ProxyTextureType::White);
@@ -711,9 +711,9 @@ void GpuParticles::SetTransform(EmitterID emitterID, const Effekseer::Matrix43& 
 	assert(emitterID >= 0 && emitterID < m_emitters.size());
 	Emitter& emitter = m_emitters[emitterID];
 	emitter.Transform = {
-		float4{ transform.Value[0][0], transform.Value[0][1], transform.Value[0][2], transform.Value[3][0] },
-		float4{ transform.Value[1][0], transform.Value[1][1], transform.Value[1][2], transform.Value[3][1] },
-		float4{ transform.Value[2][0], transform.Value[2][1], transform.Value[2][2], transform.Value[3][2] }
+		float4{ transform.Value[0][0], transform.Value[1][0], transform.Value[2][0], transform.Value[3][0] },
+		float4{ transform.Value[0][1], transform.Value[1][1], transform.Value[2][1], transform.Value[3][1] },
+		float4{ transform.Value[0][2], transform.Value[1][2], transform.Value[2][2], transform.Value[3][2] }
 	};
 }
 

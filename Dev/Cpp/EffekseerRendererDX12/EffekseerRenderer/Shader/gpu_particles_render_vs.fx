@@ -35,7 +35,7 @@ struct Emitter
     uint Reserved1;
     uint Reserved2;
     uint Color;
-    row_major float3x4 Transform;
+    column_major float4x3 Transform;
 };
 
 struct Particle
@@ -47,7 +47,7 @@ struct Particle
     uint2 Velocity;
     uint Color;
     uint Padding;
-    row_major float3x4 Transform;
+    column_major float4x3 Transform;
 };
 
 struct ParameterSet
@@ -94,14 +94,14 @@ struct ParameterSet
 
 struct Constants
 {
-    column_major float4x4 ProjMat;
-    column_major float4x4 CameraMat;
-    row_major float3x4 BillboardMat;
-    row_major float3x4 YAxisBillboardMat;
     float3 CameraPos;
     float DeltaTime;
     float3 CameraFront;
     float Reserved;
+    column_major float4x4 ProjMat;
+    column_major float4x4 CameraMat;
+    column_major float4x3 BillboardMat;
+    column_major float4x3 YAxisBillboardMat;
 };
 
 struct Trail
@@ -123,7 +123,7 @@ cbuffer cb1 : register(b1)
 
 cbuffer cb0 : register(b0)
 {
-    Constants _254_constants : packoffset(c0);
+    Constants _249_constants : packoffset(c0);
 };
 
 ByteAddressBuffer Trails : register(t1);
@@ -197,7 +197,7 @@ VS_Output _main(VS_Input _input)
     _173.Velocity = Particles.Load2(index * 80 + 16);
     _173.Color = Particles.Load(index * 80 + 24);
     _173.Padding = Particles.Load(index * 80 + 28);
-    _173.Transform = asfloat(uint3x4(Particles.Load4(index * 80 + 32), Particles.Load4(index * 80 + 48), Particles.Load4(index * 80 + 64)));
+    _173.Transform = asfloat(uint4x3(Particles.Load(index * 80 + 32), Particles.Load(index * 80 + 48), Particles.Load(index * 80 + 64), Particles.Load(index * 80 + 36), Particles.Load(index * 80 + 52), Particles.Load(index * 80 + 68), Particles.Load(index * 80 + 40), Particles.Load(index * 80 + 56), Particles.Load(index * 80 + 72), Particles.Load(index * 80 + 44), Particles.Load(index * 80 + 60), Particles.Load(index * 80 + 76)));
     Particle particle;
     particle.FlagBits = _173.FlagBits;
     particle.Seed = _173.Seed;
@@ -216,25 +216,25 @@ VS_Output _main(VS_Input _input)
         float4 color = _input.Color;
         if (_223_paramSet.ShapeType == 0u)
         {
-            position = mul(particle.Transform, float4(position, 0.0f));
+            position = mul(float4(position, 0.0f), particle.Transform);
             if (_223_paramSet.ShapeData == 0u)
             {
-                position = mul(_254_constants.BillboardMat, float4(position, 0.0f));
+                position = mul(float4(position, 0.0f), _249_constants.BillboardMat);
             }
             else
             {
                 if (_223_paramSet.ShapeData == 1u)
                 {
-                    position = mul(_254_constants.YAxisBillboardMat, float4(position, 0.0f));
+                    position = mul(float4(position, 0.0f), _249_constants.YAxisBillboardMat);
                 }
             }
-            position += float3(particle.Transform[0].w, particle.Transform[1].w, particle.Transform[2].w);
+            position += particle.Transform[3];
         }
         else
         {
             if (_223_paramSet.ShapeType == 1u)
             {
-                position = mul(particle.Transform, float4(position, 1.0f));
+                position = mul(float4(position, 1.0f), particle.Transform);
             }
             else
             {
@@ -245,7 +245,7 @@ VS_Output _main(VS_Input _input)
                     float3 trailDirection;
                     if ((_input.VertexID / 2u) == 0u)
                     {
-                        trailPosition = float3(particle.Transform[0].w, particle.Transform[1].w, particle.Transform[2].w);
+                        trailPosition = particle.Transform[3];
                         uint2 param = particle.Velocity;
                         trailDirection = normalize(UnpackFloat4(param).xyz);
                     }
@@ -254,18 +254,18 @@ VS_Output _main(VS_Input _input)
                         uint trailID = _153_emitter.TrailHead + (_input.InstanceID * _223_paramSet.ShapeData);
                         uint trailIndex = min((_input.VertexID / 2u), trailLength);
                         trailID += (((_223_paramSet.ShapeData + _153_emitter.TrailPhase) - trailIndex) % _223_paramSet.ShapeData);
-                        Trail _364;
-                        _364.Position = asfloat(Trails.Load3(trailID * 16 + 0));
-                        _364.Direction = Trails.Load(trailID * 16 + 12);
+                        Trail _354;
+                        _354.Position = asfloat(Trails.Load3(trailID * 16 + 0));
+                        _354.Direction = Trails.Load(trailID * 16 + 12);
                         Trail trail;
-                        trail.Position = _364.Position;
-                        trail.Direction = _364.Direction;
+                        trail.Position = _354.Position;
+                        trail.Direction = _354.Direction;
                         trailPosition = trail.Position;
                         uint param_1 = trail.Direction;
                         trailDirection = normalize(UnpackNormalizedFloat3(param_1));
                         uv.y = float(trailIndex) / float(trailLength);
                     }
-                    float3 trailTangent = normalize(cross(_254_constants.CameraFront, trailDirection));
+                    float3 trailTangent = normalize(cross(_249_constants.CameraFront, trailDirection));
                     position = (trailTangent * position.x) * _223_paramSet.ShapeSize;
                     position += trailPosition;
                 }
@@ -273,12 +273,12 @@ VS_Output _main(VS_Input _input)
         }
         uint param_2 = particle.Color;
         color *= UnpackColor(param_2);
-        float4 _410 = color;
-        float3 _412 = _410.xyz * _223_paramSet.Emissive;
-        color.x = _412.x;
-        color.y = _412.y;
-        color.z = _412.z;
-        _output.Pos = mul(_254_constants.ProjMat, mul(_254_constants.CameraMat, float4(position, 1.0f)));
+        float4 _400 = color;
+        float3 _402 = _400.xyz * _223_paramSet.Emissive;
+        color.x = _402.x;
+        color.y = _402.y;
+        color.z = _402.z;
+        _output.Pos = mul(_249_constants.ProjMat, mul(_249_constants.CameraMat, float4(position, 1.0f)));
         _output.UV = uv;
         _output.Color = color;
     }

@@ -50,25 +50,25 @@ VS_Output main(const VS_Input input)
 
         if (paramSet.ShapeType == 0) {
             // Rotation and Scale Transform
-            position = mul(particle.Transform, float4(position, 0.0f));
+            position = mul(float4(position, 0.0f), particle.Transform);
             // Billboard transform
             if (paramSet.ShapeData == 0) {
-                position = mul(constants.BillboardMat, float4(position, 0.0f));
+                position = mul(float4(position, 0.0f), constants.BillboardMat);
             } else if (paramSet.ShapeData == 1) {
-                position = mul(constants.YAxisBillboardMat, float4(position, 0.0f));
+                position = mul(float4(position, 0.0f), constants.YAxisBillboardMat);
             }
             // Position transform
-            position = position + float3(particle.Transform[0].w, particle.Transform[1].w, particle.Transform[2].w);
+            position = position + particle.Transform[3];
         } else if (paramSet.ShapeType == 1) {
             // Position and Rotation and Scale Transform
-            position = mul(particle.Transform, float4(position, 1.0f)).xyz;
+            position = mul(float4(position, 1.0f), particle.Transform).xyz;
         } else if (paramSet.ShapeType == 2) {
             // Trail Transform
             uint trailLength = min(paramSet.ShapeData, updateCount);
             float3 trailPosition;
             float3 trailDirection;
             if (input.VertexID / 2 == 0) {
-                trailPosition = float3(particle.Transform[0].w, particle.Transform[1].w, particle.Transform[2].w);
+                trailPosition = particle.Transform[3];
                 trailDirection = normalize(UnpackFloat4(particle.Velocity).xyz);
             } else {
                 uint trailID = emitter.TrailHead + input.InstanceID * paramSet.ShapeData;

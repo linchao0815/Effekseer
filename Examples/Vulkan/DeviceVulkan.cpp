@@ -95,7 +95,7 @@ void DeviceVulkan::EndComputePass()
 void DeviceVulkan::BeginRenderPass()
 {
 	LLGI::Color8 color{0, 0, 0, 255};
-	commandList->BeginRenderPass(platform->GetCurrentScreen(color, true, false));
+	commandList->BeginRenderPass(platform->GetCurrentScreen(color, true, true));
 }
 
 void DeviceVulkan::EndRenderPass()

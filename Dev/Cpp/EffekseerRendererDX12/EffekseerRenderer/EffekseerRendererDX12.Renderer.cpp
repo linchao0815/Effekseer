@@ -296,28 +296,31 @@ CommandListProperty GetCommandListProperty(Effekseer::RefPtr<EffekseerRenderer::
 void BeginCommandList(Effekseer::RefPtr<EffekseerRenderer::CommandList> commandList, ID3D12GraphicsCommandList* dx12CommandList)
 {
 	assert(commandList != nullptr);
+	auto c = static_cast<EffekseerRendererLLGI::CommandList*>(commandList.Get());
 
 	if (dx12CommandList)
 	{
 		LLGI::PlatformContextDX12 context;
 		context.commandList = dx12CommandList;
 
-		auto c = static_cast<EffekseerRendererLLGI::CommandList*>(commandList.Get());
 		c->GetInternal()->BeginWithPlatform(&context);
 		c->SetState(EffekseerRendererLLGI::CommandListState::RunningWithPlatformCommandList);
 	}
 	else
 	{
-		auto c = static_cast<EffekseerRendererLLGI::CommandList*>(commandList.Get());
 		c->GetInternal()->Begin();
 		c->SetState(EffekseerRendererLLGI::CommandListState::Running);
 	}
+
+	c->GetInternal()->BeginComputePass();
 }
 
 void EndCommandList(Effekseer::RefPtr<EffekseerRenderer::CommandList> commandList)
 {
 	assert(commandList != nullptr);
 	auto c = static_cast<EffekseerRendererLLGI::CommandList*>(commandList.Get());
+
+	c->GetInternal()->EndComputePass();
 
 	if (c->GetState() == EffekseerRendererLLGI::CommandListState::RunningWithPlatformCommandList)
 	{

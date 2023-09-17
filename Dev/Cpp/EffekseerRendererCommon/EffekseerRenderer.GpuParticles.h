@@ -42,7 +42,7 @@ public:
 		ParticleGroupID GroupID;
 		uint32_t Reserved;
 		Effekseer::Color Color;
-		float3x4 Transform;
+		float4x3 Transform;
 
 		bool IsAlive() const
 		{
@@ -78,7 +78,7 @@ public:
 		uint16_t Velocity[4];
 		uint32_t Color;
 		uint32_t Padding;
-		float3x4 Transform;
+		float4x3 Transform;
 	};
 	struct Trail
 	{
@@ -88,14 +88,14 @@ public:
 
 	struct Constants
 	{
-		float4x4 ProjMat;
-		float4x4 CameraMat;
-		float3x4 BillboardMat;
-		float3x4 YAxisBillboardMat;
 		float3 CameraPos;
 		float DeltaTime;
 		float3 CameraFront;
 		float Reserved;
+		float4x4 ProjMat;
+		float4x4 CameraMat;
+		float4x3 BillboardMat;
+		float4x3 YAxisBillboardMat;
 	};
 	struct Block
 	{

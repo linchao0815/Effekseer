@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 
-transpiler_path = 'ShaderTranspiler'
+transpiler_path = '3rdParty/LLGI-tools/ShaderTranspiler'
 root_path = 'EffekseerRendererDX11/EffekseerRenderer/Shader/'
 
 dx9_root_path = 'EffekseerRendererDX9/EffekseerRenderer/Shader/'
@@ -66,7 +66,7 @@ def fix_dx9_vs(path):
 
 
 try:
-    subprocess.call(['ShaderTranspiler'])
+    subprocess.call([transpiler_path])
 except:
     print('Please put ShaderTranspiler from https://github.com/altseed/LLGI/tree/master/tools')
     sys.exit(1)
@@ -81,7 +81,7 @@ gl2_common_flags = ['-D', 'DISABLE_INSTANCE', '1', '-D', '__OPENGL__', '1', '-D'
 def transpile_dx9(shaderType, shaderModel, sources):
     for f in sources:
         print('Converting {}'.format(f))
-        subprocess.call(['ShaderTranspiler', '--' + shaderType, '-H', '--sm', shaderModel, '--input',
+        subprocess.call([transpiler_path, '--' + shaderType, '-H', '--sm', shaderModel, '--input',
                         f, '--output', dx9_root_path + os.path.basename(f)] + dx9_common_flags)
         if shaderType == "--vert":
             fix_dx9_vs(dx9_root_path + os.path.basename(f))
@@ -90,21 +90,21 @@ def transpile_dx9(shaderType, shaderModel, sources):
 def transpile_dx12(shaderType, shaderModel, sources):
     for f in (sources):
         print('Converting {}'.format(f))
-        subprocess.call(['ShaderTranspiler', '--' + shaderType, '-H', '--sm', shaderModel, '--dx12', '--input',
+        subprocess.call([transpiler_path, '--' + shaderType, '-H', '--sm', shaderModel, '--dx12', '--input',
                         f, '--output', dx12_root_path + os.path.basename(f)] + llgi_common_flags)
 
 
 def transpile_metal(shaderType, sources):
     for f in (sources):
         print('Converting {}'.format(f))
-        subprocess.call(['ShaderTranspiler', '--' + shaderType, '-M', '--input', f,
+        subprocess.call([transpiler_path, '--' + shaderType, '-M', '--input', f,
                         '--output', metal_root_path + os.path.basename(f)] + llgi_common_flags)
 
 
 def transpile_vulkan(shaderType, sources):
     for f in (sources):
         print('Converting {}'.format(f))
-        subprocess.call(['ShaderTranspiler', '--' + shaderType, '-V', '--input', f, '--output',
+        subprocess.call([transpiler_path, '--' + shaderType, '-V', '--input', f, '--output',
                         vulkan_root_path + os.path.basename(f) + '.' + shaderType] + llgi_common_flags)
 
 
@@ -112,22 +112,22 @@ def transpile_gl(shaderType, glver, sources):
     for f in (sources):
         print('Converting {}'.format(f))
         if glver == "gl2":
-            subprocess.call(['ShaderTranspiler', '--' + shaderType, '-G', '--sm', '120', '--input',
+            subprocess.call([transpiler_path, '--' + shaderType, '-G', '--sm', '120', '--input',
                             f, '--output', gl_2_root_path + os.path.basename(f)] + gl2_common_flags)
         elif glver == "gl3":
-            subprocess.call(['ShaderTranspiler', '--' + shaderType, '-G', '--sm', '330', '--input',
+            subprocess.call([transpiler_path, '--' + shaderType, '-G', '--sm', '330', '--input',
                             f, '--output', gl_3_root_path + os.path.basename(f)] + gl_common_flags)
         elif glver == "gl4":
-            subprocess.call(['ShaderTranspiler', '--' + shaderType, '-G', '--sm', '430', '--input',
+            subprocess.call([transpiler_path, '--' + shaderType, '-G', '--sm', '430', '--input',
                             f, '--output', gl_4_root_path + os.path.basename(f)] + gl_common_flags)
         elif glver == "gles2":
-            subprocess.call(['ShaderTranspiler', '--' + shaderType, '-G', '--es', '--sm', '200', '--input',
+            subprocess.call([transpiler_path, '--' + shaderType, '-G', '--es', '--sm', '200', '--input',
                             f, '--output', gl_es2_root_path + os.path.basename(f)] + gl2_common_flags)
         elif glver == "gles3":
-            subprocess.call(['ShaderTranspiler', '--' + shaderType, '-G', '--es', '--sm', '300', '--input',
+            subprocess.call([transpiler_path, '--' + shaderType, '-G', '--es', '--sm', '300', '--input',
                             f, '--output', gl_es3_root_path + os.path.basename(f)] + gl_common_flags)
 
-"""
+
 # Standard Shaders
 transpile_dx9("vert", "30", verts)
 transpile_dx9("frag", "30", frags)
@@ -155,7 +155,7 @@ transpile_gl("frag", "gles2", frags)
 
 transpile_gl("vert", "gles3", verts)
 transpile_gl("frag", "gles3", frags)
-"""
+
 
 # Gpu Particles Shaders
 transpile_dx12("comp", "50", gpu_particles_comps)

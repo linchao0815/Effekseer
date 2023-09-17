@@ -198,7 +198,7 @@ bool Texture::Init(const Effekseer::Backend::TextureParameter& param, const Effe
 
 	while (mw > 1)
 	{
-		mw = mw << 1;
+		mw = mw >> 1;
 		count++;
 	}
 

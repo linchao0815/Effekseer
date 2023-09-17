@@ -68,7 +68,7 @@ struct Emitter
     uint Reserved1;
     uint Reserved2;
     uint Color;
-    row_major float3x4 Transform;
+    float4x3 Transform;
 };
 
 struct EmitPoint
@@ -90,7 +90,7 @@ struct Particle
     uint2 Velocity;
     uint Color;
     uint Padding;
-    row_major float3x4 Transform;
+    float4x3 Transform;
 };
 
 struct Trail
@@ -101,14 +101,14 @@ struct Trail
 
 struct Constants
 {
-    float4x4 ProjMat;
-    float4x4 CameraMat;
-    row_major float3x4 BillboardMat;
-    row_major float3x4 YAxisBillboardMat;
     float3 CameraPos;
     float DeltaTime;
     float3 CameraFront;
     float Reserved;
+    float4x4 ProjMat;
+    float4x4 CameraMat;
+    float4x3 BillboardMat;
+    float4x3 YAxisBillboardMat;
 };
 
 uint PackColor(float4 color)
@@ -149,23 +149,23 @@ float3 UnpackNormalizedFloat3(uint bits) {
 	return v / 1023.0f * 2.0f - 1.0f;
 }
 
-float3x4 TRSMatrix(float3 translation, float3 rotation, float3 scale) {
+float4x3 TRSMatrix(float3 translation, float3 rotation, float3 scale) {
     float3 s, c;
     sincos(rotation, s, c);
     
-    float3x4 m;
+    float4x3 m;
 	m[0][0] = scale.x * (c.z * c.y + s.z * s.x * s.y);
-	m[0][1] = scale.y * (s.z * c.x);
-	m[0][2] = scale.z * (c.z * -s.y + s.z * s.x * c.y);
-    m[0][3] = translation.x;
-	m[1][0] = scale.x * (-s.z * c.y + c.z * s.x * s.y);
+	m[1][0] = scale.y * (s.z * c.x);
+	m[2][0] = scale.z * (c.z * -s.y + s.z * s.x * c.y);
+    m[3][0] = translation.x;
+	m[0][1] = scale.x * (-s.z * c.y + c.z * s.x * s.y);
 	m[1][1] = scale.y * (c.z * c.x);
-	m[1][2] = scale.z * (-s.z * -s.y + c.z * s.x * c.y);
-    m[1][3] = translation.y;
-	m[2][0] = scale.x * (c.x * s.y);
-	m[2][1] = scale.y * (-s.x);
+	m[2][1] = scale.z * (-s.z * -s.y + c.z * s.x * c.y);
+    m[3][1] = translation.y;
+	m[0][2] = scale.x * (c.x * s.y);
+	m[1][2] = scale.y * (-s.x);
 	m[2][2] = scale.z * (c.x * c.y);
-    m[2][3] = translation.z;
+    m[3][2] = translation.z;
     return m;
 }
 

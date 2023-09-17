@@ -16,7 +16,7 @@ struct Emitter
     uint Reserved1;
     uint Reserved2;
     uint Color;
-    row_major float3x4 Transform;
+    column_major float4x3 Transform;
 };
 
 struct Particle
@@ -28,19 +28,19 @@ struct Particle
     uint2 Velocity;
     uint Color;
     uint Padding;
-    row_major float3x4 Transform;
+    column_major float4x3 Transform;
 };
 
 struct Constants
 {
-    column_major float4x4 ProjMat;
-    column_major float4x4 CameraMat;
-    row_major float3x4 BillboardMat;
-    row_major float3x4 YAxisBillboardMat;
     float3 CameraPos;
     float DeltaTime;
     float3 CameraFront;
     float Reserved;
+    column_major float4x4 ProjMat;
+    column_major float4x4 CameraMat;
+    column_major float4x3 BillboardMat;
+    column_major float4x3 YAxisBillboardMat;
 };
 
 struct ParameterSet
@@ -93,12 +93,12 @@ cbuffer cb2 : register(b2)
 RWByteAddressBuffer Particles : register(u0);
 cbuffer cb0 : register(b0)
 {
-    Constants _161_constants : packoffset(c0);
+    Constants _160_constants : packoffset(c0);
 };
 
 cbuffer cb1 : register(b1)
 {
-    ParameterSet _168_paramSet : packoffset(c0);
+    ParameterSet _167_paramSet : packoffset(c0);
 };
 
 
@@ -144,7 +144,7 @@ void _main(uint3 dtid)
     float3 param = 0.0f.xxx;
     float param_1 = 0.0f;
     particle.Velocity = PackFloat4(param, param_1);
-    particle.Transform = float3x4(0.0f.xxxx, 0.0f.xxxx, 0.0f.xxxx);
+    particle.Transform = float4x3(0.0f.xxx, 0.0f.xxx, 0.0f.xxx, 0.0f.xxx);
     Particles.Store(particleID * 80 + 0, particle.FlagBits);
     Particles.Store(particleID * 80 + 4, particle.Seed);
     Particles.Store(particleID * 80 + 8, asuint(particle.LifeAge));
@@ -152,9 +152,18 @@ void _main(uint3 dtid)
     Particles.Store2(particleID * 80 + 16, particle.Velocity);
     Particles.Store(particleID * 80 + 24, particle.Color);
     Particles.Store(particleID * 80 + 28, particle.Padding);
-    Particles.Store4(particleID * 80 + 32, asuint(particle.Transform[0]));
-    Particles.Store4(particleID * 80 + 48, asuint(particle.Transform[1]));
-    Particles.Store4(particleID * 80 + 64, asuint(particle.Transform[2]));
+    Particles.Store(particleID * 80 + 32, asuint(particle.Transform[0].x));
+    Particles.Store(particleID * 80 + 36, asuint(particle.Transform[1].x));
+    Particles.Store(particleID * 80 + 40, asuint(particle.Transform[2].x));
+    Particles.Store(particleID * 80 + 44, asuint(particle.Transform[3].x));
+    Particles.Store(particleID * 80 + 48, asuint(particle.Transform[0].y));
+    Particles.Store(particleID * 80 + 52, asuint(particle.Transform[1].y));
+    Particles.Store(particleID * 80 + 56, asuint(particle.Transform[2].y));
+    Particles.Store(particleID * 80 + 60, asuint(particle.Transform[3].y));
+    Particles.Store(particleID * 80 + 64, asuint(particle.Transform[0].z));
+    Particles.Store(particleID * 80 + 68, asuint(particle.Transform[1].z));
+    Particles.Store(particleID * 80 + 72, asuint(particle.Transform[2].z));
+    Particles.Store(particleID * 80 + 76, asuint(particle.Transform[3].z));
 }
 
 void comp_main()
