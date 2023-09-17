@@ -7,10 +7,14 @@ struct Emitter
     uint TrailHead;
     uint TrailSize;
     uint TrailPhase;
-    float TimeCount;
     uint NextEmitCount;
     uint TotalEmitCount;
     uint EmitPointCount;
+    float TimeCount;
+    float TimeStopped;
+    uint Reserved0;
+    uint Reserved1;
+    uint Reserved2;
     uint Color;
     row_major float3x4 Transform;
 };
@@ -97,7 +101,6 @@ cbuffer cb1 : register(b1)
     ParameterSet _168_paramSet : packoffset(c0);
 };
 
-ByteAddressBuffer ParamSets : register(t0);
 
 static uint3 gl_GlobalInvocationID;
 struct SPIRV_Cross_Input

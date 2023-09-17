@@ -13,14 +13,14 @@ cbuffer cb2 : register(b2)
     Emitter emitter;
 }
 
-StructuredBuffer<EmitPoint> EmitPoints : register(t0);
+StructuredBuffer<EmitPoint> EmitPoints : register(t1);
 RWStructuredBuffer<Particle> Particles : register(u0);
 
 [numthreads(1, 1, 1)]
 void main(uint3 dtid : SV_DispatchThreadID)
 {
     float paramSeed = emitter.Seed ^ (emitter.TotalEmitCount + dtid.x);
-    float3 position = emitter.Transform._m03_m13_m23;
+    float3 position = float3(emitter.Transform[0].w, emitter.Transform[1].w, emitter.Transform[2].w);
     float3 direction = RandomSpread(paramSeed, paramSet.Direction, paramSet.Spread * 3.141592f / 180.0f);
     float speed = RandomFloatRange(paramSeed, paramSet.InitialSpeed);
 

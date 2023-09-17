@@ -7,10 +7,14 @@ struct Emitter
     uint TrailHead;
     uint TrailSize;
     uint TrailPhase;
-    float TimeCount;
     uint NextEmitCount;
     uint TotalEmitCount;
     uint EmitPointCount;
+    float TimeCount;
+    float TimeStopped;
+    uint Reserved0;
+    uint Reserved1;
+    uint Reserved2;
     uint Color;
     row_major float3x4 Transform;
 };
@@ -98,14 +102,14 @@ cbuffer cb2 : register(b2)
 
 cbuffer cb1 : register(b1)
 {
-    ParameterSet _356_paramSet : packoffset(c0);
+    ParameterSet _362_paramSet : packoffset(c0);
 };
 
-ByteAddressBuffer EmitPoints : register(t0);
+ByteAddressBuffer EmitPoints : register(t1);
 RWByteAddressBuffer Particles : register(u0);
 cbuffer cb0 : register(b0)
 {
-    Constants _702_constants : packoffset(c0);
+    Constants _708_constants : packoffset(c0);
 };
 
 
@@ -225,92 +229,92 @@ uint2 PackFloat4(float3 v3, float v1)
 void _main(uint3 dtid)
 {
     float paramSeed = float(_329_emitter.Seed ^ (_329_emitter.TotalEmitCount + dtid.x));
-    float3 position = 3;
-    uint _349 = uint(paramSeed);
-    uint param = _349;
-    float3 param_1 = _356_paramSet.Direction;
-    float param_2 = (_356_paramSet.Spread * 3.1415920257568359375f) / 180.0f;
-    float3 _371 = RandomSpread(param, param_1, param_2);
-    _349 = param;
-    float3 direction = _371;
-    uint _375 = uint(paramSeed);
-    uint param_3 = _375;
-    float2 param_4 = _356_paramSet.InitialSpeed;
-    float _382 = RandomFloatRange(param_3, param_4);
-    _375 = param_3;
-    float speed = _382;
-    if (_356_paramSet.EmitShapeType == 1u)
+    float3 position = float3(_329_emitter.Transform[0].w, _329_emitter.Transform[1].w, _329_emitter.Transform[2].w);
+    uint _355 = uint(paramSeed);
+    uint param = _355;
+    float3 param_1 = _362_paramSet.Direction;
+    float param_2 = (_362_paramSet.Spread * 3.1415920257568359375f) / 180.0f;
+    float3 _376 = RandomSpread(param, param_1, param_2);
+    _355 = param;
+    float3 direction = _376;
+    uint _380 = uint(paramSeed);
+    uint param_3 = _380;
+    float2 param_4 = _362_paramSet.InitialSpeed;
+    float _387 = RandomFloatRange(param_3, param_4);
+    _380 = param_3;
+    float speed = _387;
+    if (_362_paramSet.EmitShapeType == 1u)
     {
-        float3 lineStart = mul(_329_emitter.Transform, float4(_356_paramSet.EmitShapeData[0].xyz, 0.0f));
-        float3 lineEnd = mul(_329_emitter.Transform, float4(_356_paramSet.EmitShapeData[1].xyz, 0.0f));
-        float lineWidth = _356_paramSet.EmitShapeData[1].w;
-        uint _421 = uint(paramSeed);
-        uint param_5 = _421;
-        float _423 = RandomFloat(param_5);
-        _421 = param_5;
-        position += lerp(lineStart, lineEnd, _423.xxx);
-        uint _430 = uint(paramSeed);
-        uint param_6 = _430;
-        float3 _432 = RandomDirection(param_6);
-        _430 = param_6;
-        position += ((_432 * lineWidth) * 0.5f);
+        float3 lineStart = mul(_329_emitter.Transform, float4(_362_paramSet.EmitShapeData[0].xyz, 0.0f));
+        float3 lineEnd = mul(_329_emitter.Transform, float4(_362_paramSet.EmitShapeData[1].xyz, 0.0f));
+        float lineWidth = _362_paramSet.EmitShapeData[1].w;
+        uint _426 = uint(paramSeed);
+        uint param_5 = _426;
+        float _428 = RandomFloat(param_5);
+        _426 = param_5;
+        position += lerp(lineStart, lineEnd, _428.xxx);
+        uint _435 = uint(paramSeed);
+        uint param_6 = _435;
+        float3 _437 = RandomDirection(param_6);
+        _435 = param_6;
+        position += ((_437 * lineWidth) * 0.5f);
     }
     else
     {
-        if (_356_paramSet.EmitShapeType == 2u)
+        if (_362_paramSet.EmitShapeType == 2u)
         {
-            float3 circleAxis = mul(_329_emitter.Transform, float4(_356_paramSet.EmitShapeData[0].xyz, 0.0f));
-            float circleInner = _356_paramSet.EmitShapeData[1].x;
-            float circleOuter = _356_paramSet.EmitShapeData[1].y;
-            uint _467 = uint(paramSeed);
-            uint param_7 = _467;
-            float _469 = RandomFloat(param_7);
-            _467 = param_7;
-            float circleRadius = lerp(circleInner, circleOuter, _469);
-            uint _473 = uint(paramSeed);
-            uint param_8 = _473;
+            float3 circleAxis = mul(_329_emitter.Transform, float4(_362_paramSet.EmitShapeData[0].xyz, 0.0f));
+            float circleInner = _362_paramSet.EmitShapeData[1].x;
+            float circleOuter = _362_paramSet.EmitShapeData[1].y;
+            uint _472 = uint(paramSeed);
+            uint param_7 = _472;
+            float _474 = RandomFloat(param_7);
+            _472 = param_7;
+            float circleRadius = lerp(circleInner, circleOuter, _474);
+            uint _478 = uint(paramSeed);
+            uint param_8 = _478;
             float3 param_9 = circleAxis;
-            float3 _477 = RandomCircle(param_8, param_9);
-            _473 = param_8;
-            position += (_477 * circleRadius);
+            float3 _482 = RandomCircle(param_8, param_9);
+            _478 = param_8;
+            position += (_482 * circleRadius);
         }
         else
         {
-            if (_356_paramSet.EmitShapeType == 3u)
+            if (_362_paramSet.EmitShapeType == 3u)
             {
-                float sphereRadius = _356_paramSet.EmitShapeData[0].x;
-                uint _493 = uint(paramSeed);
-                uint param_10 = _493;
-                float3 _495 = RandomDirection(param_10);
-                _493 = param_10;
-                position += (_495 * sphereRadius);
+                float sphereRadius = _362_paramSet.EmitShapeData[0].x;
+                uint _498 = uint(paramSeed);
+                uint param_10 = _498;
+                float3 _500 = RandomDirection(param_10);
+                _498 = param_10;
+                position += (_500 * sphereRadius);
             }
             else
             {
-                if (_356_paramSet.EmitShapeType == 4u)
+                if (_362_paramSet.EmitShapeType == 4u)
                 {
-                    float modelSize = _356_paramSet.EmitShapeData[0].y;
+                    float modelSize = _362_paramSet.EmitShapeData[0].y;
                     if (_329_emitter.EmitPointCount > 0u)
                     {
-                        uint _517 = uint(paramSeed);
-                        uint param_11 = _517;
-                        uint _519 = RandomUint(param_11);
-                        _517 = param_11;
-                        uint emitIndex = _519 % _329_emitter.EmitPointCount;
-                        EmitPoint _535;
-                        _535.Position = asfloat(EmitPoints.Load3(emitIndex * 80 + 0));
-                        _535.Normal = asfloat(EmitPoints.Load3(emitIndex * 80 + 16));
-                        _535.Binormal = asfloat(EmitPoints.Load3(emitIndex * 80 + 32));
-                        _535.Tangent = asfloat(EmitPoints.Load3(emitIndex * 80 + 48));
-                        _535.UV = asfloat(EmitPoints.Load2(emitIndex * 80 + 64));
-                        _535.VColor = EmitPoints.Load(emitIndex * 80 + 72);
+                        uint _522 = uint(paramSeed);
+                        uint param_11 = _522;
+                        uint _524 = RandomUint(param_11);
+                        _522 = param_11;
+                        uint emitIndex = _524 % _329_emitter.EmitPointCount;
+                        EmitPoint _540;
+                        _540.Position = asfloat(EmitPoints.Load3(emitIndex * 80 + 0));
+                        _540.Normal = asfloat(EmitPoints.Load3(emitIndex * 80 + 16));
+                        _540.Binormal = asfloat(EmitPoints.Load3(emitIndex * 80 + 32));
+                        _540.Tangent = asfloat(EmitPoints.Load3(emitIndex * 80 + 48));
+                        _540.UV = asfloat(EmitPoints.Load2(emitIndex * 80 + 64));
+                        _540.VColor = EmitPoints.Load(emitIndex * 80 + 72);
                         EmitPoint emitPoint;
-                        emitPoint.Position = _535.Position;
-                        emitPoint.Normal = _535.Normal;
-                        emitPoint.Binormal = _535.Binormal;
-                        emitPoint.Tangent = _535.Tangent;
-                        emitPoint.UV = _535.UV;
-                        emitPoint.VColor = _535.VColor;
+                        emitPoint.Position = _540.Position;
+                        emitPoint.Normal = _540.Normal;
+                        emitPoint.Binormal = _540.Binormal;
+                        emitPoint.Tangent = _540.Tangent;
+                        emitPoint.UV = _540.UV;
+                        emitPoint.VColor = _540.VColor;
                         position += mul(_329_emitter.Transform, float4(emitPoint.Position * modelSize, 0.0f));
                         direction = mul(direction, float3x3(float3(normalize(emitPoint.Tangent)), float3(normalize(emitPoint.Binormal)), float3(normalize(emitPoint.Normal))));
                     }
@@ -324,7 +328,7 @@ void _main(uint3 dtid)
     particle.FlagBits = 1u;
     particle.Seed = uint(paramSeed);
     particle.LifeAge = 0.0f;
-    if (_356_paramSet.ColorFlags == 0u)
+    if (_362_paramSet.ColorFlags == 0u)
     {
         particle.InheritColor = 4294967295u;
     }

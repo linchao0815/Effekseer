@@ -7,10 +7,14 @@ struct Emitter
     uint TrailHead;
     uint TrailSize;
     uint TrailPhase;
-    float TimeCount;
     uint NextEmitCount;
     uint TotalEmitCount;
     uint EmitPointCount;
+    float TimeCount;
+    float TimeStopped;
+    uint Reserved0;
+    uint Reserved1;
+    uint Reserved2;
     uint Color;
     row_major float3x4 Transform;
 };
@@ -104,8 +108,8 @@ cbuffer cb1 : register(b1)
 };
 
 RWByteAddressBuffer Trails : register(u1);
-Texture3D<float4> NoiseVFTex : register(t4);
-SamplerState NoiseVFSamp : register(s4);
+Texture3D<float4> NoiseVFTex : register(t2);
+SamplerState NoiseVFSamp : register(s2);
 
 static uint3 gl_GlobalInvocationID;
 struct SPIRV_Cross_Input
@@ -301,7 +305,7 @@ void _main(uint3 dtid)
         float4 _692 = RandomColorRange(param_10, param_11);
         paramSeed = param_10;
         float4 colorEnd = _692;
-        float3 position = 3;
+        float3 position = float3(particle.Transform[0].w, particle.Transform[1].w, particle.Transform[2].w);
         uint2 param_12 = particle.Velocity;
         float3 velocity = UnpackFloat4(param_12).xyz;
         if (_541_emitter.TrailSize > 0u)
@@ -330,8 +334,8 @@ void _main(uint3 dtid)
             float3 param_17 = _610_paramSet.VortexAxis;
             float3 param_18 = position;
             float3x4 param_19 = _541_emitter.Transform;
-            float3 _810 = Vortex(param_14, param_15, param_16, param_17, param_18, param_19);
-            velocity += (_810 * deltaTime);
+            float3 _817 = Vortex(param_14, param_15, param_16, param_17, param_18, param_19);
+            velocity += (_817 * deltaTime);
         }
         if (_610_paramSet.TurbulencePower != 0.0f)
         {

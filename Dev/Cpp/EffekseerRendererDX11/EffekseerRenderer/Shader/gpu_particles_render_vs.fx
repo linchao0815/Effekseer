@@ -32,8 +32,8 @@ struct VS_Output
     float4 Color : COLOR0;
 };
 
-StructuredBuffer<Particle> Particles : register(t8);
-StructuredBuffer<Trail> Trails : register(t9);
+StructuredBuffer<Particle> Particles : register(t0);
+StructuredBuffer<Trail> Trails : register(t1);
 
 VS_Output main(const VS_Input input)
 {
@@ -58,7 +58,7 @@ VS_Output main(const VS_Input input)
                 position = mul(constants.YAxisBillboardMat, float4(position, 0.0f));
             }
             // Position transform
-            position = position + particle.Transform._m03_m13_m23;
+            position = position + float3(particle.Transform[0].w, particle.Transform[1].w, particle.Transform[2].w);
         } else if (paramSet.ShapeType == 1) {
             // Position and Rotation and Scale Transform
             position = mul(particle.Transform, float4(position, 1.0f)).xyz;
@@ -68,7 +68,7 @@ VS_Output main(const VS_Input input)
             float3 trailPosition;
             float3 trailDirection;
             if (input.VertexID / 2 == 0) {
-                trailPosition = particle.Transform._m03_m13_m23;
+                trailPosition = float3(particle.Transform[0].w, particle.Transform[1].w, particle.Transform[2].w);
                 trailDirection = normalize(UnpackFloat4(particle.Velocity).xyz);
             } else {
                 uint trailID = emitter.TrailHead + input.InstanceID * paramSet.ShapeData;

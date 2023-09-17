@@ -142,8 +142,8 @@
 //
 // Name                                 Type  Format         Dim Slot Elements
 // ------------------------------ ---------- ------- ----------- ---- --------
-// NoiseVFSamp                       sampler      NA          NA    4        1
-// NoiseVFTex                        texture  float4          3d    4        1
+// NoiseVFSamp                       sampler      NA          NA    2        1
+// NoiseVFTex                        texture  float4          3d    2        1
 // Particles                             UAV  struct         r/w    0        1
 // Trails                                UAV  struct         r/w    1        1
 // cb0                               cbuffer      NA          NA    0        1
@@ -168,8 +168,8 @@ dcl_globalFlags refactoringAllowed
 dcl_constantbuffer cb0[15], immediateIndexed
 dcl_constantbuffer cb1[17], immediateIndexed
 dcl_constantbuffer cb2[7], immediateIndexed
-dcl_sampler s4, mode_default
-dcl_resource_texture3d (float,float,float,float) t4
+dcl_sampler s2, mode_default
+dcl_resource_texture3d (float,float,float,float) t2
 dcl_uav_structured u0, 80
 dcl_uav_structured u1, 16
 dcl_input vThreadID.x
@@ -326,7 +326,7 @@ if_nz r0.w
   ne r1.x, cb1[13].x, l(0.000000)
   if_nz r1.x
     mad r9.xyz, r2.xyzx, l(0.125000, 0.125000, 0.125000, 0.000000), l(0.500000, 0.500000, 0.500000, 0.000000)
-    sample_l_indexable(texture3d)(float,float,float,float) r9.xyz, r9.xyzx, t4.xyzw, s4, l(0.000000)
+    sample_l_indexable(texture3d)(float,float,float,float) r9.xyz, r9.xyzx, t2.xyzw, s2, l(0.000000)
     mad r9.xyz, r9.xyzx, l(2.000000, 2.000000, 2.000000, 0.000000), l(-1.000000, -1.000000, -1.000000, 0.000000)
     mul r9.xyz, r9.xyzx, cb1[13].xxxx
     mad r4.xzw, r9.xxyz, cb0[14].wwww, r4.xxzw
@@ -412,10 +412,10 @@ ret
 
 const BYTE g_main[] =
 {
-     68,  88,  66,  67, 162,   3, 
-     84,  41, 229, 181, 161, 124, 
-     53, 165,   7, 151, 161,  85, 
-    235, 229,   1,   0,   0,   0, 
+     68,  88,  66,  67, 173, 147, 
+    214, 121, 167,  68, 226, 140, 
+     31,  24,  49, 243, 178, 162, 
+     47, 193,   1,   0,   0,   0, 
     188,  41,   0,   0,   5,   0, 
       0,   0,  52,   0,   0,   0, 
      68,  12,   0,   0,  84,  12, 
@@ -435,12 +435,12 @@ const BYTE g_main[] =
      28,   1,   0,   0,   3,   0, 
       0,   0,   0,   0,   0,   0, 
       0,   0,   0,   0,   0,   0, 
-      0,   0,   4,   0,   0,   0, 
+      0,   0,   2,   0,   0,   0, 
       1,   0,   0,   0,   1,   0, 
       0,   0,  40,   1,   0,   0, 
       2,   0,   0,   0,   5,   0, 
       0,   0,   8,   0,   0,   0, 
-    255, 255, 255, 255,   4,   0, 
+    255, 255, 255, 255,   2,   0, 
       0,   0,   1,   0,   0,   0, 
      13,   0,   0,   0,  51,   1, 
       0,   0,   6,   0,   0,   0, 
@@ -953,9 +953,9 @@ const BYTE g_main[] =
      70, 142,  32,   0,   2,   0, 
       0,   0,   7,   0,   0,   0, 
      90,   0,   0,   3,   0,  96, 
-     16,   0,   4,   0,   0,   0, 
+     16,   0,   2,   0,   0,   0, 
      88,  40,   0,   4,   0, 112, 
-     16,   0,   4,   0,   0,   0, 
+     16,   0,   2,   0,   0,   0, 
      85,  85,   0,   0, 158,   0, 
       0,   4,   0, 224,  17,   0, 
       0,   0,   0,   0,  80,   0, 
@@ -1759,8 +1759,8 @@ const BYTE g_main[] =
     114,   0,  16,   0,   9,   0, 
       0,   0,  70,   2,  16,   0, 
       9,   0,   0,   0,  70, 126, 
-     16,   0,   4,   0,   0,   0, 
-      0,  96,  16,   0,   4,   0, 
+     16,   0,   2,   0,   0,   0, 
+      0,  96,  16,   0,   2,   0, 
       0,   0,   1,  64,   0,   0, 
       0,   0,   0,   0,  50,   0, 
       0,  15, 114,   0,  16,   0, 

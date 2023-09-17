@@ -5,10 +5,10 @@ struct PS_Input
     float4 Color;
 };
 
-Texture2D<float4> ColorTex : register(t0);
-SamplerState NormalSamp : register(s1);
-SamplerState ColorSamp : register(s0);
-Texture2D<float4> NormalTex : register(t1);
+Texture2D<float4> ColorTex : register(t2);
+SamplerState ColorSamp : register(s2);
+Texture2D<float4> NormalTex : register(t3);
+SamplerState NormalSamp : register(s3);
 
 static float4 gl_FragCoord;
 static float2 input_UV;
@@ -29,7 +29,7 @@ struct SPIRV_Cross_Output
 
 float4 _main(PS_Input _input)
 {
-    return _input.Color * ColorTex.Sample(NormalSamp, _input.UV);
+    return _input.Color * ColorTex.Sample(ColorSamp, _input.UV);
 }
 
 void frag_main()

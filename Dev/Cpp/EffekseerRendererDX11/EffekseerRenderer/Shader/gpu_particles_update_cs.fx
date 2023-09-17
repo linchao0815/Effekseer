@@ -15,8 +15,8 @@ cbuffer cb2 : register(b2)
 
 RWStructuredBuffer<Particle> Particles : register(u0);
 RWStructuredBuffer<Trail> Trails : register(u1);
-Texture3D<float4> NoiseVFTex : register(t4);
-SamplerState NoiseVFSamp : register(s4);
+Texture3D<float4> NoiseVFTex : register(t2);
+SamplerState NoiseVFSamp : register(s2);
 
 float3 Vortex(float rotation, float attraction, float3 center, float3 axis, float3 position, float3x4 transform) {
     
@@ -59,7 +59,7 @@ void main(uint3 dtid : SV_DispatchThreadID)
         float4 colorStart = RandomColorRange(paramSeed, paramSet.ColorStart);
         float4 colorEnd = RandomColorRange(paramSeed, paramSet.ColorEnd);
 
-        float3 position = particle.Transform._m03_m13_m23;
+        float3 position = float3(particle.Transform[0].w, particle.Transform[1].w, particle.Transform[2].w);
         float3 velocity = UnpackFloat4(particle.Velocity).xyz;
 
         if (emitter.TrailSize > 0) {

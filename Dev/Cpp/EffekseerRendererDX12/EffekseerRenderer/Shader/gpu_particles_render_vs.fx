@@ -26,10 +26,14 @@ struct Emitter
     uint TrailHead;
     uint TrailSize;
     uint TrailPhase;
-    float TimeCount;
     uint NextEmitCount;
     uint TotalEmitCount;
     uint EmitPointCount;
+    float TimeCount;
+    float TimeStopped;
+    uint Reserved0;
+    uint Reserved1;
+    uint Reserved2;
     uint Color;
     row_major float3x4 Transform;
 };
@@ -111,7 +115,7 @@ cbuffer cb2 : register(b2)
     Emitter _153_emitter : packoffset(c0);
 };
 
-ByteAddressBuffer Particles : register(t8);
+ByteAddressBuffer Particles : register(t0);
 cbuffer cb1 : register(b1)
 {
     ParameterSet _223_paramSet : packoffset(c0);
@@ -122,7 +126,7 @@ cbuffer cb0 : register(b0)
     Constants _254_constants : packoffset(c0);
 };
 
-ByteAddressBuffer Trails : register(t9);
+ByteAddressBuffer Trails : register(t1);
 
 static float4 gl_Position;
 static int gl_VertexIndex;
@@ -224,7 +228,7 @@ VS_Output _main(VS_Input _input)
                     position = mul(_254_constants.YAxisBillboardMat, float4(position, 0.0f));
                 }
             }
-            position += int3(3, 3, 3);
+            position += float3(particle.Transform[0].w, particle.Transform[1].w, particle.Transform[2].w);
         }
         else
         {
@@ -241,7 +245,7 @@ VS_Output _main(VS_Input _input)
                     float3 trailDirection;
                     if ((_input.VertexID / 2u) == 0u)
                     {
-                        trailPosition = 3;
+                        trailPosition = float3(particle.Transform[0].w, particle.Transform[1].w, particle.Transform[2].w);
                         uint2 param = particle.Velocity;
                         trailDirection = normalize(UnpackFloat4(param).xyz);
                     }
@@ -250,12 +254,12 @@ VS_Output _main(VS_Input _input)
                         uint trailID = _153_emitter.TrailHead + (_input.InstanceID * _223_paramSet.ShapeData);
                         uint trailIndex = min((_input.VertexID / 2u), trailLength);
                         trailID += (((_223_paramSet.ShapeData + _153_emitter.TrailPhase) - trailIndex) % _223_paramSet.ShapeData);
-                        Trail _352;
-                        _352.Position = asfloat(Trails.Load3(trailID * 16 + 0));
-                        _352.Direction = Trails.Load(trailID * 16 + 12);
+                        Trail _364;
+                        _364.Position = asfloat(Trails.Load3(trailID * 16 + 0));
+                        _364.Direction = Trails.Load(trailID * 16 + 12);
                         Trail trail;
-                        trail.Position = _352.Position;
-                        trail.Direction = _352.Direction;
+                        trail.Position = _364.Position;
+                        trail.Direction = _364.Direction;
                         trailPosition = trail.Position;
                         uint param_1 = trail.Direction;
                         trailDirection = normalize(UnpackNormalizedFloat3(param_1));
@@ -269,8 +273,11 @@ VS_Output _main(VS_Input _input)
         }
         uint param_2 = particle.Color;
         color *= UnpackColor(param_2);
-        float3 _400 = color.xyz * _223_paramSet.Emissive;
-        color = float4(_400.x, _400.y, _400.z, color.w);
+        float4 _410 = color;
+        float3 _412 = _410.xyz * _223_paramSet.Emissive;
+        color.x = _412.x;
+        color.y = _412.y;
+        color.z = _412.z;
         _output.Pos = mul(_254_constants.ProjMat, mul(_254_constants.CameraMat, float4(position, 1.0f)));
         _output.UV = uv;
         _output.Color = color;

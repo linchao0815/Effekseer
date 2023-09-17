@@ -142,8 +142,8 @@
 //
 // Name                                 Type  Format         Dim Slot Elements
 // ------------------------------ ---------- ------- ----------- ---- --------
-// Particles                         texture  struct         r/o    8        1
-// Trails                            texture  struct         r/o    9        1
+// Particles                         texture  struct         r/o    0        1
+// Trails                            texture  struct         r/o    1        1
 // cb0                               cbuffer      NA          NA    0        1
 // cb1                               cbuffer      NA          NA    1        1
 // cb2                               cbuffer      NA          NA    2        1
@@ -177,8 +177,8 @@ dcl_globalFlags refactoringAllowed
 dcl_constantbuffer cb0[16], immediateIndexed
 dcl_constantbuffer cb1[16], immediateIndexed
 dcl_constantbuffer cb2[2], immediateIndexed
-dcl_resource_structured t8, 80 
-dcl_resource_structured t9, 16 
+dcl_resource_structured t0, 80 
+dcl_resource_structured t1, 16 
 dcl_input v0.xyz
 dcl_input v4.xy
 dcl_input v5.xyzw
@@ -189,13 +189,13 @@ dcl_output o1.xy
 dcl_output o2.xyzw
 dcl_temps 9
 iadd r0.x, cb2[0].z, v6.x
-ld_structured_indexable(structured_buffer, stride=80)(mixed,mixed,mixed,mixed) r0.y, r0.x, l(0), t8.xxxx
+ld_structured_indexable(structured_buffer, stride=80)(mixed,mixed,mixed,mixed) r0.y, r0.x, l(0), t0.xxxx
 and r0.z, r0.y, l(1)
 if_nz r0.z
-  ld_structured_indexable(structured_buffer, stride=80)(mixed,mixed,mixed,mixed) r1.xyz, r0.x, l(16), t8.xyzx
-  ld_structured_indexable(structured_buffer, stride=80)(mixed,mixed,mixed,mixed) r2.xyzw, r0.x, l(32), t8.xyzw
-  ld_structured_indexable(structured_buffer, stride=80)(mixed,mixed,mixed,mixed) r3.xyzw, r0.x, l(48), t8.xyzw
-  ld_structured_indexable(structured_buffer, stride=80)(mixed,mixed,mixed,mixed) r4.xyzw, r0.x, l(64), t8.xywz
+  ld_structured_indexable(structured_buffer, stride=80)(mixed,mixed,mixed,mixed) r1.xyz, r0.x, l(16), t0.xyzx
+  ld_structured_indexable(structured_buffer, stride=80)(mixed,mixed,mixed,mixed) r2.xyzw, r0.x, l(32), t0.xyzw
+  ld_structured_indexable(structured_buffer, stride=80)(mixed,mixed,mixed,mixed) r3.xyzw, r0.x, l(48), t0.xyzw
+  ld_structured_indexable(structured_buffer, stride=80)(mixed,mixed,mixed,mixed) r4.xyzw, r0.x, l(64), t0.xywz
   if_z cb1[14].y
     dp3 r5.x, r2.xyzx, v0.xyzx
     dp3 r5.y, r3.xyzx, v0.xyzx
@@ -240,7 +240,7 @@ if_nz r0.z
         iadd r2.x, r2.x, -r1.y
         udiv null, r2.x, r2.x, cb1[14].z
         iadd r1.x, r1.x, r2.x
-        ld_structured_indexable(structured_buffer, stride=16)(mixed,mixed,mixed,mixed) r7.xyzw, r1.x, l(0), t9.xyzw
+        ld_structured_indexable(structured_buffer, stride=16)(mixed,mixed,mixed,mixed) r7.xyzw, r1.x, l(0), t1.xyzw
         ushr r8.zw, r7.wwww, l(0, 0, 10, 20)
         mov r8.y, r7.w
         and r2.xyz, r8.yzwy, l(1023, 1023, 1023, 0)
@@ -301,10 +301,10 @@ ret
 
 const BYTE g_main[] =
 {
-     68,  88,  66,  67, 169, 254, 
-    210, 227,  13,  39,  88, 160, 
-     97,  98,  49,  69,  43, 171, 
-    193, 221,   1,   0,   0,   0, 
+     68,  88,  66,  67, 244, 124, 
+    117,  69, 146, 137,  12,  47, 
+     49,  59, 215, 113,  30, 124, 
+    216,  83,   1,   0,   0,   0, 
     128,  26,   0,   0,   5,   0, 
       0,   0,  52,   0,   0,   0, 
     240,  11,   0,   0, 244,  12, 
@@ -324,12 +324,12 @@ const BYTE g_main[] =
     220,   0,   0,   0,   5,   0, 
       0,   0,   6,   0,   0,   0, 
       1,   0,   0,   0,  80,   0, 
-      0,   0,   8,   0,   0,   0, 
+      0,   0,   0,   0,   0,   0, 
       1,   0,   0,   0,   1,   0, 
       0,   0, 230,   0,   0,   0, 
       5,   0,   0,   0,   6,   0, 
       0,   0,   1,   0,   0,   0, 
-     16,   0,   0,   0,   9,   0, 
+     16,   0,   0,   0,   1,   0, 
       0,   0,   1,   0,   0,   0, 
       1,   0,   0,   0, 237,   0, 
       0,   0,   0,   0,   0,   0, 
@@ -885,10 +885,10 @@ const BYTE g_main[] =
       0,   4,  70, 142,  32,   0, 
       2,   0,   0,   0,   2,   0, 
       0,   0, 162,   0,   0,   4, 
-      0, 112,  16,   0,   8,   0, 
+      0, 112,  16,   0,   0,   0, 
       0,   0,  80,   0,   0,   0, 
     162,   0,   0,   4,   0, 112, 
-     16,   0,   9,   0,   0,   0, 
+     16,   0,   1,   0,   0,   0, 
      16,   0,   0,   0,  95,   0, 
       0,   3, 114,  16,  16,   0, 
       0,   0,   0,   0,  95,   0, 
@@ -921,7 +921,7 @@ const BYTE g_main[] =
      16,   0,   0,   0,   0,   0, 
       1,  64,   0,   0,   0,   0, 
       0,   0,   6, 112,  16,   0, 
-      8,   0,   0,   0,   1,   0, 
+      0,   0,   0,   0,   1,   0, 
       0,   7,  66,   0,  16,   0, 
       0,   0,   0,   0,  26,   0, 
      16,   0,   0,   0,   0,   0, 
@@ -935,21 +935,21 @@ const BYTE g_main[] =
      16,   0,   0,   0,   0,   0, 
       1,  64,   0,   0,  16,   0, 
       0,   0,  70, 114,  16,   0, 
-      8,   0,   0,   0, 167,   0, 
+      0,   0,   0,   0, 167,   0, 
       0, 139,   2, 131,   2, 128, 
     131, 153,  25,   0, 242,   0, 
      16,   0,   2,   0,   0,   0, 
      10,   0,  16,   0,   0,   0, 
       0,   0,   1,  64,   0,   0, 
      32,   0,   0,   0,  70, 126, 
-     16,   0,   8,   0,   0,   0, 
+     16,   0,   0,   0,   0,   0, 
     167,   0,   0, 139,   2, 131, 
       2, 128, 131, 153,  25,   0, 
     242,   0,  16,   0,   3,   0, 
       0,   0,  10,   0,  16,   0, 
       0,   0,   0,   0,   1,  64, 
       0,   0,  48,   0,   0,   0, 
-     70, 126,  16,   0,   8,   0, 
+     70, 126,  16,   0,   0,   0, 
       0,   0, 167,   0,   0, 139, 
       2, 131,   2, 128, 131, 153, 
      25,   0, 242,   0,  16,   0, 
@@ -957,7 +957,7 @@ const BYTE g_main[] =
      16,   0,   0,   0,   0,   0, 
       1,  64,   0,   0,  64,   0, 
       0,   0,  70, 123,  16,   0, 
-      8,   0,   0,   0,  31,   0, 
+      0,   0,   0,   0,  31,   0, 
       0,   4,  26, 128,  32,   0, 
       1,   0,   0,   0,  14,   0, 
       0,   0,  16,   0,   0,   7, 
@@ -1159,7 +1159,7 @@ const BYTE g_main[] =
       0,   0,  10,   0,  16,   0, 
       1,   0,   0,   0,   1,  64, 
       0,   0,   0,   0,   0,   0, 
-     70, 126,  16,   0,   9,   0, 
+     70, 126,  16,   0,   1,   0, 
       0,   0,  85,   0,   0,  10, 
     194,   0,  16,   0,   8,   0, 
       0,   0, 246,  15,  16,   0, 

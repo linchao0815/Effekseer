@@ -1,9 +1,9 @@
 #include "gpu_particles_common.h"
 
-Texture2D<float4> ColorTex : register(t0);
-SamplerState ColorSamp : register(s0);
-Texture2D<float4> NormalTex : register(t1);
-SamplerState NormalSamp : register(s1);
+Texture2D<float4> ColorTex : register(t2);
+SamplerState ColorSamp : register(s2);
+Texture2D<float4> NormalTex : register(t3);
+SamplerState NormalSamp : register(s3);
 
 struct PS_Input
 {
@@ -14,5 +14,5 @@ struct PS_Input
 
 float4 main(const PS_Input input) : SV_Target
 {
-    return input.Color * ColorTex.Sample(NormalSamp, input.UV);
+    return input.Color * ColorTex.Sample(ColorSamp, input.UV);
 }
