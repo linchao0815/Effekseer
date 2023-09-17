@@ -1,7 +1,10 @@
 ﻿// Choose from the following graphics APIs you want to enable
 // グラフィックスAPIを下記から選んで有効にしてください
 //#define DEVICE_OPENGL
-#define DEVICE_DX12
+//#define DEVICE_DX11
+//#define DEVICE_DX12
+#define DEVICE_VULKAN
+//#define DEVICE_METAL
 
 #include <stdio.h>
 #include <string>
@@ -14,6 +17,10 @@
 #include "../DirectX11/DeviceDX11.h"
 #elif defined(DEVICE_DX12)
 #include "../DirectX12/DeviceDX12.h"
+#elif defined(DEVICE_VULKAN)
+#include "../Vulkan/DeviceVulkan.h"
+#elif defined(DEVICE_METAL)
+#include "../Metal/DeviceMetal.h"
 #endif
 
 const Utils::Vec2I screenSize = {1280, 720};
@@ -29,6 +36,12 @@ int main(int argc, char** argv)
 #elif defined(DEVICE_DX12)
 	DeviceDX12 device;
 	device.Initialize("GPU Particles (DirectX12)", screenSize);
+#elif defined(DEVICE_VULKAN)
+	DeviceVulkan device;
+	device.Initialize("GPU Particles (Vulkan)", screenSize);
+#elif defined(DEVICE_METAL)
+	DeviceMetal device;
+	device.Initialize("GPU Particles (Metal)", screenSize);
 #endif
 
 	// Create a manager of effects
@@ -69,9 +82,9 @@ int main(int argc, char** argv)
 		{
 			// Press the "Space" key
 			// スペースキーを押す
-			if (Utils::Input::IsKeyPressed(' '))
-			{
-			}
+			//if (Utils::Input::IsKeyPressed(' '))
+			//{
+			//}
 		}
 		else
 		{
@@ -79,6 +92,10 @@ int main(int argc, char** argv)
 			// エフェクトの再生
 			handle = efkManager->Play(effect, 0, 0, 0);
 		}
+
+		// Begin to compute pass
+		// 計算パスの開始
+		device.BeginComputePass();
 
 		// Set layer parameters
 		// レイヤーパラメータの設定
@@ -91,9 +108,13 @@ int main(int argc, char** argv)
 		Effekseer::Manager::UpdateParameter updateParameter;
 		efkManager->Update(updateParameter);
 
-		// Clear render target buffer
-		// レンダリングターゲットをクリア
-		device.ClearScreen();
+		// Finish to compute pass
+		// 計算パスの終了
+		device.EndComputePass();
+
+		// Begin to rendering pass
+		// 描画パスの開始
+		device.BeginRenderPass();
 
 		// Update a time
 		// 時間を更新する
@@ -122,6 +143,10 @@ int main(int argc, char** argv)
 		// Finish to rendering effects
 		// エフェクトの描画終了処理を行う。
 		efkRenderer->EndRendering();
+
+		// Finish to rendering pass
+		// 描画パスの終了
+		device.EndRenderPass();
 
 		// Update the display
 		// ディスプレイを更新

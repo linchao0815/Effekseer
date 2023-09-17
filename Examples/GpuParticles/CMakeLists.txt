@@ -2,11 +2,23 @@
 
 project(Example_GpuParticles)
 
+if (BUILD_VULKAN)
+    find_package(Vulkan REQUIRED)
+endif ()
+
 set (DEVICE_SRC_FILES ../OpenGL/DeviceGLFW.cpp ../OpenGL/DeviceGLFW.h)
 
 if (WIN32)
     list (APPEND DEVICE_SRC_FILES ../DirectX11/DeviceDX11.cpp ../DirectX11/DeviceDX11.h)
     list (APPEND DEVICE_SRC_FILES ../DirectX12/DeviceDX12.cpp ../DirectX12/DeviceDX12.h)
+endif ()
+
+if (BUILD_VULKAN)
+    list (APPEND DEVICE_SRC_FILES ../Vulkan/DeviceVulkan.cpp ../Vulkan/DeviceVulkan.h)
+endif ()
+
+if (BUILD_METAL)
+    list (APPEND DEVICE_SRC_FILES ../Metal/DeviceMetal.cpp ../Vulkan/DeviceMetal.h)
 endif ()
 
 add_executable(${PROJECT_NAME} main.cpp ${DEVICE_SRC_FILES})
@@ -25,6 +37,14 @@ if (WIN32)
         ${EFK_RUNTIME_ROOT}/EffekseerRendererDX12
         ${EFK_RUNTIME_ROOT}/EffekseerSoundXAudio2
     )
+endif ()
+
+if (BUILD_VULKAN)
+    list (APPEND MODULE_INCLUDE_PATHS ${Vulkan_INCLUDE_DIR} ${EFK_RUNTIME_ROOT}/EffekseerRendererVulkan)
+endif ()
+
+if (BUILD_METAL)
+    list (APPEND MODULE_INCLUDE_PATHS ${EFK_RUNTIME_ROOT}/EffekseerRendererMetal)
 endif ()
 
 target_include_directories(
@@ -52,6 +72,22 @@ if (WIN32)
     list (APPEND MODULE_LIBRARIES EffekseerRendererDX11)
     list (APPEND MODULE_LIBRARIES EffekseerRendererDX12)
     list (APPEND MODULE_LIBRARIES EffekseerSoundXAudio2)
+endif ()
+
+if (BUILD_VULKAN)
+    list (APPEND MODULE_LIBRARIES
+        ${Vulkan_LIBRARIES}
+        glslang
+        glslang-default-resource-limits
+        SPIRV
+        OGLCompiler
+        OSDependent
+        EffekseerRendererVulkan
+    )
+endif ()
+
+if (BUILD_METAL)
+    list (APPEND MODULE_LIBRARIES EffekseerRendererMetal)
 endif ()
 
 target_link_libraries(

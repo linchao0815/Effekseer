@@ -74,10 +74,6 @@ void DeviceDX12::Terminate()
 	CoUninitialize();
 }
 
-void DeviceDX12::ClearScreen()
-{
-}
-
 bool DeviceDX12::NewFrame()
 {
 	if (!platform->NewFrame())
@@ -87,18 +83,11 @@ bool DeviceDX12::NewFrame()
 
 	commandList = commandListPool->Get();
 
-	LLGI::Color8 color;
-	color.R = 0;
-	color.G = 0;
-	color.B = 0;
-	color.A = 255;
-
-	commandList->Begin();
-	commandList->BeginRenderPass(platform->GetCurrentScreen(color, true, false)); // TODO: isDepthClear is false, because it fails with dx12.
-
 	// Call on starting of a frame
 	// フレームの開始時に呼ぶ
 	efkMemoryPool->NewFrame();
+
+	commandList->Begin();
 
 	// Begin a command list
 	// コマンドリストを開始する。
@@ -108,6 +97,28 @@ bool DeviceDX12::NewFrame()
 	return true;
 }
 
+void DeviceDX12::BeginComputePass()
+{
+	commandList->BeginComputePass();
+}
+
+void DeviceDX12::EndComputePass()
+{
+	commandList->EndComputePass();
+}
+
+void DeviceDX12::BeginRenderPass()
+{
+	// TODO: isDepthClear is false, because it fails with dx12.
+	LLGI::Color8 color{0, 0, 0, 255};
+	commandList->BeginRenderPass(platform->GetCurrentScreen(color, true, false));
+}
+
+void DeviceDX12::EndRenderPass()
+{
+	commandList->EndRenderPass();
+}
+
 void DeviceDX12::PresentDevice()
 {
 	// Finish a command list
@@ -115,7 +126,6 @@ void DeviceDX12::PresentDevice()
 	efkRenderer->SetCommandList(nullptr);
 	EffekseerRendererDX12::EndCommandList(efkCommandList);
 
-	commandList->EndRenderPass();
 	commandList->End();
 
 	graphics->Execute(commandList);

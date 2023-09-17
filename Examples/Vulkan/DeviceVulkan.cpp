@@ -59,10 +59,6 @@ void DeviceVulkan::Terminate()
 	window.reset();
 }
 
-void DeviceVulkan::ClearScreen()
-{
-}
-
 bool DeviceVulkan::NewFrame()
 {
 	if (!platform->NewFrame())
@@ -72,18 +68,11 @@ bool DeviceVulkan::NewFrame()
 
 	commandList = commandListPool->Get();
 
-	LLGI::Color8 color;
-	color.R = 0;
-	color.G = 0;
-	color.B = 0;
-	color.A = 255;
-
-	commandList->Begin();
-	commandList->BeginRenderPass(platform->GetCurrentScreen(color, true, true));
-
 	// Call on starting of a frame
 	// フレームの開始時に呼ぶ
 	efkMemoryPool->NewFrame();
+
+	commandList->Begin();
 
 	// Begin a command list
 	// コマンドリストを開始する。
@@ -93,6 +82,27 @@ bool DeviceVulkan::NewFrame()
 	return true;
 }
 
+void DeviceVulkan::BeginComputePass()
+{
+	commandList->BeginComputePass();
+}
+
+void DeviceVulkan::EndComputePass()
+{
+	commandList->EndComputePass();
+}
+
+void DeviceVulkan::BeginRenderPass()
+{
+	LLGI::Color8 color{0, 0, 0, 255};
+	commandList->BeginRenderPass(platform->GetCurrentScreen(color, true, false));
+}
+
+void DeviceVulkan::EndRenderPass()
+{
+	commandList->EndRenderPass();
+}
+
 void DeviceVulkan::PresentDevice()
 {
 	// Finish a command list
@@ -100,7 +110,6 @@ void DeviceVulkan::PresentDevice()
 	efkRenderer->SetCommandList(nullptr);
 	EffekseerRendererVulkan::EndCommandList(efkCommandList);
 
-	commandList->EndRenderPass();
 	commandList->End();
 
 	graphics->Execute(commandList);

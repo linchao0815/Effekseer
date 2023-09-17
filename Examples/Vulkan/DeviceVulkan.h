@@ -65,8 +65,11 @@ public:
 
 	bool Initialize(const char* windowTitle, Utils::Vec2I windowSize);
 	void Terminate();
-	void ClearScreen();
 	bool NewFrame();
+	void BeginComputePass();
+	void EndComputePass();
+	void BeginRenderPass();
+	void EndRenderPass();
 	void PresentDevice();
 
 	void SetupEffekseerModules(::Effekseer::ManagerRef efkManager);
