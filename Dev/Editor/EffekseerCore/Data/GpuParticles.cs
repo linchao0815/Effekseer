@@ -117,17 +117,58 @@ namespace Effekseer.Data
 
 		public class ScaleParams
 		{
-			[Key(key = "GpuParticles_Scale_InitialSingleScale")]
-			public Value.FloatWithRandom InitialSingleScale { get; private set; } = new Value.FloatWithRandom(1.0f);
+			public enum ParamaterType
+			{
+				[Key(key = "Scale_ParamaterType_Fixed")]
+				Fixed = 0,
+				//[Key(key = "Scale_ParamaterType_PVA")]
+				//PVA = 1,
+				[Key(key = "Scale_ParamaterType_Easing")]
+				Easing = 2,
+			}
 
-			[Key(key = "GpuParticles_Scale_InitialXYZScale")]
-			public Value.Vector3DWithRandom InitialXYZScale { get; private set; } = new Value.Vector3DWithRandom(1.0f, 1.0f, 1.0f);
+			[Selector(ID = 0)]
+			[Key(key = "GpuParticles_Scale_Type")]
+			public Value.Enum<ParamaterType> Type { get; private set; } = new();
 
-			[Key(key = "GpuParticles_Scale_TerminalSingleScale")]
-			public Value.FloatWithRandom TerminalSingleScale { get; private set; } = new Value.FloatWithRandom(1.0f);
+			public class FixedParams
+			{
+				[Key(key = "GpuParticles_Scale_SingleScale")]
+				public Value.FloatWithRandom SingleScale { get; private set; } = new(1.0f);
 
-			[Key(key = "GpuParticles_Scale_TerminalXYZScale")]
-			public Value.Vector3DWithRandom TerminalXYZScale { get; private set; } = new Value.Vector3DWithRandom(1.0f, 1.0f, 1.0f);
+				[Key(key = "GpuParticles_Scale_XYZScale")]
+				public Value.Vector3DWithRandom XYZScale { get; private set; } = new(1.0f, 1.0f, 1.0f);
+
+			}
+			
+			[IO(Export = true)]
+			[Selected(ID = 0, Value = 0)]
+			public FixedParams Fixed { get; private set; } = new();
+
+			public class EasingParams
+			{
+				[Key(key = "GpuParticles_Scale_InitialSingleScale")]
+				public Value.FloatWithRandom InitialSingleScale { get; private set; } = new(1.0f);
+
+				[Key(key = "GpuParticles_Scale_InitialXYZScale")]
+				public Value.Vector3DWithRandom InitialXYZScale { get; private set; } = new(1.0f, 1.0f, 1.0f);
+
+				[Key(key = "GpuParticles_Scale_TerminalSingleScale")]
+				public Value.FloatWithRandom TerminalSingleScale { get; private set; } = new(1.0f);
+
+				[Key(key = "GpuParticles_Scale_TerminalXYZScale")]
+				public Value.Vector3DWithRandom TerminalXYZScale { get; private set; } = new(1.0f, 1.0f, 1.0f);
+
+				[Key(key = "Easing_StartSpeed")]
+				public Value.Enum<EasingStart> StartSpeed { get; private set; } = new();
+
+				[Key(key = "Easing_EndSpeed")]
+				public Value.Enum<EasingEnd> EndSpeed { get; private set; } = new();
+			}
+
+			[IO(Export = true)]
+			[Selected(ID = 0, Value = 2)]
+			public EasingParams Easing { get; private set; } = new();
 		}
 
 		public class ForceParams

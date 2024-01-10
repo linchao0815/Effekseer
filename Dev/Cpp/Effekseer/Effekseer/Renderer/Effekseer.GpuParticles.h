@@ -112,8 +112,11 @@ public:
 
 		std::array<float4, 2> InitialAngle;
 		std::array<float4, 2> TargetAngle;
-		std::array<float4, 2> InitialScale;
-		std::array<float4, 2> TargetScale;
+
+		std::array<float4, 2> ScaleData1;
+		std::array<float4, 2> ScaleData2;
+		float3 ScaleEasing;
+		uint32_t ScaleFlags;
 
 		float3 Gravity;
 		float Padding2;

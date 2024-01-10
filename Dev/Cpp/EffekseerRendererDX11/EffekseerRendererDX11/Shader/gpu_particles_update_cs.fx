@@ -48,8 +48,6 @@ void main(uint3 dtid : SV_DispatchThreadID)
         float damping = RandomFloatRange(seed, paramSet.Damping) * 0.01;
         float4 initialAngle = RandomFloat4Range(seed, paramSet.InitialAngle);
         float4 angularVelocity = RandomFloat4Range(seed, paramSet.TargetAngle);
-        float4 initialScale = RandomFloat4Range(seed, paramSet.InitialScale);
-        float4 terminalScale = RandomFloat4Range(seed, paramSet.TargetScale);
 
         float3 position = particle.Transform[3];
         float3 velocity = UnpackFloat4(particle.Velocity).xyz;
@@ -102,7 +100,15 @@ void main(uint3 dtid : SV_DispatchThreadID)
         float3 rotation = initialAngle.xyz + angularVelocity.xyz * particle.LifeAge;
         
         // Scale (XYZ+Single)
-        float4 scale = lerp(initialScale, terminalScale, lifeRatio);
+        float4 scale = float4(1.0f, 1.0f, 1.0f, 1.0f);
+        uint scaleMode = paramSet.ScaleFlags & 0x07;
+        if (scaleMode == 0) {
+            scale = RandomFloat4Range(seed, paramSet.ScaleData1);
+        } else if (scaleMode == 2) {
+            float4 scale1 = RandomFloat4Range(seed, paramSet.ScaleData1);
+            float4 scale2 = RandomFloat4Range(seed, paramSet.ScaleData2);
+            scale = lerp(scale1, scale2, EasingSpeed(lifeRatio, paramSet.ScaleEasing));
+        }
 
         // Color
         uint colorMode = paramSet.ColorFlags & 0x07;

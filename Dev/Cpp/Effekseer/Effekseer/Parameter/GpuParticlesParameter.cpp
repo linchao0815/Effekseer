@@ -81,22 +81,37 @@ GpuParticles::ParameterSet LoadGpuParticlesParameter(uint8_t*& pos, int32_t vers
 		paramSet.TargetAngle[i].w = 0.0f;
 	}
 
-	memcpy(&paramSet.InitialScale[0].w, pos, sizeof(float));
-	pos += sizeof(float);
-	memcpy(&paramSet.InitialScale[1].w, pos, sizeof(float));
-	pos += sizeof(float);
-	memcpy(&paramSet.InitialScale[0], pos, sizeof(Vector3D));
-	pos += sizeof(Vector3D);
-	memcpy(&paramSet.InitialScale[1], pos, sizeof(Vector3D));
-	pos += sizeof(Vector3D);
-	memcpy(&paramSet.TargetScale[0].w, pos, sizeof(float));
-	pos += sizeof(float);
-	memcpy(&paramSet.TargetScale[1].w, pos, sizeof(float));
-	pos += sizeof(float);
-	memcpy(&paramSet.TargetScale[0], pos, sizeof(Vector3D));
-	pos += sizeof(Vector3D);
-	memcpy(&paramSet.TargetScale[1], pos, sizeof(Vector3D));
-	pos += sizeof(Vector3D);
+	memcpy(&paramSet.ScaleFlags, pos, sizeof(uint32_t));
+	pos += sizeof(uint32_t);
+
+	uint32_t scaleMode = paramSet.ScaleFlags & 0x07;
+	if (scaleMode >= 0)
+	{
+		memcpy(&paramSet.ScaleData1[0].w, pos, sizeof(float));
+		pos += sizeof(float);
+		memcpy(&paramSet.ScaleData1[1].w, pos, sizeof(float));
+		pos += sizeof(float);
+		memcpy(&paramSet.ScaleData1[0], pos, sizeof(Vector3D));
+		pos += sizeof(Vector3D);
+		memcpy(&paramSet.ScaleData1[1], pos, sizeof(Vector3D));
+		pos += sizeof(Vector3D);
+	}
+	if (scaleMode >= 1)
+	{
+		memcpy(&paramSet.ScaleData2[0].w, pos, sizeof(float));
+		pos += sizeof(float);
+		memcpy(&paramSet.ScaleData2[1].w, pos, sizeof(float));
+		pos += sizeof(float);
+		memcpy(&paramSet.ScaleData2[0], pos, sizeof(Vector3D));
+		pos += sizeof(Vector3D);
+		memcpy(&paramSet.ScaleData2[1], pos, sizeof(Vector3D));
+		pos += sizeof(Vector3D);
+	}
+	if (scaleMode >= 2)
+	{
+		memcpy(&paramSet.ScaleEasing, pos, sizeof(float) * 3);
+		pos += sizeof(float) * 3;
+	}
 
 	memcpy(&paramSet.Gravity, pos, sizeof(Vector3D));
 	pos += sizeof(Vector3D);

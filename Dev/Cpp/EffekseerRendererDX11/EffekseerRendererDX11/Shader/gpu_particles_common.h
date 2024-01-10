@@ -18,8 +18,11 @@ struct ParameterSet
 
     float4 InitialAngle[2];
     float4 TargetAngle[2];
-    float4 InitialScale[2];
-    float4 TargetScale[2];
+
+    float4 ScaleData1[2];
+    float4 ScaleData2[2];
+    float3 ScaleEasing;
+    uint ScaleFlags;
 
     float3 Gravity;
     uint Padding2;

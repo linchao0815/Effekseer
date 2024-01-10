@@ -8,6 +8,7 @@ using Effekseer.Utils;
 using Microsoft.Scripting.Utils;
 using static IronPython.Modules._ast;
 using static Effekseer.InternalScript.SSAGenerator;
+using static Effekseer.Data.GpuParticlesValues.ScaleParams;
 
 namespace Effekseer.Binary
 {
@@ -63,10 +64,22 @@ namespace Effekseer.Binary
 			data.Add(value.Rotation.InitialAngle.GetBytes());
 			data.Add(value.Rotation.AngularVelocity.GetBytes());
 
-			data.Add(value.Scale.InitialSingleScale.GetBytes());
-			data.Add(value.Scale.InitialXYZScale.GetBytes());
-			data.Add(value.Scale.TerminalSingleScale.GetBytes());
-			data.Add(value.Scale.TerminalXYZScale.GetBytes());
+			// ScaleParams
+			data.Add(value.Scale.Type.GetBytes());
+			switch (value.Scale.Type.Value)
+			{
+				case ParamaterType.Fixed:
+					data.Add(value.Scale.Fixed.SingleScale.GetBytes());
+					data.Add(value.Scale.Fixed.XYZScale.GetBytes());
+					break;
+				case ParamaterType.Easing:
+					data.Add(value.Scale.Easing.InitialSingleScale.GetBytes());
+					data.Add(value.Scale.Easing.InitialXYZScale.GetBytes());
+					data.Add(value.Scale.Easing.TerminalSingleScale.GetBytes());
+					data.Add(value.Scale.Easing.TerminalXYZScale.GetBytes());
+					AddEasing(data, value.Scale.Easing.StartSpeed, value.Scale.Easing.EndSpeed);
+					break;
+			}
 
 			data.Add(value.Force.Gravity.GetBytes(1.0f / 60.0f));
 			data.Add(value.Force.Vortex.Rotation.GetBytes(1.0f / 60.0f));
