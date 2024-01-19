@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\Config.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\Graphics\efkMat.Graphics.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\effekseerMaterialEditor.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\efkMat.Editor.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\ThirdParty\imgui_main\imgui.cpp">
+      <Filter>ThirdParty\imgui_main</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\ThirdParty\imgui_main\imgui_draw.cpp">
+      <Filter>ThirdParty\imgui_main</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\ThirdParty\imgui_main\imgui_widgets.cpp">
+      <Filter>ThirdParty\imgui_main</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\ThirdParty\imgui_platform\imgui_impl_glfw.cpp">
+      <Filter>ThirdParty\imgui_platform</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\ThirdParty\imgui_platform\imgui_impl_opengl3.cpp">
+      <Filter>ThirdParty\imgui_platform</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\ThirdParty\NodeEditor\Source\crude_json.cpp">
+      <Filter>ThirdParty\NodeEditor\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\ThirdParty\NodeEditor\Source\imgui_canvas.cpp">
+      <Filter>ThirdParty\NodeEditor\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\ThirdParty\NodeEditor\Source\imgui_node_editor.cpp">
+      <Filter>ThirdParty\NodeEditor\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\ThirdParty\NodeEditor\Source\imgui_node_editor_api.cpp">
+      <Filter>ThirdParty\NodeEditor\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\ThirdParty\nfd\nfd_common.c">
+      <Filter>ThirdParty\nfd</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\ThirdParty\nfd\nfd_win.cpp">
+      <Filter>ThirdParty\nfd</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\Config.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\Dialog\Dialog.h">
+      <Filter>Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\Graphics\efkMat.Graphics.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\efkMat.Editor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialEditor\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Dialog">
+      <UniqueIdentifier>{D4409DAE-23F9-3E42-BA8B-99CCA4DE7D52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{E6401284-69E3-3F57-BF36-E773490362FA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{2E5D8681-4035-3226-AFB7-DA273EDAE899}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\NodeEditor">
+      <UniqueIdentifier>{F5F19C7E-550A-38BC-917D-0DF36C27D07C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\NodeEditor\Source">
+      <UniqueIdentifier>{602C207E-27FC-36E4-A831-4FDD6F6AABE4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\imgui_main">
+      <UniqueIdentifier>{AE22BFCA-0465-3012-B5DB-7E25DAFE080D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\imgui_platform">
+      <UniqueIdentifier>{57AE052B-8C69-30FD-B9D3-E164E980466B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\nfd">
+      <UniqueIdentifier>{3C4F2AA8-A649-32FC-95EA-F2210BDBDAEC}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

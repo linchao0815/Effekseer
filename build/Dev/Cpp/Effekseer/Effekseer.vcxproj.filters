@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Client.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Color.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.DefaultEffectLoader.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.DefaultFile.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Effect.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNode.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeModel.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeRibbon.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeRing.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeRoot.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeSprite.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeTrack.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.FCurves.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Instance.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceChunk.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceContainer.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceGlobal.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceGroup.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InternalScript.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Manager.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Matrix43.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Matrix44.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.RectF.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Setting.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Server.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Socket.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Vector2D.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Vector3D.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.Grid.cpp">
+      <Filter>Effekseer\Culling</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.Layer.cpp">
+      <Filter>Effekseer\Culling</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.Matrix44.cpp">
+      <Filter>Effekseer\Culling</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.ObjectInternal.cpp">
+      <Filter>Effekseer\Culling</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.ReferenceObject.cpp">
+      <Filter>Effekseer\Culling</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.Vector3DF.cpp">
+      <Filter>Effekseer\Culling</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.WorldInternal.cpp">
+      <Filter>Effekseer\Culling</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Material\Effekseer.Material.cpp">
+      <Filter>Effekseer\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Material\Effekseer.CompiledMaterial.cpp">
+      <Filter>Effekseer\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Material\Effekseer.MaterialCompiler.cpp">
+      <Filter>Effekseer\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\IO\Effekseer.EfkEfcFactory.cpp">
+      <Filter>Effekseer\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Parameter\Effekseer.Parameters.cpp">
+      <Filter>Effekseer\Parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Utils\Effekseer.CustomAllocator.cpp">
+      <Filter>Effekseer\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\SIMD\Effekseer.Mat43f.cpp">
+      <Filter>Effekseer\SIMD</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\SIMD\Effekseer.Mat44f.cpp">
+      <Filter>Effekseer\SIMD</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\SIMD\Effekseer.SIMDUtils.cpp">
+      <Filter>Effekseer\SIMD</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Noise\CurlNoise.cpp">
+      <Filter>Effekseer\Noise</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Noise\PerlinNoise.cpp">
+      <Filter>Effekseer\Noise</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer.Internal.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.Grid.h">
+      <Filter>Effekseer\Culling</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.Layer.h">
+      <Filter>Effekseer\Culling</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.ObjectInternal.h">
+      <Filter>Effekseer\Culling</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.ReferenceObject.h">
+      <Filter>Effekseer\Culling</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.WorldInternal.h">
+      <Filter>Effekseer\Culling</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.h">
+      <Filter>Effekseer\Culling</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Base.Pre.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Base.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Client.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.ClientImplemented.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Color.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.DefaultEffectLoader.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.DefaultFile.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Effect.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectImplemented.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectLoader.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNode.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeModel.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeRibbon.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeRing.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeRoot.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeSprite.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeTrack.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.FCurves.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.File.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Instance.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceChunk.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceContainer.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceGlobal.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceGroup.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InternalScript.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InternalStruct.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.IntrusiveList.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Manager.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.ManagerImplemented.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.MaterialLoader.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Math.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Matrix43.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Matrix44.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Model.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.ModelLoader.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.RectF.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Server.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.ServerImplemented.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Setting.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Socket.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.SoundLoader.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.TextureLoader.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Vector2D.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Vector3D.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\IO\Effekseer.EfkEfcFactory.h">
+      <Filter>Effekseer\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Material\Effekseer.CompiledMaterial.h">
+      <Filter>Effekseer\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Material\Effekseer.Material.h">
+      <Filter>Effekseer\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Material\Effekseer.MaterialCompiler.h">
+      <Filter>Effekseer\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Noise\CurlNoise.h">
+      <Filter>Effekseer\Noise</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Noise\PerlinNoise.h">
+      <Filter>Effekseer\Noise</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Parameter\Effekseer.Parameters.h">
+      <Filter>Effekseer\Parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Renderer\Effekseer.ModelRenderer.h">
+      <Filter>Effekseer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Renderer\Effekseer.ParticleRenderer.h">
+      <Filter>Effekseer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Renderer\Effekseer.RibbonRenderer.h">
+      <Filter>Effekseer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Renderer\Effekseer.RingRenderer.h">
+      <Filter>Effekseer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Renderer\Effekseer.SpriteRenderer.h">
+      <Filter>Effekseer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Renderer\Effekseer.TrackRenderer.h">
+      <Filter>Effekseer\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Utils\Effekseer.BinaryReader.h">
+      <Filter>Effekseer\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Utils\Effekseer.CustomAllocator.h">
+      <Filter>Effekseer\Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Effekseer">
+      <UniqueIdentifier>{A2F9A126-0520-3307-BEA2-58DAB5E8F886}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effekseer\Culling">
+      <UniqueIdentifier>{FC6F602D-0F1A-3481-8E2F-03B686B5CFA4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effekseer\IO">
+      <UniqueIdentifier>{2AC53668-60A8-36FF-A889-084149AC9BBA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effekseer\Material">
+      <UniqueIdentifier>{D271E8D5-2BBA-322B-94A4-93AF90810270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effekseer\Noise">
+      <UniqueIdentifier>{EDDCE185-4B7B-31B4-A345-D47A6D496E85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effekseer\Parameter">
+      <UniqueIdentifier>{418728DE-993D-3CC8-8BB2-710E5AB4EC69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effekseer\Renderer">
+      <UniqueIdentifier>{987CDD4F-F51C-3CB5-92CA-65CBFC94E813}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effekseer\SIMD">
+      <UniqueIdentifier>{D5FD1742-6DF1-3F0A-9A2E-5D1A07C6E7E1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effekseer\Utils">
+      <UniqueIdentifier>{F404C45D-A55E-3358-A5DF-C317523034F6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

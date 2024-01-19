@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.CommonUtils.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DDSTextureLoader.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DXTK.DDSTextureLoader.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.IndexBufferBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.ModelRendererBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.PngTextureLoader.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RenderStateBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer_Impl.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RibbonRendererBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RingRendererBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.SpriteRendererBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TrackRendererBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.VertexBufferBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.DeviceObject.cpp">
+      <Filter>EffekseerRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.IndexBuffer.cpp">
+      <Filter>EffekseerRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.MaterialLoader.cpp">
+      <Filter>EffekseerRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.ModelLoader.cpp">
+      <Filter>EffekseerRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.ModelRenderer.cpp">
+      <Filter>EffekseerRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.RenderState.cpp">
+      <Filter>EffekseerRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.Renderer.cpp">
+      <Filter>EffekseerRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.Shader.cpp">
+      <Filter>EffekseerRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.TextureLoader.cpp">
+      <Filter>EffekseerRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.VertexBuffer.cpp">
+      <Filter>EffekseerRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialCompiler\DirectX9\EffekseerMaterialCompilerDX9.cpp">
+      <Filter>..\EffekseerMaterialCompiler\DirectX9</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.CommonUtils.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DDSTextureLoader.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DXTK.DDSTextureLoader.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DXTK.dds.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.IndexBufferBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.ModelRendererBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.PngTextureLoader.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RenderStateBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer_Impl.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RibbonRendererBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RingRendererBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.ShaderBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.SpriteRendererBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.StandardRenderer.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TrackRendererBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.VertexBufferBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.Base.Pre.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.Base.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.DeviceObject.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.IndexBuffer.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.MaterialLoader.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.ModelLoader.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.ModelRenderer.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.RenderState.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.Renderer.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.RendererImplemented.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.Shader.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.TextureLoader.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\EffekseerRendererDX9.VertexBuffer.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderDistortionTexture_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderDistortion_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderDistortion_VS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLightingNormal_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLightingNormal_VS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLightingTextureNormal_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLightingTextureNormal_VS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLightingTexture_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLightingTexture_VS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLighting_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLighting_VS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderTexture_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderTexture_VS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.Shader_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.Shader_VS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.StandardNoTexture_Distortion_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.StandardNoTexture_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.Standard_Distortion_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.Standard_Distortion_VS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.Standard_Lighting_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.Standard_Lighting_VS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.Standard_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.Standard_VS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.ToolNoTexture_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.Tool_PS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRenderer\Shader\EffekseerRenderer.Tool_VS.h">
+      <Filter>EffekseerRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\EffekseerRendererDX9.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialCompiler\DirectX9\EffekseerMaterialCompilerDX9.h">
+      <Filter>..\EffekseerMaterialCompiler\DirectX9</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX9\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="..">
+      <UniqueIdentifier>{B66CBBCB-B957-3A76-BC30-62A0EC4F016B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\EffekseerMaterialCompiler">
+      <UniqueIdentifier>{30D74726-9DAA-3EAC-AEE3-C7FFEE2255EC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\EffekseerMaterialCompiler\DirectX9">
+      <UniqueIdentifier>{94F3110C-91AD-35BB-8B2A-6860E1D544DD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EffekseerRenderer">
+      <UniqueIdentifier>{A1808AC8-B391-3A5C-8DAF-26D158C3C471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EffekseerRendererCommon">
+      <UniqueIdentifier>{041BBC07-2AC3-37CA-8CFD-4665FA4FDEFF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EffekseerRenderer\Shader">
+      <UniqueIdentifier>{52AD1F92-F7B9-350D-A0B8-8F83943294AC}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,9 @@
+libdir=S:/ArtTool/Effekseer_1.51/build/ThirdParty/Install/libgd/lib
+includedir=S:/ArtTool/Effekseer_1.51/build/ThirdParty/Install/libgd/include
+
+Name: gd
+Description: GD graphics library
+Version: ..
+Cflags: -I${includedir}
+Libs.private: optimized;S:/ArtTool/Effekseer_1.51/build/ThirdParty/Install/zlib/lib/zlib.lib;debug;S:/ArtTool/Effekseer_1.51/build/ThirdParty/Install/zlib/lib/zlibd.lib
+Libs: -L${libdir} -lgd

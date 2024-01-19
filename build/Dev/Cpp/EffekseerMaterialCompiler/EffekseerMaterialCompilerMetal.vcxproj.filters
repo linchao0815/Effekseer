@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialCompiler\Metal\EffekseerMaterialCompilerMetal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialCompiler\Metal\EffekseerMaterialCompilerMetal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialCompiler\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{220053B7-D0FA-33AE-8B0C-40FA514840BF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6904C149-8CAF-3614-A565-36F2BC6F551B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

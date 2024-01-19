@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\ar.Base.cpp">
+      <Filter>Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\ar.ImageHelper.cpp">
+      <Filter>Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.Compiler_Impl_DX11.cpp">
+      <Filter>Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.ConstantBuffer_Impl_DX11.cpp">
+      <Filter>Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.Context_Impl_DX11.cpp">
+      <Filter>Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.CubemapTexture_Impl_DX11.cpp">
+      <Filter>Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.DepthTexture_Impl_DX11.cpp">
+      <Filter>Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.IndexBuffer_Impl_DX11.cpp">
+      <Filter>Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.Manager_Impl_DX11.cpp">
+      <Filter>Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.RenderTexture2D_Impl_DX11.cpp">
+      <Filter>Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.Shader_Impl_DX11.cpp">
+      <Filter>Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.Texture2D_Impl_DX11.cpp">
+      <Filter>Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.VertexBuffer_Impl_DX11.cpp">
+      <Filter>Files\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.Compiler_Impl_GL.cpp">
+      <Filter>Files\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.ConstantBuffer_Impl_GL.cpp">
+      <Filter>Files\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.Context_Impl_GL.cpp">
+      <Filter>Files\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.CubemapTexture_Impl_GL.cpp">
+      <Filter>Files\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.DepthTexture_Impl_GL.cpp">
+      <Filter>Files\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.IndexBuffer_Impl_GL.cpp">
+      <Filter>Files\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.Manager_Impl_GL.cpp">
+      <Filter>Files\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.RenderTexture2D_Impl_GL.cpp">
+      <Filter>Files\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.Shader_Impl_GL.cpp">
+      <Filter>Files\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.Texture2D_Impl_GL.cpp">
+      <Filter>Files\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.VertexBuffer_Impl_GL.cpp">
+      <Filter>Files\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\Win\ar.PNGHelper_Impl_Win.cpp">
+      <Filter>Files\Win</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\3rdParty\DirectXToolKit\DDSTextureLoader.cpp">
+      <Filter>Files\3rdParty\DirectXToolKit</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\3rdParty\nv_dds\nv_dds.cpp">
+      <Filter>Files\3rdParty\nv_dds</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\ar.Base.h">
+      <Filter>Files</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\ar.BaseInternal.h">
+      <Filter>Files</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\ar.ImageHelper.h">
+      <Filter>Files</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.Compiler_Impl_DX11.h">
+      <Filter>Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.ConstantBuffer_Impl_DX11.h">
+      <Filter>Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.Context_Impl_DX11.h">
+      <Filter>Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.CubemapTexture_Impl_DX11.h">
+      <Filter>Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.DX11.h">
+      <Filter>Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.DepthTexture_Impl_DX11.h">
+      <Filter>Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.IndexBuffer_Impl_DX11.h">
+      <Filter>Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.Manager_Impl_DX11.h">
+      <Filter>Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.RenderTexture2D_Impl_DX11.h">
+      <Filter>Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.Shader_Impl_DX11.h">
+      <Filter>Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.Texture2D_Impl_DX11.h">
+      <Filter>Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\DX11\ar.VertexBuffer_Impl_DX11.h">
+      <Filter>Files\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.Compiler_Impl_GL.h">
+      <Filter>Files\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.ConstantBuffer_Impl_GL.h">
+      <Filter>Files\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.Context_Impl_GL.h">
+      <Filter>Files\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.CubemapTexture_Impl_GL.h">
+      <Filter>Files\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.DepthTexture_Impl_GL.h">
+      <Filter>Files\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.GL.h">
+      <Filter>Files\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.IndexBuffer_Impl_GL.h">
+      <Filter>Files\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.Manager_Impl_GL.h">
+      <Filter>Files\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.RenderTexture2D_Impl_GL.h">
+      <Filter>Files\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.Shader_Impl_GL.h">
+      <Filter>Files\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.Texture2D_Impl_GL.h">
+      <Filter>Files\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\GL\ar.VertexBuffer_Impl_GL.h">
+      <Filter>Files\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\Win\ar.PNGHelper_Impl_Win.h">
+      <Filter>Files\Win</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\3rdParty\DirectXToolKit\DDSTextureLoader.h">
+      <Filter>Files\3rdParty\DirectXToolKit</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\3rdParty\DirectXToolKit\DirectXHelpers.h">
+      <Filter>Files\3rdParty\DirectXToolKit</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\3rdParty\DirectXToolKit\PlatformHelpers.h">
+      <Filter>Files\3rdParty\DirectXToolKit</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\3rdParty\DirectXToolKit\dds.h">
+      <Filter>Files\3rdParty\DirectXToolKit</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\3rdParty\nv_dds\nv_dds.h">
+      <Filter>Files\3rdParty\nv_dds</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\3rdParty\AltseedRHI\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Files">
+      <UniqueIdentifier>{1159E578-3D89-38AC-935D-487CE045817B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Files\3rdParty">
+      <UniqueIdentifier>{D1A23488-E763-34A4-A0A8-16AFA96CB3A6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Files\3rdParty\DirectXToolKit">
+      <UniqueIdentifier>{FECE183E-10A1-31F8-91FE-D191B7832D11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Files\3rdParty\nv_dds">
+      <UniqueIdentifier>{DCC8F173-E7DD-38AE-AD62-F62D06672178}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Files\DX11">
+      <UniqueIdentifier>{BE3AA76B-3410-32DA-89D5-6FC6C025B024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Files\GL">
+      <UniqueIdentifier>{68BEDE22-2C1F-393F-9759-5E5DF4F4D1D1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Files\Win">
+      <UniqueIdentifier>{528BC5DF-B4B3-332D-BD01-836FFBD84C21}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

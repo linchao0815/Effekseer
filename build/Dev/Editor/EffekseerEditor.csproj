@@ -1,0 +1,606 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2E608049-C2A0-3920-A4C1-41AF4DA06600}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>EffekseerEditor</ProjectName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+    <ApplicationIcon>S:/ArtTool/Effekseer_1.51/Dev/Editor/Effekseer/icon.ico</ApplicationIcon>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <OutputPath>S:\ArtTool\Effekseer_1.51\Dev\release\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <PlatformToolset>v142</PlatformToolset>
+    <AssemblyName>Effekseer</AssemblyName>
+    <StartAction>Program</StartAction>
+    <StartProgram>S:\ArtTool\Effekseer_1.51\Dev\release\Effekseer.exe</StartProgram>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <DefineConstants>TRACE;DEBUG;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <LangVersion>6</LangVersion>
+    <Optimize>false</Optimize>
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <OutputPath>S:\ArtTool\Effekseer_1.51\Dev\release\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <PlatformToolset>v142</PlatformToolset>
+    <AssemblyName>Effekseer</AssemblyName>
+    <StartAction>Program</StartAction>
+    <StartProgram>S:\ArtTool\Effekseer_1.51\Dev\release\Effekseer.exe</StartProgram>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>none</DebugType>
+    <DefineConstants>TRACE;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__</DefineConstants>
+    <ErrorReport>queue</ErrorReport>
+    <LangVersion>6</LangVersion>
+    <Optimize>true</Optimize>
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <OutputPath>S:\ArtTool\Effekseer_1.51\build\Dev\Editor\MinSizeRel\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <PlatformToolset>v142</PlatformToolset>
+    <AssemblyName>EffekseerEditor</AssemblyName>
+    <StartAction>Program</StartAction>
+    <StartProgram>S:\ArtTool\Effekseer_1.51\build\Dev\Editor\MinSizeRel\EffekseerEditor.exe</StartProgram>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>none</DebugType>
+    <DefineConstants>TRACE;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__</DefineConstants>
+    <LangVersion>6</LangVersion>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <OutputPath>S:\ArtTool\Effekseer_1.51\build\Dev\Editor\RelWithDebInfo\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <PlatformToolset>v142</PlatformToolset>
+    <AssemblyName>EffekseerEditor</AssemblyName>
+    <StartAction>Program</StartAction>
+    <StartProgram>S:\ArtTool\Effekseer_1.51\build\Dev\Editor\RelWithDebInfo\EffekseerEditor.exe</StartProgram>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <DefineConstants>TRACE;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__</DefineConstants>
+    <LangVersion>6</LangVersion>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.CSharp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.CSharp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemGroup>
+    <None Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\CMakeLists.txt">
+      <Link>CMakeLists.txt</Link>
+    </None>
+  </ItemGroup>
+  <Target Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"
+    Name="CustomCommand_Debug_8277aaacde894de68832be77df02bcc7"
+    Inputs="S:/ArtTool/Effekseer_1.51/Dev/Editor/CMakeLists.txt;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCSharpCompiler.cmake.in;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCSharpInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeDetermineCSharpCompiler.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeDetermineCompiler.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeTestCSharpCompiler.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CompilerId\VS-10.csproj.in;S:\ArtTool\Effekseer_1.51\build\CMakeFiles\3.20.21032501-MSVC_2\CMakeCSharpCompiler.cmake"
+    Outputs="S:\ArtTool\Effekseer_1.51\build\Dev\Editor\CMakeFiles\generate.stamp">
+    <Exec Command="echo Building Custom Rule S:/ArtTool/Effekseer_1.51/Dev/Editor/CMakeLists.txt" />
+    <Exec Command="setlocal&#10;&quot;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe&quot; -SS:/ArtTool/Effekseer_1.51 -BS:/ArtTool/Effekseer_1.51/build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/Dev/Editor/CMakeFiles/generate.stamp&#10;if %errorlevel% neq 0 goto :cmEnd&#10;:cmEnd&#10;endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone&#10;:cmErrorLevel&#10;exit /b %1&#10;:cmDone&#10;if %errorlevel% neq 0 goto :VCEnd" />
+  </Target>
+  <Target Condition="'$(Configuration)|$(Platform)'=='Release|x64'"
+    Name="CustomCommand_Release_8277aaacde894de68832be77df02bcc7"
+    Inputs="S:/ArtTool/Effekseer_1.51/Dev/Editor/CMakeLists.txt;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCSharpCompiler.cmake.in;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCSharpInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeDetermineCSharpCompiler.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeDetermineCompiler.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeTestCSharpCompiler.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CompilerId\VS-10.csproj.in;S:\ArtTool\Effekseer_1.51\build\CMakeFiles\3.20.21032501-MSVC_2\CMakeCSharpCompiler.cmake"
+    Outputs="S:\ArtTool\Effekseer_1.51\build\Dev\Editor\CMakeFiles\generate.stamp">
+    <Exec Command="echo Building Custom Rule S:/ArtTool/Effekseer_1.51/Dev/Editor/CMakeLists.txt" />
+    <Exec Command="setlocal&#10;&quot;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe&quot; -SS:/ArtTool/Effekseer_1.51 -BS:/ArtTool/Effekseer_1.51/build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/Dev/Editor/CMakeFiles/generate.stamp&#10;if %errorlevel% neq 0 goto :cmEnd&#10;:cmEnd&#10;endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone&#10;:cmErrorLevel&#10;exit /b %1&#10;:cmDone&#10;if %errorlevel% neq 0 goto :VCEnd" />
+  </Target>
+  <Target Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'"
+    Name="CustomCommand_MinSizeRel_8277aaacde894de68832be77df02bcc7"
+    Inputs="S:/ArtTool/Effekseer_1.51/Dev/Editor/CMakeLists.txt;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCSharpCompiler.cmake.in;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCSharpInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeDetermineCSharpCompiler.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeDetermineCompiler.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeTestCSharpCompiler.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CompilerId\VS-10.csproj.in;S:\ArtTool\Effekseer_1.51\build\CMakeFiles\3.20.21032501-MSVC_2\CMakeCSharpCompiler.cmake"
+    Outputs="S:\ArtTool\Effekseer_1.51\build\Dev\Editor\CMakeFiles\generate.stamp">
+    <Exec Command="echo Building Custom Rule S:/ArtTool/Effekseer_1.51/Dev/Editor/CMakeLists.txt" />
+    <Exec Command="setlocal&#10;&quot;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe&quot; -SS:/ArtTool/Effekseer_1.51 -BS:/ArtTool/Effekseer_1.51/build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/Dev/Editor/CMakeFiles/generate.stamp&#10;if %errorlevel% neq 0 goto :cmEnd&#10;:cmEnd&#10;endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone&#10;:cmErrorLevel&#10;exit /b %1&#10;:cmDone&#10;if %errorlevel% neq 0 goto :VCEnd" />
+  </Target>
+  <Target Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'"
+    Name="CustomCommand_RelWithDebInfo_8277aaacde894de68832be77df02bcc7"
+    Inputs="S:/ArtTool/Effekseer_1.51/Dev/Editor/CMakeLists.txt;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCSharpCompiler.cmake.in;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCSharpInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeDetermineCSharpCompiler.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeDetermineCompiler.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeTestCSharpCompiler.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CompilerId\VS-10.csproj.in;S:\ArtTool\Effekseer_1.51\build\CMakeFiles\3.20.21032501-MSVC_2\CMakeCSharpCompiler.cmake"
+    Outputs="S:\ArtTool\Effekseer_1.51\build\Dev\Editor\CMakeFiles\generate.stamp">
+    <Exec Command="echo Building Custom Rule S:/ArtTool/Effekseer_1.51/Dev/Editor/CMakeLists.txt" />
+    <Exec Command="setlocal&#10;&quot;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe&quot; -SS:/ArtTool/Effekseer_1.51 -BS:/ArtTool/Effekseer_1.51/build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/Dev/Editor/CMakeFiles/generate.stamp&#10;if %errorlevel% neq 0 goto :cmEnd&#10;:cmEnd&#10;endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone&#10;:cmErrorLevel&#10;exit /b %1&#10;:cmDone&#10;if %errorlevel% neq 0 goto :VCEnd" />
+  </Target>
+  <ItemGroup>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\Data\ViewPoint.cs">
+      <Link>Effekseer\Data\ViewPoint.cs</Link>
+      <ObjectFileName>$(IntDir)/Effekseer/Data/ViewPoint.cs</ObjectFileName>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\Define.cs">
+      <Link>Effekseer\Define.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Commands.cs">
+      <Link>Effekseer\GUI\Commands.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\Boolean.cs">
+      <Link>Effekseer\GUI\Component\Boolean.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\ColorCtrl.cs">
+      <Link>Effekseer\GUI\Component\ColorCtrl.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\ColorWithRandom.cs">
+      <Link>Effekseer\GUI\Component\ColorWithRandom.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\Dummy.cs">
+      <Link>Effekseer\GUI\Component\Dummy.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\DynamicSelector.cs">
+      <Link>Effekseer\GUI\Component\DynamicSelector.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\Enum.cs">
+      <Link>Effekseer\GUI\Component\Enum.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\FCurveButton.cs">
+      <Link>Effekseer\GUI\Component\FCurveButton.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\Float.cs">
+      <Link>Effekseer\GUI\Component\Float.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\FloatWithRandom.cs">
+      <Link>Effekseer\GUI\Component\FloatWithRandom.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\Int.cs">
+      <Link>Effekseer\GUI\Component\Int.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\IntWithInifinite.cs">
+      <Link>Effekseer\GUI\Component\IntWithInifinite.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\IntWithRandom.cs">
+      <Link>Effekseer\GUI\Component\IntWithRandom.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\ParameterList.cs">
+      <Link>Effekseer\GUI\Component\ParameterList.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\PathForImage.cs">
+      <Link>Effekseer\GUI\Component\PathForImage.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\PathForMaterial.cs">
+      <Link>Effekseer\GUI\Component\PathForMaterial.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\PathForModel.cs">
+      <Link>Effekseer\GUI\Component\PathForModel.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\PathForSound.cs">
+      <Link>Effekseer\GUI\Component\PathForSound.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\String.cs">
+      <Link>Effekseer\GUI\Component\String.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\Utils.cs">
+      <Link>Effekseer\GUI\Component\Utils.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\Vector2D.cs">
+      <Link>Effekseer\GUI\Component\Vector2D.cs</Link>
+      <ObjectFileName>$(IntDir)/Effekseer/GUI/Component/Vector2D.cs</ObjectFileName>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\Vector2DWithRandom.cs">
+      <Link>Effekseer\GUI\Component\Vector2DWithRandom.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\Vector3D.cs">
+      <Link>Effekseer\GUI\Component\Vector3D.cs</Link>
+      <ObjectFileName>$(IntDir)/Effekseer/GUI/Component/Vector3D.cs</ObjectFileName>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\Vector3DWithRandom.cs">
+      <Link>Effekseer\GUI\Component\Vector3DWithRandom.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Component\Vector4D.cs">
+      <Link>Effekseer\GUI\Component\Vector4D.cs</Link>
+      <ObjectFileName>$(IntDir)/Effekseer/GUI/Component/Vector4D.cs</ObjectFileName>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Controls.cs">
+      <Link>Effekseer\GUI\Controls.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dialog\About.cs">
+      <Link>Effekseer\GUI\Dialog\About.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dialog\MessageBox.cs">
+      <Link>Effekseer\GUI\Dialog\MessageBox.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dialog\OpenModel.cs">
+      <Link>Effekseer\GUI\Dialog\OpenModel.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dialog\RenameNode.cs">
+      <Link>Effekseer\GUI\Dialog\RenameNode.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dialog\SaveOnDisposing.cs">
+      <Link>Effekseer\GUI\Dialog\SaveOnDisposing.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\AlphaCrunchValues.cs">
+      <Link>Effekseer\GUI\Dock\AlphaCrunchValues.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\BehaviorValues.cs">
+      <Link>Effekseer\GUI\Dock\BehaviorValues.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\CommonValues.cs">
+      <Link>Effekseer\GUI\Dock\CommonValues.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\Culling.cs">
+      <Link>Effekseer\GUI\Dock\Culling.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\DepthValues.cs">
+      <Link>Effekseer\GUI\Dock\DepthValues.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\DockManager.cs">
+      <Link>Effekseer\GUI\Dock\DockManager.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\DockPanel.cs">
+      <Link>Effekseer\GUI\Dock\DockPanel.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\Dynamic.cs">
+      <Link>Effekseer\GUI\Dock\Dynamic.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\EffectViwer.cs">
+      <Link>Effekseer\GUI\Dock\EffectViwer.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\Environment.cs">
+      <Link>Effekseer\GUI\Dock\Environment.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\FCurves.cs">
+      <Link>Effekseer\GUI\Dock\FCurves.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\FileViewer.cs">
+      <Link>Effekseer\GUI\Dock\FileViewer.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\GenerationLocationValues.cs">
+      <Link>Effekseer\GUI\Dock\GenerationLocationValues.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\GlobalValues.cs">
+      <Link>Effekseer\GUI\Dock\GlobalValues.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\LocationAbsValues.cs">
+      <Link>Effekseer\GUI\Dock\LocationAbsValues.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\LocationValues.cs">
+      <Link>Effekseer\GUI\Dock\LocationValues.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\Network.cs">
+      <Link>Effekseer\GUI\Dock\Network.cs</Link>
+      <ObjectFileName>$(IntDir)/Effekseer/GUI/Dock/Network.cs</ObjectFileName>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\NodeTreeView.cs">
+      <Link>Effekseer\GUI\Dock\NodeTreeView.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\Option.cs">
+      <Link>Effekseer\GUI\Dock\Option.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\PostEffect.cs">
+      <Link>Effekseer\GUI\Dock\PostEffect.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\Recorder.cs">
+      <Link>Effekseer\GUI\Dock\Recorder.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\RendererCommonValues.cs">
+      <Link>Effekseer\GUI\Dock\RendererCommonValues.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\RendererValues.cs">
+      <Link>Effekseer\GUI\Dock\RendererValues.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\RotationValues.cs">
+      <Link>Effekseer\GUI\Dock\RotationValues.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\ScaleValues.cs">
+      <Link>Effekseer\GUI\Dock\ScaleValues.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\SoundValues.cs">
+      <Link>Effekseer\GUI\Dock\SoundValues.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\ViewPoint.cs">
+      <Link>Effekseer\GUI\Dock\ViewPoint.cs</Link>
+      <ObjectFileName>$(IntDir)/Effekseer/GUI/Dock/ViewPoint.cs</ObjectFileName>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Dock\ViewerController.cs">
+      <Link>Effekseer\GUI\Dock\ViewerController.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\DragAndDrops.cs">
+      <Link>Effekseer\GUI\DragAndDrops.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Icons.cs">
+      <Link>Effekseer\GUI\Icons.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Manager.cs">
+      <Link>Effekseer\GUI\Manager.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Menu\MainMenu.cs">
+      <Link>Effekseer\GUI\Menu\MainMenu.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Menu\Menu.cs">
+      <Link>Effekseer\GUI\Menu\Menu.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Menu\MenuItem.cs">
+      <Link>Effekseer\GUI\Menu\MenuItem.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Network.cs">
+      <Link>Effekseer\GUI\Network.cs</Link>
+      <ObjectFileName>$(IntDir)/Effekseer/GUI/Network.cs</ObjectFileName>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\RecentFiles.cs">
+      <Link>Effekseer\GUI\RecentFiles.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Shortcuts.cs">
+      <Link>Effekseer\GUI\Shortcuts.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\ThumbnailManager.cs">
+      <Link>Effekseer\GUI\ThumbnailManager.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\GUI\Viewer.cs">
+      <Link>Effekseer\GUI\Viewer.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\MaterialCacheGenerator.cs">
+      <Link>Effekseer\IO\MaterialCacheGenerator.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\mqoToEffekseerModelConverter\Color.cs">
+      <Link>Effekseer\IO\mqoToEffekseerModelConverter\Color.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\mqoToEffekseerModelConverter\Matrix44.cs">
+      <Link>Effekseer\IO\mqoToEffekseerModelConverter\Matrix44.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\mqoToEffekseerModelConverter\Program.cs">
+      <Link>Effekseer\IO\mqoToEffekseerModelConverter\Program.cs</Link>
+      <ObjectFileName>$(IntDir)/Effekseer/IO/mqoToEffekseerModelConverter/Program.cs</ObjectFileName>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\mqoToEffekseerModelConverter\Vector2D.cs">
+      <Link>Effekseer\IO\mqoToEffekseerModelConverter\Vector2D.cs</Link>
+      <ObjectFileName>$(IntDir)/Effekseer/IO/mqoToEffekseerModelConverter/Vector2D.cs</ObjectFileName>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\mqoToEffekseerModelConverter\Vector3D.cs">
+      <Link>Effekseer\IO\mqoToEffekseerModelConverter\Vector3D.cs</Link>
+      <ObjectFileName>$(IntDir)/Effekseer/IO/mqoToEffekseerModelConverter/Vector3D.cs</ObjectFileName>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\mqoToEffekseerModelConverter\Vector4D.cs">
+      <Link>Effekseer\IO\mqoToEffekseerModelConverter\Vector4D.cs</Link>
+      <ObjectFileName>$(IntDir)/Effekseer/IO/mqoToEffekseerModelConverter/Vector4D.cs</ObjectFileName>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Data.cs">
+      <Link>Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Data.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Loader.cs">
+      <Link>Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Loader.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Loexer.cs">
+      <Link>Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Loexer.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Realtime\Face.cs">
+      <Link>Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Realtime\Face.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Realtime\Material.cs">
+      <Link>Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Realtime\Material.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Realtime\Model.cs">
+      <Link>Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Realtime\Model.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Realtime\Object.cs">
+      <Link>Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Realtime\Object.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Realtime\Vertex.cs">
+      <Link>Effekseer\IO\mqoToEffekseerModelConverter\mqoIO\Realtime\Vertex.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\Plugin\ExportDefault.cs">
+      <Link>Effekseer\Plugin\ExportDefault.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\Process\MaterialEditor.cs">
+      <Link>Effekseer\Process\MaterialEditor.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\Program.cs">
+      <Link>Effekseer\Program.cs</Link>
+      <ObjectFileName>$(IntDir)/Effekseer/Program.cs</ObjectFileName>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\Properties\AssemblyInfo.cs">
+      <Link>Effekseer\Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\Utils\CompileErrorGenerator.cs">
+      <Link>Effekseer\Utils\CompileErrorGenerator.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\Utils\DelayedList.cs">
+      <Link>Effekseer\Utils\DelayedList.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\ColorEditFlags.cs">
+      <Link>Effekseer\swig\ColorEditFlags.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\ComboFlags.cs">
+      <Link>Effekseer\swig\ComboFlags.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\CompiledMaterialGenerator.cs">
+      <Link>Effekseer\swig\CompiledMaterialGenerator.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\Cond.cs">
+      <Link>Effekseer\swig\Cond.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\DeviceType.cs">
+      <Link>Effekseer\swig\DeviceType.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\DialogButtons.cs">
+      <Link>Effekseer\swig\DialogButtons.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\DialogSelection.cs">
+      <Link>Effekseer\swig\DialogSelection.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\DialogStyle.cs">
+      <Link>Effekseer\swig\DialogStyle.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\DistortionType.cs">
+      <Link>Effekseer\swig\DistortionType.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\DockNodeFlags.cs">
+      <Link>Effekseer\swig\DockNodeFlags.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\DockSplitDir.cs">
+      <Link>Effekseer\swig\DockSplitDir.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\EffekseerNative.cs">
+      <Link>Effekseer\swig\EffekseerNative.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\EffekseerNativePINVOKE.cs">
+      <Link>Effekseer\swig\EffekseerNativePINVOKE.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\FCurveEdgeType.cs">
+      <Link>Effekseer\swig\FCurveEdgeType.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\FCurveInterporationType.cs">
+      <Link>Effekseer\swig\FCurveInterporationType.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\FileDialog.cs">
+      <Link>Effekseer\swig\FileDialog.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\GUIManager.cs">
+      <Link>Effekseer\swig\GUIManager.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\GUIManagerCallback.cs">
+      <Link>Effekseer\swig\GUIManagerCallback.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\IO.cs">
+      <Link>Effekseer\swig\IO.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\IOCallback.cs">
+      <Link>Effekseer\swig\IOCallback.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\ImGuiColFlags.cs">
+      <Link>Effekseer\swig\ImGuiColFlags.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\ImGuiStyleVarFlags.cs">
+      <Link>Effekseer\swig\ImGuiStyleVarFlags.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\ImageResource.cs">
+      <Link>Effekseer\swig\ImageResource.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\InputTextFlags.cs">
+      <Link>Effekseer\swig\InputTextFlags.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\Key.cs">
+      <Link>Effekseer\swig\Key.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\MainWindow.cs">
+      <Link>Effekseer\swig\MainWindow.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\MainWindowState.cs">
+      <Link>Effekseer\swig\MainWindowState.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\MouseCursor.cs">
+      <Link>Effekseer\swig\MouseCursor.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\Native.cs">
+      <Link>Effekseer\swig\Native.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\RecordingModeType.cs">
+      <Link>Effekseer\swig\RecordingModeType.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\RecordingParameter.cs">
+      <Link>Effekseer\swig\RecordingParameter.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\RenderMode.cs">
+      <Link>Effekseer\swig\RenderMode.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\SelectableFlags.cs">
+      <Link>Effekseer\swig\SelectableFlags.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\StaticFile.cs">
+      <Link>Effekseer\swig\StaticFile.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\StaticFileType.cs">
+      <Link>Effekseer\swig\StaticFileType.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\SystemLanguage.cs">
+      <Link>Effekseer\swig\SystemLanguage.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\TransparenceType.cs">
+      <Link>Effekseer\swig\TransparenceType.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\TreeNodeFlags.cs">
+      <Link>Effekseer\swig\TreeNodeFlags.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\Vec2.cs">
+      <Link>Effekseer\swig\Vec2.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\ViewMode.cs">
+      <Link>Effekseer\swig\ViewMode.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\ViewerEffectBehavior.cs">
+      <Link>Effekseer\swig\ViewerEffectBehavior.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\ViewerParamater.cs">
+      <Link>Effekseer\swig\ViewerParamater.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\swig\WindowFlags.cs">
+      <Link>Effekseer\swig\WindowFlags.cs</Link>
+    </Compile>
+    <Compile Include="S:\ArtTool\Effekseer_1.51\Dev\Editor\Effekseer\Configs\WindowConfig.cs">
+      <Link>Effekseer\Configs\WindowConfig.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Xml">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Text.RegularExpressions">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.IO.Compression">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="S:\ArtTool\Effekseer_1.51\build\ZERO_CHECK.vcxproj">
+      <Project>{9A4FFC13-BC8D-3B2B-A354-4248277B5916}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="S:\ArtTool\Effekseer_1.51\build\Dev\Editor\EffekseerCore.csproj">
+      <Project>{BC517CD1-75F3-3DFB-897F-E1D5D8BC96D5}</Project>
+      <Name>EffekseerCore</Name>
+      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
+    </ProjectReference>
+    <ProjectReference Include="S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\Viewer\Viewer.vcxproj">
+      <Project>{7E447E6E-FE3E-3C43-BC9B-2180A985DE43}</Project>
+      <Name>Viewer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'MinSizeRel'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'RelWithDebInfo'">
+  </PropertyGroup>
+  <PropertyGroup>
+    <BuildDependsOn>
+      CustomCommand_Debug_8277aaacde894de68832be77df02bcc7;
+      CustomCommand_MinSizeRel_8277aaacde894de68832be77df02bcc7;
+      CustomCommand_RelWithDebInfo_8277aaacde894de68832be77df02bcc7;
+      CustomCommand_Release_8277aaacde894de68832be77df02bcc7;
+      $(BuildDependsOn)
+</BuildDependsOn>
+  </PropertyGroup>
+</Project>

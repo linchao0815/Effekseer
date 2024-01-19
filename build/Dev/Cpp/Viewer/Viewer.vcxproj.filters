@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\imgui\imgui.cpp">
+      <Filter>3rdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\imgui\imgui_draw.cpp">
+      <Filter>3rdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\imgui\imgui_widgets.cpp">
+      <Filter>3rdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\imgui_addon\fcurve\fcurve.cpp">
+      <Filter>3rdParty\imgui_addon\fcurve</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\imgui_addon\imguihelper\imguihelper.cpp">
+      <Filter>3rdParty\imgui_addon\imguihelper</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\CompiledMaterialGenerator.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\DynamicLinkLibrary.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\EffekseerTool\EffekseerTool.Culling.cpp">
+      <Filter>EffekseerTool</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\EffekseerTool\EffekseerTool.Grid.cpp">
+      <Filter>EffekseerTool</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\EffekseerTool\EffekseerTool.Guide.cpp">
+      <Filter>EffekseerTool</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\EffekseerTool\EffekseerTool.Paste.cpp">
+      <Filter>EffekseerTool</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\EffekseerTool\EffekseerTool.Renderer.cpp">
+      <Filter>EffekseerTool</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\EffekseerTool\EffekseerTool.Sound.cpp">
+      <Filter>EffekseerTool</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\GUI\efk.FileDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\GUI\efk.GUIManager.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\GUI\efk.ImageResource.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\GUI\efk.Window.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\efk.AVIExporter.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\efk.GifHelper.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\efk.Graphics.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\efk.ImageRenderer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\efk.LineRenderer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\efk.PNGHelper.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\efk.PostEffects.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\dll.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\dll_cs.cxx" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\nfd\nfd_common.c">
+      <Filter>3rdParty\nfd</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\nfd\nfd_win.cpp">
+      <Filter>3rdParty\nfd</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\imgui_platform\imgui_impl_glfw.cpp">
+      <Filter>3rdParty\imgui_platform</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\imgui_platform\imgui_impl_opengl3.cpp">
+      <Filter>3rdParty\imgui_platform</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\imgui_platform\imgui_impl_dx11.cpp">
+      <Filter>3rdParty\imgui_platform</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\DX11\efk.GraphicsDX11.cpp">
+      <Filter>Graphics\Platform\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\DX11\efk.ImageRendererDX11.cpp">
+      <Filter>Graphics\Platform\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\DX11\efk.LineRendererDX11.cpp">
+      <Filter>Graphics\Platform\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\DX11\efk.PostEffectsDX11.cpp">
+      <Filter>Graphics\Platform\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\GL\efk.GraphicsGL.cpp">
+      <Filter>Graphics\Platform\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\GL\efk.ImageRendererGL.cpp">
+      <Filter>Graphics\Platform\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\GL\efk.LineRendererGL.cpp">
+      <Filter>Graphics\Platform\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\GL\efk.PostEffectsGL.cpp">
+      <Filter>Graphics\Platform\GL</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\imgui\imconfig.h">
+      <Filter>3rdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\imgui\imgui.h">
+      <Filter>3rdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\imgui\imgui_internal.h">
+      <Filter>3rdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\imgui\imstb_rectpack.h">
+      <Filter>3rdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\imgui\imstb_textedit.h">
+      <Filter>3rdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\imgui\imstb_truetype.h">
+      <Filter>3rdParty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\CompiledMaterialGenerator.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\DynamicLinkLibrary.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\EffekseerTool\EffekseerTool.Base.h">
+      <Filter>EffekseerTool</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\EffekseerTool\EffekseerTool.Culling.h">
+      <Filter>EffekseerTool</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\EffekseerTool\EffekseerTool.Grid.h">
+      <Filter>EffekseerTool</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\EffekseerTool\EffekseerTool.Guide.h">
+      <Filter>EffekseerTool</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\EffekseerTool\EffekseerTool.Paste.h">
+      <Filter>EffekseerTool</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\EffekseerTool\EffekseerTool.Renderer.h">
+      <Filter>EffekseerTool</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\EffekseerTool\EffekseerTool.Sound.h">
+      <Filter>EffekseerTool</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\GUI\efk.FileDialog.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\GUI\efk.GUIManager.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\GUI\efk.ImageResource.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\GUI\efk.JapaneseFont.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\GUI\efk.Vec2.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\GUI\efk.Window.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\efk.AVIExporter.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\efk.GifHelper.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\efk.Graphics.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\efk.ImageRenderer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\efk.LineRenderer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\efk.PNGHelper.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\efk.PostEffects.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\dll.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\dll_cs.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\efk.Base.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\nfd\nfd.h">
+      <Filter>3rdParty\nfd</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\3rdParty\nfd\nfd_common.h">
+      <Filter>3rdParty\nfd</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\DX11\efk.GraphicsDX11.h">
+      <Filter>Graphics\Platform\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\DX11\efk.ImageRendererDX11.h">
+      <Filter>Graphics\Platform\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\DX11\efk.LineRendererDX11.h">
+      <Filter>Graphics\Platform\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\DX11\efk.PostEffectsDX11.h">
+      <Filter>Graphics\Platform\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\GL\efk.GraphicsGL.h">
+      <Filter>Graphics\Platform\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\GL\efk.ImageRendererGL.h">
+      <Filter>Graphics\Platform\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\GL\efk.LineRendererGL.h">
+      <Filter>Graphics\Platform\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\Graphics\Platform\GL\efk.PostEffectsGL.h">
+      <Filter>Graphics\Platform\GL</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Viewer\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="3rdParty">
+      <UniqueIdentifier>{71DF51BB-1B00-3B09-B6D8-686DF3216C9D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdParty\imgui">
+      <UniqueIdentifier>{E082940B-557C-35F0-AB1B-D63FA719A68D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdParty\imgui_addon">
+      <UniqueIdentifier>{B931B8F0-55A8-36DA-B093-805334CA3120}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdParty\imgui_addon\fcurve">
+      <UniqueIdentifier>{4B57058D-C644-3F95-A224-170F24555AEF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdParty\imgui_addon\imguihelper">
+      <UniqueIdentifier>{1055E883-954A-3315-8E04-13C92A1136ED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdParty\imgui_platform">
+      <UniqueIdentifier>{810D95B3-C4F3-30FE-AE41-BDB73F352C87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdParty\nfd">
+      <UniqueIdentifier>{8177DAD4-9C67-393F-8DB3-4DF500B6F372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EffekseerTool">
+      <UniqueIdentifier>{031BC182-28F1-3F71-BBAC-DA69951FAD3F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{CC8CD1A7-827D-33BF-A7C5-F5FFFE4F0CB5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{E6401284-69E3-3F57-BF36-E773490362FA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Platform">
+      <UniqueIdentifier>{587FDC71-450D-33D6-A943-C16F13474494}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Platform\DX11">
+      <UniqueIdentifier>{155B6850-07E2-3BCD-B0D6-FDF79A231705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Platform\GL">
+      <UniqueIdentifier>{6C02F141-038E-3C75-A761-468AB209316E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

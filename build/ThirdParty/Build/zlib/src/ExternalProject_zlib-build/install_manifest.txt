@@ -1,0 +1,7 @@
+S:/ArtTool/Effekseer_1.51/build/ThirdParty/Install/zlib/lib/zlib.lib
+S:/ArtTool/Effekseer_1.51/build/ThirdParty/Install/zlib/bin/zlib.dll
+S:/ArtTool/Effekseer_1.51/build/ThirdParty/Install/zlib/lib/zlibstatic.lib
+S:/ArtTool/Effekseer_1.51/build/ThirdParty/Install/zlib/include/zconf.h
+S:/ArtTool/Effekseer_1.51/build/ThirdParty/Install/zlib/include/zlib.h
+S:/ArtTool/Effekseer_1.51/build/ThirdParty/Install/zlib/share/man/man3/zlib.3
+S:/ArtTool/Effekseer_1.51/build/ThirdParty/Install/zlib/share/pkgconfig/zlib.pc

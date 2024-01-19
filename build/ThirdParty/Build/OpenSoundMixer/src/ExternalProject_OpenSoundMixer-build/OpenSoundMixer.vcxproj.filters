@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Decorder\osm.OggDecorder.cpp">
+      <Filter>src\Decorder</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Decorder\osm.WaveDecorder.cpp">
+      <Filter>src\Decorder</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Filter\osm.Panner.cpp">
+      <Filter>src\Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Filter\osm.Resampler.cpp">
+      <Filter>src\Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libogg\src\bitwise.c">
+      <Filter>thirdparty\libogg\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libogg\src\framing.c">
+      <Filter>thirdparty\libogg\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\analysis.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\bitrate.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\block.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\codebook.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\envelope.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\floor0.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\floor1.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\info.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\lookup.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\lpc.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\lsp.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\mapping0.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\mdct.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\psy.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\registry.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\res0.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\sharedbook.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\smallft.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\synthesis.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\vorbisenc.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\vorbisfile.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\window.c">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.Decorder.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.FastFourierTransform.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.Manager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.Manager_Impl.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.ReferenceObject.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.Sound_Impl.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Manager\osm.Manager_Impl_WasApi.cpp">
+      <Filter>src\Manager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Decorder\osm.OggDecorder.h">
+      <Filter>src\Decorder</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Decorder\osm.WaveDecorder.h">
+      <Filter>src\Decorder</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Filter\osm.Panner.h">
+      <Filter>src\Filter</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Filter\osm.Resampler.h">
+      <Filter>src\Filter</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libogg\include\ogg\ogg.h">
+      <Filter>thirdparty\libogg\include\ogg</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libogg\include\ogg\os_types.h">
+      <Filter>thirdparty\libogg\include\ogg</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\include\vorbis\codec.h">
+      <Filter>thirdparty\libvorbis\include\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\include\vorbis\vorbisenc.h">
+      <Filter>thirdparty\libvorbis\include\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\include\vorbis\vorbisfile.h">
+      <Filter>thirdparty\libvorbis\include\vorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\backends.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\bitrate.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\books\coupled\res_books_51.h">
+      <Filter>thirdparty\libvorbis\src\books\coupled</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\books\coupled\res_books_stereo.h">
+      <Filter>thirdparty\libvorbis\src\books\coupled</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\books\floor\floor_books.h">
+      <Filter>thirdparty\libvorbis\src\books\floor</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\books\uncoupled\res_books_uncoupled.h">
+      <Filter>thirdparty\libvorbis\src\books\uncoupled</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\codebook.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\codec_internal.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\envelope.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\highlevel.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\lookup.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\lookup_data.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\lpc.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\lsp.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\masking.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\mdct.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\misc.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\floor_all.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\psych_11.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\psych_16.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\psych_44.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\psych_8.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\residue_16.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\residue_44.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\residue_44p51.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\residue_44u.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\residue_8.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_11.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_16.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_22.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_32.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_44.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_44p51.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_44u.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_8.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_X.h">
+      <Filter>thirdparty\libvorbis\src\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\os.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\psy.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\registry.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\scales.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\smallft.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\window.h">
+      <Filter>thirdparty\libvorbis\src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\OpenSoundMixer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\OpenSoundMixerInternal.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.Decorder.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.FastFourierTransform.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.Manager_Impl.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.ReferenceObject.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.Sound_Impl.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{F4FA84AE-5A85-39A3-ABBD-998B2E9DB6D9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Decorder">
+      <UniqueIdentifier>{5EAE51A7-FF39-3818-A9CE-EB195F562ECE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Filter">
+      <UniqueIdentifier>{264D9ABF-D8CF-3166-955C-0DD08C24AE3E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Manager">
+      <UniqueIdentifier>{7A013AF7-39AC-3472-8DF2-DA078A28882E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty">
+      <UniqueIdentifier>{1924E2CE-8A3C-3918-856B-F385DC10B9AD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libogg">
+      <UniqueIdentifier>{B84512DB-BACD-3696-9ED3-F954581DFD78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libogg\include">
+      <UniqueIdentifier>{35FD0B6B-039B-3659-97DE-1C56D658D177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libogg\include\ogg">
+      <UniqueIdentifier>{54CC0DEC-2D64-32DE-A3F2-2C9B78B5E29C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libogg\src">
+      <UniqueIdentifier>{47AE3B36-37DA-3D77-82AE-EB664E4F44E9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libvorbis">
+      <UniqueIdentifier>{BE198983-AEC8-3810-A816-E0C6CC2209E8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libvorbis\include">
+      <UniqueIdentifier>{681B0A4B-BAD2-320A-A2B8-A04D8044D6F7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libvorbis\include\vorbis">
+      <UniqueIdentifier>{B29F81C6-9AF0-3640-8137-345D27DF129C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libvorbis\src">
+      <UniqueIdentifier>{E0AFF0BB-EF9D-37A8-BDE5-87E286922ACC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libvorbis\src\books">
+      <UniqueIdentifier>{A26215DA-0BE9-38DE-AAFB-415FC1F41021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libvorbis\src\books\coupled">
+      <UniqueIdentifier>{031644B8-F664-3C9B-B366-854EA5C038E2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libvorbis\src\books\floor">
+      <UniqueIdentifier>{F279422F-CB5A-39E9-AF1A-13DACEE05C67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libvorbis\src\books\uncoupled">
+      <UniqueIdentifier>{D07BB830-9346-3B0C-8710-D30EB0BAC06C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libvorbis\src\modes">
+      <UniqueIdentifier>{9AA4CA50-7235-3322-92D8-866D184D0527}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\glfw\src\ExternalProject_glfw-build\CMakeFiles\a3d007251bf0f9ad69ccf974ae5b90a9\uninstall.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\Downloads\glfw\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\glfw\src\ExternalProject_glfw-build\CMakeFiles\uninstall" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{141B23D8-4C9E-3ADF-8C71-06D657D5B303}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

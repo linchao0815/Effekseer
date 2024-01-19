@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\glew\src\ExternalProject_glew-build\CMakeFiles\bf2e42c45a04be2a106a99e41f493f51\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{C21C487D-941F-35F8-829D-DA704799F165}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

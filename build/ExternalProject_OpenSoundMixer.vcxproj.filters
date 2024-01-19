@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\build\CMakeFiles\05a9db261002c977116fbbd1004a52c9\ExternalProject_OpenSoundMixer-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\build\CMakeFiles\05a9db261002c977116fbbd1004a52c9\ExternalProject_OpenSoundMixer-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\build\CMakeFiles\05a9db261002c977116fbbd1004a52c9\ExternalProject_OpenSoundMixer-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\build\CMakeFiles\05a9db261002c977116fbbd1004a52c9\ExternalProject_OpenSoundMixer-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\build\CMakeFiles\05a9db261002c977116fbbd1004a52c9\ExternalProject_OpenSoundMixer-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\build\CMakeFiles\05a9db261002c977116fbbd1004a52c9\ExternalProject_OpenSoundMixer-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\build\CMakeFiles\05a9db261002c977116fbbd1004a52c9\ExternalProject_OpenSoundMixer-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\build\CMakeFiles\ff672d41a2c3666bdc5d656a324e8134\ExternalProject_OpenSoundMixer-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\build\CMakeFiles\a322f0e028d47f4794242a1f60ab4cae\ExternalProject_OpenSoundMixer.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="S:\ArtTool\Effekseer_1.51\build\CMakeFiles\ExternalProject_OpenSoundMixer" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{129A1B1B-12B9-345C-8F76-824586AA347A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

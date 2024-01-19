@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C22E8F81-C910-3E13-A52E-458B97E397A2}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>OpenSoundMixer</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\OpenSoundMixer\src\ExternalProject_OpenSoundMixer-build\lib\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">OpenSoundMixer.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">OpenSoundMixerd</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\OpenSoundMixer\src\ExternalProject_OpenSoundMixer-build\lib\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">OpenSoundMixer.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">OpenSoundMixer</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libogg\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libogg\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libogg\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libogg\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libogg\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libogg\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\CMakeLists.txt">
+      <StdOutEncoding>UTF-8</StdOutEncoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule S:/ArtTool/Effekseer_1.51/Downloads/OpenSoundMixer/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SS:/ArtTool/Effekseer_1.51/Downloads/OpenSoundMixer -BS:/ArtTool/Effekseer_1.51/build/ThirdParty/Build/OpenSoundMixer/src/ExternalProject_OpenSoundMixer-build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/ThirdParty/Build/OpenSoundMixer/src/ExternalProject_OpenSoundMixer-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;S:\ArtTool\Effekseer_1.51\Dev\CFlagOverrides.cmake;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\OpenSoundMixer\src\ExternalProject_OpenSoundMixer-build\CMakeFiles\3.20.21032501-MSVC_2\CMakeCCompiler.cmake;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\OpenSoundMixer\src\ExternalProject_OpenSoundMixer-build\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\OpenSoundMixer\src\ExternalProject_OpenSoundMixer-build\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\OpenSoundMixer\src\ExternalProject_OpenSoundMixer-build\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\OpenSoundMixer\src\ExternalProject_OpenSoundMixer-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule S:/ArtTool/Effekseer_1.51/Downloads/OpenSoundMixer/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SS:/ArtTool/Effekseer_1.51/Downloads/OpenSoundMixer -BS:/ArtTool/Effekseer_1.51/build/ThirdParty/Build/OpenSoundMixer/src/ExternalProject_OpenSoundMixer-build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/ThirdParty/Build/OpenSoundMixer/src/ExternalProject_OpenSoundMixer-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;S:\ArtTool\Effekseer_1.51\Dev\CFlagOverrides.cmake;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\OpenSoundMixer\src\ExternalProject_OpenSoundMixer-build\CMakeFiles\3.20.21032501-MSVC_2\CMakeCCompiler.cmake;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\OpenSoundMixer\src\ExternalProject_OpenSoundMixer-build\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\OpenSoundMixer\src\ExternalProject_OpenSoundMixer-build\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\OpenSoundMixer\src\ExternalProject_OpenSoundMixer-build\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\OpenSoundMixer\src\ExternalProject_OpenSoundMixer-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Decorder\osm.OggDecorder.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Decorder\osm.OggDecorder.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Decorder\osm.WaveDecorder.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Decorder\osm.WaveDecorder.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Filter\osm.Panner.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Filter\osm.Panner.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Filter\osm.Resampler.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Filter\osm.Resampler.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libogg\include\ogg\ogg.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libogg\include\ogg\os_types.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libogg\src\bitwise.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libogg\src\framing.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\include\vorbis\codec.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\include\vorbis\vorbisenc.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\include\vorbis\vorbisfile.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\analysis.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\backends.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\bitrate.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\bitrate.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\block.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\books\coupled\res_books_51.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\books\coupled\res_books_stereo.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\books\floor\floor_books.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\books\uncoupled\res_books_uncoupled.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\codebook.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\codebook.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\codec_internal.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\envelope.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\envelope.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\floor0.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\floor1.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\highlevel.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\info.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\lookup.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\lookup.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\lookup_data.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\lpc.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\lpc.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\lsp.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\lsp.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\mapping0.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\masking.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\mdct.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\mdct.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\misc.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\floor_all.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\psych_11.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\psych_16.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\psych_44.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\psych_8.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\residue_16.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\residue_44.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\residue_44p51.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\residue_44u.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\residue_8.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_11.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_16.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_22.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_32.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_44.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_44p51.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_44u.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_8.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\modes\setup_X.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\os.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\psy.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\psy.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\registry.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\registry.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\res0.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\scales.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\sharedbook.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\smallft.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\smallft.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\synthesis.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\vorbisenc.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\vorbisfile.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\window.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\thirdparty\libvorbis\src\window.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\OpenSoundMixer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\OpenSoundMixerInternal.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.Decorder.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.Decorder.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.FastFourierTransform.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.FastFourierTransform.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.Manager.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.Manager_Impl.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.Manager_Impl.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.ReferenceObject.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.ReferenceObject.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.Sound_Impl.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\osm.Sound_Impl.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src\Manager\osm.Manager_Impl_WasApi.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\OpenSoundMixer\src\ExternalProject_OpenSoundMixer-build\ZERO_CHECK.vcxproj">
+      <Project>{4F0C6993-223E-3B93-A4FA-7AB52E283E1D}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

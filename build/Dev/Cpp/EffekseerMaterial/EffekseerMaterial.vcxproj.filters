@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.CommandManager.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.Library.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.Models.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.Parameters.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.StringContainer.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.TextExporter.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\ThirdParty\picojson.h">
+      <Filter>ThirdParty</Filter>
+    </ClInclude>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.Base.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.CommandManager.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.Library.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.Models.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.Parameters.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.StringContainer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.TextExporter.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\efkMat.Utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterial\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{2E5D8681-4035-3226-AFB7-DA273EDAE899}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

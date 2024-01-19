@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\x64\Release\ZERO_CHECK</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\Bin\Release\arc.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\Bin\Release\crop.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\Bin\Release\gd2copypal.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\Bin\Release\gd2togif.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\Bin\Release\gdcmpgif.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\Bin\Release\gif.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\Bin\Release\giftogd2.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\Bin\Release\nnquant.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\Bin\Release\tgaread.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\Bin\Release\windows.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\x64\Release\ALL_BUILD</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

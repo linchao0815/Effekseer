@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A4B8B5A4-CEFE-369C-AEE3-4E2E816D3643}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>EffekseerRendererDX11</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\EffekseerRendererDX11\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EffekseerRendererDX11.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EffekseerRendererDX11</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\EffekseerRendererDX11\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">EffekseerRendererDX11.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">EffekseerRendererDX11</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\EffekseerRendererDX11\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">EffekseerRendererDX11.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">EffekseerRendererDX11</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\EffekseerRendererDX11\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">EffekseerRendererDX11.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">EffekseerRendererDX11</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\..\Effekseer;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libpng\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libgd\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glew\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\..\Effekseer;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libpng\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libgd\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glew\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\..\Effekseer;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libpng\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libgd\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glew\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\..\Effekseer;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libpng\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libgd\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glew\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\..\Effekseer;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libpng\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libgd\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glew\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\..\Effekseer;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libpng\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libgd\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glew\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\..\Effekseer;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libpng\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libgd\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glew\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\..\Effekseer;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libpng\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libgd\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glew\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\..\Effekseer;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libpng\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libgd\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glew\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\..\Effekseer;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libpng\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libgd\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glew\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\..\Effekseer;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libpng\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libgd\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glew\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\..\Effekseer;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libpng\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\libgd\include;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glew\include;S:\ArtTool\Effekseer_1.51\Downloads\OpenSoundMixer\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\CMakeLists.txt">
+      <StdOutEncoding>UTF-8</StdOutEncoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule S:/ArtTool/Effekseer_1.51/Dev/Cpp/EffekseerRendererDX11/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SS:/ArtTool/Effekseer_1.51 -BS:/ArtTool/Effekseer_1.51/build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/Dev/Cpp/EffekseerRendererDX11/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\EffekseerRendererDX11\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule S:/ArtTool/Effekseer_1.51/Dev/Cpp/EffekseerRendererDX11/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SS:/ArtTool/Effekseer_1.51 -BS:/ArtTool/Effekseer_1.51/build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/Dev/Cpp/EffekseerRendererDX11/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\EffekseerRendererDX11\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule S:/ArtTool/Effekseer_1.51/Dev/Cpp/EffekseerRendererDX11/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SS:/ArtTool/Effekseer_1.51 -BS:/ArtTool/Effekseer_1.51/build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/Dev/Cpp/EffekseerRendererDX11/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\EffekseerRendererDX11\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule S:/ArtTool/Effekseer_1.51/Dev/Cpp/EffekseerRendererDX11/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SS:/ArtTool/Effekseer_1.51 -BS:/ArtTool/Effekseer_1.51/build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/Dev/Cpp/EffekseerRendererDX11/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\EffekseerRendererDX11\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.CommonUtils.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.CommonUtils.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DDSTextureLoader.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DDSTextureLoader.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DXTK.DDSTextureLoader.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DXTK.DDSTextureLoader.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DXTK.dds.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.IndexBufferBase.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.IndexBufferBase.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.ModelRendererBase.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.ModelRendererBase.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.PngTextureLoader.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.PngTextureLoader.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RenderStateBase.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RenderStateBase.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer_Impl.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer_Impl.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RibbonRendererBase.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RibbonRendererBase.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RingRendererBase.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RingRendererBase.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.ShaderBase.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.SpriteRendererBase.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.SpriteRendererBase.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.StandardRenderer.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TrackRendererBase.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TrackRendererBase.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.VertexBufferBase.cpp" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.VertexBufferBase.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.Base.Pre.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.Base.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.DeviceObject.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.IndexBuffer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.MaterialLoader.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.ModelLoader.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.ModelRenderer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.RenderState.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.Renderer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.RendererImplemented.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.Shader.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.TextureLoader.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.VertexBuffer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderDistortionTexture_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderDistortion_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderDistortion_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLightingNormal_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLightingNormal_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLightingTextureNormal_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLightingTextureNormal_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLightingTexture_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLightingTexture_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLighting_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderLighting_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderTexture_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.ShaderTexture_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.Shader_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ModelRenderer.Shader_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.StandardNoTexture_Distortion_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.StandardNoTexture_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.Standard_Distortion_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.Standard_Distortion_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.Standard_Lighting_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.Standard_Lighting_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.Standard_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.Standard_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.ToolNoTexture_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.Tool_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader\EffekseerRenderer.Tool_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.ShaderDistortionTexture_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.ShaderDistortion_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.ShaderDistortion_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.ShaderLightingNormal_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.ShaderLightingNormal_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.ShaderLightingTextureNormal_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.ShaderLightingTextureNormal_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.ShaderLightingTexture_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.ShaderLightingTexture_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.ShaderLighting_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.ShaderLighting_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.ShaderTexture_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.ShaderTexture_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.Shader_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ModelRenderer.Shader_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.StandardNoTexture_Distortion_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.StandardNoTexture_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.Standard_Distortion_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.Standard_Distortion_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.Standard_Lighting_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.Standard_Lighting_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.Standard_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.Standard_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.ToolNoTexture_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.Tool_PS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\Shader_15\EffekseerRenderer.Tool_VS.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRendererDX11.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialCompiler\DirectX11\EffekseerMaterialCompilerDX11.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.DeviceObject.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.IndexBuffer.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.MaterialLoader.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.ModelLoader.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.ModelRenderer.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.RenderState.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.Renderer.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.Shader.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.TextureLoader.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerRendererDX11\EffekseerRenderer\EffekseerRendererDX11.VertexBuffer.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\EffekseerMaterialCompiler\DirectX11\EffekseerMaterialCompilerDX11.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="S:\ArtTool\Effekseer_1.51\build\ZERO_CHECK.vcxproj">
+      <Project>{9A4FFC13-BC8D-3B2B-A354-4248277B5916}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\Effekseer\Effekseer.vcxproj">
+      <Project>{073C9468-95D7-3C9A-BC35-8F4C3DC13658}</Project>
+      <Name>Effekseer</Name>
+    </ProjectReference>
+    <ProjectReference Include="S:\ArtTool\Effekseer_1.51\build\ExternalProject_libpng.vcxproj">
+      <Project>{F3C3C92D-4106-3A11-9548-4DDCB72F7447}</Project>
+      <Name>ExternalProject_libpng</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="S:\ArtTool\Effekseer_1.51\build\ExternalProject_zlib.vcxproj">
+      <Project>{1BB33DBC-CF5A-3B3E-95AD-44859548ADC4}</Project>
+      <Name>ExternalProject_zlib</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

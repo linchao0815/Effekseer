@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{073C9468-95D7-3C9A-BC35-8F4C3DC13658}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>Effekseer</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\Effekseer\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effekseer.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effekseer</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\Effekseer\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effekseer.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effekseer</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\Effekseer\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Effekseer.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Effekseer</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\Effekseer\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Effekseer.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Effekseer</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <TreatSpecificWarningsAsErrors>4456;4458</TreatSpecificWarningsAsErrors>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <TreatSpecificWarningsAsErrors>4456;4458</TreatSpecificWarningsAsErrors>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <TreatSpecificWarningsAsErrors>4456;4458</TreatSpecificWarningsAsErrors>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <TreatSpecificWarningsAsErrors>4456;4458</TreatSpecificWarningsAsErrors>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__EFFEKSEER_USE_LIBPNG__;__EFFEKSEER_BUILD_DX12__;__EFFEKSEER_RENDERER_INTERNAL_LOADER__;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\CMakeLists.txt">
+      <StdOutEncoding>UTF-8</StdOutEncoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule S:/ArtTool/Effekseer_1.51/Dev/Cpp/Effekseer/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SS:/ArtTool/Effekseer_1.51 -BS:/ArtTool/Effekseer_1.51/build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/Dev/Cpp/Effekseer/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\Effekseer\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule S:/ArtTool/Effekseer_1.51/Dev/Cpp/Effekseer/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SS:/ArtTool/Effekseer_1.51 -BS:/ArtTool/Effekseer_1.51/build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/Dev/Cpp/Effekseer/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\Effekseer\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule S:/ArtTool/Effekseer_1.51/Dev/Cpp/Effekseer/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SS:/ArtTool/Effekseer_1.51 -BS:/ArtTool/Effekseer_1.51/build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/Dev/Cpp/Effekseer/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\Effekseer\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule S:/ArtTool/Effekseer_1.51/Dev/Cpp/Effekseer/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SS:/ArtTool/Effekseer_1.51 -BS:/ArtTool/Effekseer_1.51/build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/Dev/Cpp/Effekseer/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">S:\ArtTool\Effekseer_1.51\build\Dev\Cpp\Effekseer\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer.Internal.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.Grid.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.Layer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.ObjectInternal.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.ReferenceObject.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.WorldInternal.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Base.Pre.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Base.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Client.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.ClientImplemented.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Color.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.DefaultEffectLoader.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.DefaultFile.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Effect.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectImplemented.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectLoader.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNode.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeModel.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeRibbon.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeRing.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeRoot.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeSprite.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeTrack.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.FCurves.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.File.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Instance.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceChunk.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceContainer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceGlobal.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceGroup.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InternalScript.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InternalStruct.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.IntrusiveList.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Manager.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.ManagerImplemented.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.MaterialLoader.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Math.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Matrix43.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Matrix44.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Model.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.ModelLoader.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.RectF.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Server.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.ServerImplemented.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Setting.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Socket.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.SoundLoader.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.TextureLoader.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Vector2D.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Vector3D.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\IO\Effekseer.EfkEfcFactory.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Material\Effekseer.CompiledMaterial.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Material\Effekseer.Material.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Material\Effekseer.MaterialCompiler.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Noise\CurlNoise.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Noise\PerlinNoise.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Parameter\Effekseer.Parameters.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Renderer\Effekseer.ModelRenderer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Renderer\Effekseer.ParticleRenderer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Renderer\Effekseer.RibbonRenderer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Renderer\Effekseer.RingRenderer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Renderer\Effekseer.SpriteRenderer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Renderer\Effekseer.TrackRenderer.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Utils\Effekseer.BinaryReader.h" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Utils\Effekseer.CustomAllocator.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Client.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Color.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.DefaultEffectLoader.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.DefaultFile.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Effect.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNode.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeModel.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeRibbon.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeRing.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeRoot.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeSprite.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.EffectNodeTrack.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.FCurves.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Instance.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceChunk.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceContainer.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceGlobal.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InstanceGroup.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.InternalScript.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Manager.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Matrix43.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Matrix44.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.RectF.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Setting.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Server.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Socket.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Vector2D.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Effekseer.Vector3D.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.Grid.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.Layer.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.Matrix44.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.ObjectInternal.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.ReferenceObject.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.Vector3DF.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Culling\Culling3D.WorldInternal.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Material\Effekseer.Material.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Material\Effekseer.CompiledMaterial.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Material\Effekseer.MaterialCompiler.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\IO\Effekseer.EfkEfcFactory.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Parameter\Effekseer.Parameters.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Utils\Effekseer.CustomAllocator.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\SIMD\Effekseer.Mat43f.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\SIMD\Effekseer.Mat44f.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\SIMD\Effekseer.SIMDUtils.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Noise\CurlNoise.cpp" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Dev\Cpp\Effekseer\Effekseer\Noise\PerlinNoise.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="S:\ArtTool\Effekseer_1.51\build\ZERO_CHECK.vcxproj">
+      <Project>{9A4FFC13-BC8D-3B2B-A354-4248277B5916}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

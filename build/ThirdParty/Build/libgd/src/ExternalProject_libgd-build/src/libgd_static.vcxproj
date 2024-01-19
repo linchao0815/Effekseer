@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{110C13EF-F81F-3E2E-A7F5-6762864B1E4B}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>libgd_static</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\Bin\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libgd_static.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libgd_staticd</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\Bin\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libgd_static.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libgd_static</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\Bin\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">libgd_static.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">libgd_static</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\Bin\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">libgd_static.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">libgd_static</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\libgd\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\Downloads\libgd\before;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NONDLL=1;HAVE_CONFIG_H;_WIN32;MSWIN32;BGDWIN32;WINVER=0x0500;_WIN32_WINNT=0x0500;_WIN32_IE=0x0600;_CRT_SECURE_NO_DEPRECATE;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;NONDLL=1;HAVE_CONFIG_H;_WIN32;MSWIN32;BGDWIN32;WINVER=0x0500;_WIN32_WINNT=0x0500;_WIN32_IE=0x0600;_CRT_SECURE_NO_DEPRECATE;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\libgd\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\Downloads\libgd\before;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\libgd\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\Downloads\libgd\before;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\libgd\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\Downloads\libgd\before;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NONDLL=1;HAVE_CONFIG_H;_WIN32;MSWIN32;BGDWIN32;WINVER=0x0500;_WIN32_WINNT=0x0500;_WIN32_IE=0x0600;_CRT_SECURE_NO_DEPRECATE;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NONDLL=1;HAVE_CONFIG_H;_WIN32;MSWIN32;BGDWIN32;WINVER=0x0500;_WIN32_WINNT=0x0500;_WIN32_IE=0x0600;_CRT_SECURE_NO_DEPRECATE;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\libgd\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\Downloads\libgd\before;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\libgd\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\Downloads\libgd\before;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\libgd\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\Downloads\libgd\before;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NONDLL=1;HAVE_CONFIG_H;_WIN32;MSWIN32;BGDWIN32;WINVER=0x0500;_WIN32_WINNT=0x0500;_WIN32_IE=0x0600;_CRT_SECURE_NO_DEPRECATE;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NONDLL=1;HAVE_CONFIG_H;_WIN32;MSWIN32;BGDWIN32;WINVER=0x0500;_WIN32_WINNT=0x0500;_WIN32_IE=0x0600;_CRT_SECURE_NO_DEPRECATE;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\libgd\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\Downloads\libgd\before;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\libgd\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\Downloads\libgd\before;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\libgd\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\Downloads\libgd\before;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NONDLL=1;HAVE_CONFIG_H;_WIN32;MSWIN32;BGDWIN32;WINVER=0x0500;_WIN32_WINNT=0x0500;_WIN32_IE=0x0600;_CRT_SECURE_NO_DEPRECATE;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NONDLL=1;HAVE_CONFIG_H;_WIN32;MSWIN32;BGDWIN32;WINVER=0x0500;_WIN32_WINNT=0x0500;_WIN32_IE=0x0600;_CRT_SECURE_NO_DEPRECATE;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\libgd\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\Downloads\libgd\before;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>S:\ArtTool\Effekseer_1.51\Downloads\libgd\src;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build;S:\ArtTool\Effekseer_1.51\build\ThirdParty\Install\zlib\include;S:\ArtTool\Effekseer_1.51\Downloads\libgd\before;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\CMakeLists.txt">
+      <StdOutEncoding>UTF-8</StdOutEncoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule S:/ArtTool/Effekseer_1.51/Downloads/libgd/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SS:/ArtTool/Effekseer_1.51/Downloads/libgd -BS:/ArtTool/Effekseer_1.51/build/ThirdParty/Build/libgd/src/ExternalProject_libgd-build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/ThirdParty/Build/libgd/src/ExternalProject_libgd-build/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\GNUInstallDirs.cmake;S:\ArtTool\Effekseer_1.51\Downloads\libgd\config\gdlib.pc.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule S:/ArtTool/Effekseer_1.51/Downloads/libgd/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SS:/ArtTool/Effekseer_1.51/Downloads/libgd -BS:/ArtTool/Effekseer_1.51/build/ThirdParty/Build/libgd/src/ExternalProject_libgd-build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/ThirdParty/Build/libgd/src/ExternalProject_libgd-build/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\GNUInstallDirs.cmake;S:\ArtTool\Effekseer_1.51\Downloads\libgd\config\gdlib.pc.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule S:/ArtTool/Effekseer_1.51/Downloads/libgd/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SS:/ArtTool/Effekseer_1.51/Downloads/libgd -BS:/ArtTool/Effekseer_1.51/build/ThirdParty/Build/libgd/src/ExternalProject_libgd-build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/ThirdParty/Build/libgd/src/ExternalProject_libgd-build/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\GNUInstallDirs.cmake;S:\ArtTool\Effekseer_1.51\Downloads\libgd\config\gdlib.pc.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule S:/ArtTool/Effekseer_1.51/Downloads/libgd/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SS:/ArtTool/Effekseer_1.51/Downloads/libgd -BS:/ArtTool/Effekseer_1.51/build/ThirdParty/Build/libgd/src/ExternalProject_libgd-build --check-stamp-file S:/ArtTool/Effekseer_1.51/build/ThirdParty/Build/libgd/src/ExternalProject_libgd-build/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\GNUInstallDirs.cmake;S:\ArtTool\Effekseer_1.51\Downloads\libgd\config\gdlib.pc.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\bmp.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_bmp.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_color.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_color.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_color_map.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_color_map.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_color_match.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_crop.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_filename.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_filter.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_gd.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_gd2.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_gif_in.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_gif_out.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_intern.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_interpolation.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_io.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_io.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_io_dp.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_io_file.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_io_ss.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_io_stream.cxx" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_io_stream.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_jpeg.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_matrix.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_nnquant.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_nnquant.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_png.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_rotate.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_security.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_ss.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_tga.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_tga.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_tiff.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_topal.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_transform.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_version.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_wbmp.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_webp.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gd_xbm.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdcache.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdcache.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdfontg.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdfontg.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdfontl.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdfontl.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdfontmb.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdfontmb.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdfonts.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdfonts.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdfontt.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdfontt.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdft.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdfx.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdfx.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdhelpers.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdhelpers.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdkanji.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdpp.cxx" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdpp.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdtables.c" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\gdxpm.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\jisx0208.h" />
+    <ClCompile Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\wbmp.c" />
+    <ClInclude Include="S:\ArtTool\Effekseer_1.51\Downloads\libgd\src\wbmp.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="S:\ArtTool\Effekseer_1.51\build\ThirdParty\Build\libgd\src\ExternalProject_libgd-build\ZERO_CHECK.vcxproj">
+      <Project>{7C83B67E-69E3-3F95-8725-42BFB6B6E402}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
